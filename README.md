@@ -79,14 +79,17 @@ Apart from `init`, these methods are available:
 
 This might look like:
 ```javascript
+/* sets mask to element with id "newMask" */
 $('#myVideo').seeThru('updateMask',{mask:'#newMask'});
 ```
 or
 ```javascript
+/* destroys seeThru functionality and adds class "plainOldVideo" */
 $('#myVideo').seeThru('revert').addClass('plainOldVideo');
 ```
 or
 ```javascript
+/* pauses video and binds click handler to resume playback to canvas representation */
 $('#myVideo').seeThru('pause').next('.seeThru-display').one('click',function(){
    $('#myVideo').seeThru('play');
 });
