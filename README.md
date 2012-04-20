@@ -20,34 +20,34 @@ It is also possible to source the alpha information from an `<img>`-element. The
 Basic HTML5 video markup should look something like this:
 
 ```html
-    <video id="myVideo">
-        <source src="src.mp4" type="video/mp4" />
-        <source src="src.ogg" type="video/ogg" />
-        ....
-    </video>
+<video id="myVideo">
+    <source src="src.mp4" type="video/mp4" />
+    <source src="src.ogg" type="video/ogg" />
+    ....
+</video>
 ```
 
 In case you are planning to have your video set to autoplay or loop you can do this when initializing the JS. The plugin will also fix the lack of a loop option in Firefox.<br/>
 To make the magic happen you just have to do the following:<br/>
 include jQuery (i built the plugin with 1.7.1 but it should be working with older versions down to 1.3 as well) and the plugin in your `<head>`:
 
-```javascript 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery-seeThru.0.9.6.min.js"></script>
+```html 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-seeThru.0.9.6.min.js"></script>
 ```
 and then call the following jQuery method on your video (preferrably on `$(document).ready`):
 
 ```javascript
-    $(document).ready(function(){
-        $('#myVideo').seeThru();
-    });
+$(document).ready(function(){
+    $('#myVideo').seeThru();
+});
 ```
 
 If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display:none;` in your CSS.<br/>In case you want to style the generated canvas elements, the generated markup looks like this:
 ```html
-    <video style="display:none;">...</video><!-- video is hidden -->
-    <canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
-    <canvas height="XXX" width="XXX" class="seeThru-buffer" style="display:none;"></canvas><!-- this is just a helper element -->
+<video style="display:none;">...</video><!-- video is hidden -->
+<canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
+<canvas height="XXX" width="XXX" class="seeThru-buffer" style="display:none;"></canvas><!-- this is just a helper element -->
 ```
 ##Options##
 There are a few options you can pass when calling the plugin:
@@ -64,11 +64,11 @@ There are a few options you can pass when calling the plugin:
 
 This might look like this:
 ```javascript
-    $('#myVideo').seeThru({fps:12,start:'autoplay',end:'stop'});
+$('#myVideo').seeThru({fps:12,start:'autoplay',end:'stop'});
 ```
 or
 ```javascript
-    $('#myVideo').seeThru({mask:'#imageWithAlpha',alphaMask: true});
+$('#myVideo').seeThru({mask:'#imageWithAlpha',alphaMask: true});
 ```
 ##Additional methods##
 Apart from `init`, these methods are available:
@@ -79,17 +79,17 @@ Apart from `init`, these methods are available:
 
 This might look like:
 ```javascript
-    $('#myVideo').seeThru('updateMask',{mask:'#newMask'});
+$('#myVideo').seeThru('updateMask',{mask:'#newMask'});
 ```
 or
 ```javascript
-    $('#myVideo').seeThru('revert').addClass('plainOldVideo');
+$('#myVideo').seeThru('revert').addClass('plainOldVideo');
 ```
 or
 ```javascript
-    $('#myVideo').seeThru('pause').next('.seeThru-display').one('click',function(){
-       $('#myVideo').seeThru('play');
-    });
+$('#myVideo').seeThru('pause').next('.seeThru-display').one('click',function(){
+   $('#myVideo').seeThru('play');
+});
 ```
 ##Examples##
 **[Moving alpha][1]**<br>
