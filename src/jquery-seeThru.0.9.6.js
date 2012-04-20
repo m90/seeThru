@@ -323,7 +323,7 @@
 	
 	} //end pause
 	
-	methods.rewind = function(){
+	methods.rewind = function(){ //method is not documented due to strange behavior in Webkit
 	
 		return this.each(function(){
 			if ($(this).data('seeThru')){
