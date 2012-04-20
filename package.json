@@ -1,0 +1,16 @@
+{
+  "name": "jQuery seeThru",
+  "version": "0.9.6",
+  "author": "Frederik Ring",
+  "description": "HTML5 video with alpha channel transparencies",
+  "homepage": "https://github.com/m90/jquery-seeThru",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/m90/jquery-seeThru.git"
+  },
+  "main": "./src/main.js",
+  "dependencies": {
+  },
+  "engines": {
+  }
+}
