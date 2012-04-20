@@ -106,7 +106,7 @@ Tested on Chrome, Firefox, Safari, Opera 11 and IE 9.0+
 Put a black-and white alpha channel right underneath your `<video>` source (in the same file), load jQuery and let the plugin do magical things:
 <code>
 $('#myRadVideoNeedsTransparencies').seeThru();
-</code>
+</code><br>
 Voila! Here's an [example][1].
 
 ##Changelog##
@@ -118,7 +118,7 @@ Voila! Here's an [example][1].
    * v0.9.1: added the `mask` option that enables the use of a static image as alpha information, also some minor improvements in overall perfomance
    * v0.9.0: first version
 
-Older versions are marked "Deprecated" but still available in the downloads if you search for them.
+Older versions (< 0.9.6) are available at Google Code
 
 ##Thank you##
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
