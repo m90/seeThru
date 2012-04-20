@@ -123,7 +123,7 @@ Older versions (< 0.9.6) are available at Google Code
 ##Thank you##
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
 
-[1]:http://www.frederikring.com/seeThru/staticAlpha
+[1]:http://www.frederikring.com/seeThru/movingAlpha
 [2]:http://www.frederikring.com/seeThru/staticAlpha
 [3]:http://www.frederikring.com/seeThru/swapAlpha
 [4]:http://www.frederikring.com/seeThru/external
