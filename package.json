@@ -1,16 +1,23 @@
 {
-  "name": "jQuery seeThru",
+  "name": "jquery.seethru",
   "version": "0.9.6",
-  "author": "Frederik Ring",
+  "author":  {
+    "name" : "Frederik Ring",
+    "email" : "frederik.ring@gmail.com",
+    "url" : "http://www.frederikring.com"
+  },
+  "title": "jQuery seeThru",
   "description": "HTML5 video with alpha channel transparencies",
   "homepage": "https://github.com/m90/jquery-seeThru",
+  "keywords":["html5","video","transparency","alpha channel","keying","canvas"],
+  "licenses": [{
+     "type": "MIT",
+     "url": "http://www.opensource.org/licenses/mit-license.php"
+  }],
+  "files": ["src/jquery-seeThru.0.9.6.min.js"],
   "repository": {
     "type": "git",
     "url": "git://github.com/m90/jquery-seeThru.git"
   },
-  "main": "./src/main.js",
-  "dependencies": {
-  },
-  "engines": {
-  }
+  "dependencies": {"jquery":"1.4"}
 }
