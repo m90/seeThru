@@ -130,6 +130,7 @@ Older versions (< 0.9.6) are available at **[Google Code][9]**
 
 ##Thank you##
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
+![Footer image][10]
 
 [1]:http://www.frederikring.com/seeThru/movingAlpha
 [2]:http://www.frederikring.com/seeThru/staticAlpha
@@ -140,3 +141,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [7]:http://www.jakearchibald.com
 [8]:http://www.kathikaeppel.de
 [9]:http://code.google.com/p/jquery-seethru/
+[10]:http://www.frederikring.com/seeThru/img/footer.png
