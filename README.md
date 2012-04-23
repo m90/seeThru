@@ -3,8 +3,8 @@
 This jQuery plugin adds support for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original data will simply be re-rendered into a canvas-element, therefore adding support for alpha information that can either be included in the source file for the video element or in a seperate `<img>`-element.
 
 ##Video setup##
-In default configuration the plugin assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being fully opaque and black being fully transparent (colored information will be used based on its overall luminance).<br/>For optimal results the color channel should be un-premultiplied. (see: http://en.wikipedia.org/wiki/Alpha_compositing for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use Knoll Unmult which is available for quite a lot of packages: http://www.redgiantsoftware.com/products/all/knoll-unmult-free/<br/>
-For a basic introduction of how to encode and embed video for HTML5 pages see the great http://www.diveintohtml5.info/video.html
+In default configuration the plugin assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being fully opaque and black being fully transparent (colored information will be used based on its overall luminance).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
+For a basic introduction of how to encode and embed video for HTML5 pages see the great **[Dive into HTML5][14]**
 ###Example image:###
 Note the jagged edges in the color channel(s) due to un-premultiplying:<br/>
 ![Example image][5]<br/>
@@ -27,9 +27,9 @@ Basic HTML5 video markup should look something like this:
 </video>
 ```
 
-In case you are planning to have your video set to autoplay or loop you can do this when initializing the JS. The plugin will also fix the lack of a loop option in Firefox.<br/>
+In case you are planning to have your video set to autoplay or loop you can do this when initializing the plugin. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
 To make the magic happen you just have to do the following:<br/>
-include jQuery (i built the plugin with 1.7.1 but it should be working with older versions down to 1.3 as well) and the plugin in your `<head>`:
+Include jQuery (I built the plugin with 1.7.1 but it should be working with older versions down to 1.4 as well) and the plugin in your `<head>`:
 
 ```html 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -55,7 +55,7 @@ There are a few options you can pass when calling the plugin:
  - `fps` expects a number specifying the frame rate that will be used for rendering the video. It defaults to `25` and should be adjusted to the frame rate of your source file for best results. If you are concerned about performance issues you can try decreasing the frame rate and therefore reduce the rendering effort the browser has to handle.
  - `start` defines the video's behavior on load. It defaults to `'autoplay'` which will automatically start the video as soon as possible. Other options are `'clicktoplay'` which will display the first frame of the video until it is clicked or `'external'` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
  - `end` defines the video's behavior when it has reached its end. It defaults to `'loop'` which will loop the video. Other possibilities are `'stop'` (it will just stop), or `'rewind'` which will jump back to the first frame and stop. If you use `start:'clicktoplay'` along with `'rewind'` or `'end'` the video will be clickable again when finished.
- - `mask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `'#fancyMask'`. In case multiple elements are matched (class passed) the first element is used, in case the selector matches nothing or a non-image node the option is ignored. Defaults to an empty string, so video information is used for the alpha.
+ - `mask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `'#fancyMask'`. In case it returns a collection (class passed), the first element is used - in case the selector matches nothing or a non-image node the option is ignored. Defaults to an empty string, so video information is used for the alpha.
  - `alphaMask` specifies if the plugin uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
@@ -151,3 +151,6 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [11]:http://www.opensource.org/licenses/mit-license.php
 [12]:http://creativecommons.org/licenses/by-sa/3.0/
 [13]:https://gist.github.com/2469449
+[14]:http://www.diveintohtml5.info/video.html
+[15]:http://en.wikipedia.org/wiki/Alpha_compositing
+[16]:http://www.redgiantsoftware.com/products/all/knoll-unmult-free
