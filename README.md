@@ -100,6 +100,9 @@ $('#myVideo').seeThru('pause').next('.seeThru-display').one('click',function(){
 **[Swapping alpha sources][3]**<br>
 **[Video listening to external JS calls][4]**<br>
 
+##Too much jQuery?##
+If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
+
 ##Cross Domain issues with canvas-elements##
 Please note that canvas is very picky about where it gets its contents from, so be aware that the video source file has to be hosted on the same domain.
 
@@ -147,3 +150,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [10]:http://www.frederikring.com/seeThru/img/footer.png
 [11]:http://www.opensource.org/licenses/mit-license.php
 [12]:http://creativecommons.org/licenses/by-sa/3.0/
+[13]:https://gist.github.com/2469449
