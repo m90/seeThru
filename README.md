@@ -128,6 +128,9 @@ Voila! Here's an [example][1].
 
 Older versions (< 0.9.6) are available at **[Google Code][9]**
 
+##Licensing##
+This plugin is licensed under the **[MIT License][11]**, demo content, video and imagery is **[CC-BY-SA 3.0][12]**
+
 ##Thank you##
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
 ![Footer image][10]
@@ -142,3 +145,5 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [8]:http://www.kathikaeppel.de
 [9]:http://code.google.com/p/jquery-seethru/
 [10]:http://www.frederikring.com/seeThru/img/footer.png
+[11]:http://www.opensource.org/licenses/mit-license.php
+[12]:http://creativecommons.org/licenses/by/3.0/
