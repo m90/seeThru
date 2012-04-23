@@ -146,4 +146,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [9]:http://code.google.com/p/jquery-seethru/
 [10]:http://www.frederikring.com/seeThru/img/footer.png
 [11]:http://www.opensource.org/licenses/mit-license.php
-[12]:http://creativecommons.org/licenses/by/3.0/
+[12]:http://creativecommons.org/licenses/by-sa/3.0/
