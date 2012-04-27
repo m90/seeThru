@@ -15,7 +15,14 @@
     "http://www.frederikring.com/seeThru/swapAlpha",
     "http://www.frederikring.com/seeThru/external"
     ],
-  "keywords":["html5","video","transparency","alpha channel","keying","canvas"],
+  "keywords":[
+    "html5",
+    "video",
+    "transparency",
+    "alpha channel",
+    "keying",
+    "canvas"
+    ],
   "licenses": [{
      "type": "MIT",
      "url": "http://www.opensource.org/licenses/mit-license.php"
