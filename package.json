@@ -9,6 +9,12 @@
   "title": "jQuery seeThru",
   "description": "HTML5 video with alpha channel transparencies",
   "homepage": "https://github.com/m90/jquery-seeThru",
+  "demo": [
+    "http://www.frederikring.com/seeThru/movingAlpha",
+    "http://www.frederikring.com/seeThru/staticAlpha",
+    "http://www.frederikring.com/seeThru/swapAlpha",
+    "http://www.frederikring.com/seeThru/external"
+    ],
   "keywords":["html5","video","transparency","alpha channel","keying","canvas"],
   "licenses": [{
      "type": "MIT",
