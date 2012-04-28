@@ -14,7 +14,7 @@
 
 	methods.init = function(options) {
 		
-		!options || (options = {}); //options passed?
+		options || (options = {}); //options passed?
 
 		/* OPTIONS */
 		var settings = $.extend({
