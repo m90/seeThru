@@ -10,9 +10,9 @@
 
 (function($) {
 
-	var methods = {};
+	var methods = {
 
-	methods.init = function(options) {
+	init : function(options) {
 		
 		options || (options = {}); //options passed?
 
@@ -53,7 +53,6 @@
 		
 		if (this.tagName === 'VIDEO'){ //no <video>: no magic!
 
-		
 			$(this).bind('loadedmetadata.seeThru',function(){
 			
 				var $this = $(this);
@@ -62,9 +61,10 @@
 				var divisor = staticMask ? 1 : 2; //static alpha data will not cut the image dimensions
 
 				/* calculate dimensions */
-				var dimensions = {};
-				dimensions.width = parseInt(settings.width,10);
-				dimensions.height = parseInt(settings.height,10)
+				var dimensions = {
+				  width: parseInt(settings.width,10),
+				  height: parseInt(settings.height,10)
+				};
 				
 				if (!dimensions.height || !dimensions.width){
 				
@@ -234,9 +234,9 @@
  
 		});
 		
-	} //end init
+	}, //end init
 	
-	methods.updateMask = function(options){
+	updateMask : function(options){
 	
 		var settings = $.extend({
 			mask: '', //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
@@ -291,9 +291,9 @@
 
 		});
 		
-	} //end updateMask
+	}, //end updateMask
 	
-	methods.revert = function(){
+	revert : function(){
 		return this.each(function(){
 		
 			var $this = $(this);
@@ -305,7 +305,7 @@
 		});
 	} // end revert
 	
-	methods.play = function(){
+	play : function(){
 	
 		return this.each(function(){
 			if ($(this).data('seeThru')){
@@ -313,9 +313,9 @@
 			}
 		});
 	
-	} //end play
+	}, //end play
 	
-	methods.pause = function(){
+	pause : function(){
 	
 		return this.each(function(){
 			if ($(this).data('seeThru')){
@@ -323,9 +323,9 @@
 			}
 		});
 	
-	} //end pause
+	}, //end pause
 	
-	methods.rewind = function(){ //method is not documented due to strange behavior in Webkit
+	rewind : function(){ //method is not documented due to strange behavior in Webkit
 	
 		return this.each(function(){
 			if ($(this).data('seeThru')){
@@ -334,8 +334,9 @@
 			}
 		});
 	
-	} //end rewind
+	}//end rewind
 	
+	}; //end methods-object
 	
 	$.fn.seeThru = function(method){ // Method calling logic -- see: http://docs.jquery.com/Plugins/Authoring
 		
