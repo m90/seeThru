@@ -91,8 +91,8 @@
 				}
 			
 				/*generate canvas elements*/
-				var bufferCanvas = $('<canvas/>',{'class':'seeThru-buffer','width':dimensions.width,'height':dimensions.height * 2}).hide(); //buffer will ALWAYS be twice the height
-				var displayCanvas = $('<canvas/>',{'class':'seeThru-display','width':dimensions.width,'height':dimensions.height});
+				var bufferCanvas = $('<canvas/>',{'class':'seeThru-buffer'}).attr({'width':dimensions.width,'height':dimensions.height * 2}).hide(); //buffer will ALWAYS be twice the height
+				var displayCanvas = $('<canvas/>',{'class':'seeThru-display'}).attr({'width':dimensions.width,'height':dimensions.height});
 				
 				var display = displayCanvas[0].getContext('2d');
 				var buffer = bufferCanvas[0].getContext('2d');
@@ -265,7 +265,7 @@
 				
 					if (alphaMask){ //alpha channel has to be converted into RGB
 					
-						var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
+						var convertCanvas = $('<canvas/>').attr({'width':dimensions.width,'height':dimensions.height}).hide();
 						var convertCtx = convertCanvas[0].getContext('2d');
 						convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 						
