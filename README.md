@@ -33,7 +33,7 @@ Include jQuery (I built the plugin with 1.7.1 but it should be working with olde
 
 ```html 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="jquery-seeThru.0.9.6.min.js"></script>
+<script type="text/javascript" src="jquery-seeThru.0.9.7.min.js"></script>
 ```
 and then call the following jQuery method on your video (preferrably on `$(document).ready`):
 
@@ -90,8 +90,8 @@ $('#myVideo').seeThru('revert').addClass('plainOldVideo');
 or
 ```javascript
 /* pauses video and binds click handler to resume playback to canvas representation */
-$('#myVideo').seeThru('pause').next('.seeThru-display').one('click',function(){
-   $('#myVideo').seeThru('play');
+$('#myVideo').seeThru('pause').one('click',function(){
+   $(this).seeThru('play');
 });
 ```
 ##Examples##
@@ -108,6 +108,7 @@ Please note that canvas is very picky about where it gets its contents from, so 
 
 ##Mobile devices##
 As most mobile devices use external video players to handle HTML5-video this plugin is *not* working on mobile Safari or Webkit (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
+Apparently Android 3.1+ will play `<video>` inline, but I do not have any experience regarding using it as a canvas source yet.
 
 ##Browser support##
 Tested on Chrome, Firefox, Safari, Opera 11 and IE 9.0+ 
@@ -121,6 +122,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1].
 
 ##Changelog##
+   * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
    * v0.9.6: elements that are not visible in the viewport will stop rendering to lower CPU usage, added the `forceRendering` option
    * v0.9.5: added simple video playback control methods: `play` and `pause`
    * v0.9.4: fixed canvas updating issues when listening to external interfaces
