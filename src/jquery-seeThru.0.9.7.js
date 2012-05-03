@@ -1,4 +1,4 @@
-/* jQuery seeThru 0.9.6 - transparent HTML5 video - written by Frederik Ring (frederik.ring@gmail.com) */
+/* jQuery seeThru 0.9.7 WIP - transparent HTML5 video - written by Frederik Ring (frederik.ring@gmail.com) */
 /* based on http://jakearchibald.com/scratch/alphavid/ by Jake Archibald (jaffathecake@gmail.com) */
 
 /* Copyright (c) 2012 Frederik Ring */
@@ -35,8 +35,8 @@
 		}
 
 		var staticMask = false;
-		var alphaMask = Boolean(settings.alphaMask);
-		var forceRendering = Boolean(settings.forceRendering);
+		var alphaMask = (settings.alphaMask === true);
+		var forceRendering = (settings.forceRendering === true);
 		var maskObj;
 
 		if ($(settings.mask).length){
@@ -52,14 +52,13 @@
 		}
 		
 		if (this.tagName === 'VIDEO'){ //no <video>: no magic!
+
 		
 			$(this).bind('loadedmetadata.seeThru',function(){
 			
 				var $this = $(this);
-				
 				var video = $this[0];
-				
-				
+				var $window = $(window);
 				var divisor = staticMask ? 1 : 2; //static alpha data will not cut the image dimensions
 
 				/* calculate dimensions */
@@ -98,6 +97,11 @@
 				var display = displayCanvas[0].getContext('2d');
 				var buffer = bufferCanvas[0].getContext('2d');
 
+				/* ECHO MOUSEEVENTS ON CANVAS*/
+				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup dblclick contextmenu',function(e){
+					$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
+				});
+				
 				/*draw static mask if needed*/
 				if (staticMask){
 					
@@ -185,11 +189,12 @@
 				
 				function inViewport(elem){
 				
-					var viewTop = $(window).scrollTop();
-					var viewBottom = viewTop + $(window).height();
+					var $elem = $(elem);
+					var viewTop = $window.scrollTop();
+					var viewBottom = viewTop + $window.height();
 
-					var elemTop = $(elem).offset().top;
-					var elemBottom = elemTop + $(elem).height();
+					var elemTop = $elem.offset().top;
+					var elemBottom = elemTop + $elem.height();
 					
 					return (!((elemTop < viewTop && elemBottom < viewTop) || (elemTop > viewBottom && elemBottom > viewBottom)));
 					
@@ -244,8 +249,8 @@
 		
 		if ($(settings.mask).length){
 
-			var staticMask = Boolean($this.data('seeThru').staticMask);
-			var alphaMask = Boolean($this.data('seeThru').alphaMask);
+			var staticMask = ($this.data('seeThru').staticMask === true);
+			var alphaMask = ($this.data('seeThru').alphaMask === true);
 
 			if (staticMask){
 				if ($(settings.mask)[0].tagName === 'IMG'){
