@@ -303,7 +303,7 @@
 				$this.show().unbind('.seeThru').removeData('seeThru').nextAll('.seeThru-buffer:first,.seeThru-display:first').remove();
 			}
 		});
-	} // end revert
+	}, // end revert
 	
 	play : function(){
 	
