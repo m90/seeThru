@@ -91,8 +91,8 @@
 				}
 			
 				/*generate canvas elements*/
-				var bufferCanvas = $('<canvas/>').hide().addClass('seeThru-buffer').attr({'width':dimensions.width,'height':dimensions.height * 2}); //buffer will ALWAYS be twice the height
-				var displayCanvas = $('<canvas/>').addClass('seeThru-display').attr({'width':dimensions.width,'height':dimensions.height});
+				var bufferCanvas = $('<canvas/>',{'class':'seeThru-buffer','width':dimensions.width,'height':dimensions.height * 2}).hide(); //buffer will ALWAYS be twice the height
+				var displayCanvas = $('<canvas/>',{'class':'seeThru-display','width':dimensions.width,'height':dimensions.height});
 				
 				var display = displayCanvas[0].getContext('2d');
 				var buffer = bufferCanvas[0].getContext('2d');
@@ -107,7 +107,7 @@
 					
 					if (alphaMask){ //alpha channel has to be converted into RGB
 					
-						var convertCanvas = $('<canvas/>').hide().attr({'width':dimensions.width,'height':dimensions.height});
+						var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
 						var convertCtx = convertCanvas[0].getContext('2d');
 						convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 						
@@ -131,7 +131,7 @@
 				var interval;
 				var refresh = 1 / settings.fps * 1000; //frame rate to ms-interval
 				
-				$this.hide().data('seeThru',{'staticMask':staticMask,'alphaMask':alphaMask,interval:interval}).after(bufferCanvas).after(displayCanvas);
+				$this.hide().data('seeThru',{'staticMask':staticMask,'alphaMask':alphaMask,interval:interval}).after(bufferCanvas,displayCanvas);
 
 				/* event handling - all events are .seeThru-namespaced */
 				$this.bind('play.seeThru', function() { //refresh canvas elements
@@ -254,14 +254,18 @@
 			if (staticMask){
 				if ($(settings.mask)[0].tagName === 'IMG'){
 
-					var dimensions = {width:$this.width(),height:$this.height()};
+					var dimensions = {
+					  width:$this.width(),
+					  height:$this.height()
+					};
+					
 					var maskObj = $(settings.mask)[0];
 					
 					var buffer = $this.nextAll('.seeThru-buffer')[0].getContext('2d');
 				
 					if (alphaMask){ //alpha channel has to be converted into RGB
 					
-						var convertCanvas = $('<canvas/>').hide().attr({'width':dimensions.width,'height':dimensions.height});
+						var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
 						var convertCtx = convertCanvas[0].getContext('2d');
 						convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 						
