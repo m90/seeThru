@@ -98,7 +98,7 @@
 				var buffer = bufferCanvas[0].getContext('2d');
 
 				/* ECHO MOUSEEVENTS ON CANVAS*/
-				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup dblclick contextmenu',function(e){
+				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove hover dblclick contextmenu',function(e){
 					$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
 				});
 				
@@ -207,7 +207,6 @@
 					
 					if (visible){ //only calculate new frames if element is visible or flagged for forceRendering
 					
-						buffer.clearRect(0, 0, dimensions.width, dimensions.height * divisor);
 						buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
 						var image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
 						
