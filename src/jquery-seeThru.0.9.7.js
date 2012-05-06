@@ -12,7 +12,7 @@
 
 	function convertAlphaMask(dimensions, maskObj){
 		
-		var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
+		var convertCanvas = $('<canvas/>').attr({'width':dimensions.width,'height':dimensions.height});
 		var convertCtx = convertCanvas[0].getContext('2d');
 		convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 		
@@ -123,23 +123,9 @@
 				if (staticMask){
 					
 					if (alphaMask){ //alpha channel has to be converted into RGB
-					
-						/*var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
-						var convertCtx = convertCanvas[0].getContext('2d');
-						convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
-						
-						var RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
-						
-						for (var i = 3, len = RGBA.data.length; i < len; i = i + 4){
-							RGBA.data[i-1] = RGBA.data[i-2] = RGBA.data[i-3] = RGBA.data[i]; //alpha into RGB
-							RGBA.data[i] = 255; //alpha is 100% opaque
-						}*/
 						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
-						
 					} else { //no conversion needed, draw image into buffer
-					
 						buffer.drawImage(maskObj, 0, dimensions.height, dimensions.width, dimensions.height);
-					
 					}
 					
 				}
@@ -279,24 +265,9 @@
 					var buffer = $this.nextAll('.seeThru-buffer')[0].getContext('2d');
 				
 					if (alphaMask){ //alpha channel has to be converted into RGB
-					
-						/*var convertCanvas = $('<canvas/>').attr({'width':dimensions.width,'height':dimensions.height}).hide();
-						var convertCtx = convertCanvas[0].getContext('2d');
-						convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
-						
-						var RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
-
-						for (var i = 3, len = RGBA.data.length; i < len; i = i + 4){
-							RGBA.data[i-1] = RGBA.data[i-2] = RGBA.data[i-3] = RGBA.data[i]; //alpha into RGB
-							RGBA.data[i] = 255; //alpha is 100% opaque
-						}*/
-						
 						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
-						
 					} else { //no conversion needed, draw image into buffer
-					
 						buffer.drawImage(maskObj, 0, dimensions.height, dimensions.width, dimensions.height);
-						
 					}
 					
 				} else {
