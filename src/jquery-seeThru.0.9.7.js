@@ -10,6 +10,23 @@
 
 (function($) {
 
+	function convertAlphaMask(dimensions, maskObj){
+		
+		var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
+		var convertCtx = convertCanvas[0].getContext('2d');
+		convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
+		
+		var RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
+		
+		for (var i = 3, len = RGBA.data.length; i < len; i = i + 4){
+			RGBA.data[i-1] = RGBA.data[i-2] = RGBA.data[i-3] = RGBA.data[i]; //alpha into RGB
+			RGBA.data[i] = 255; //alpha is 100% opaque
+		}
+		
+		return RGBA;
+		
+	}
+
 	var methods = {
 
 	init : function(options) {
@@ -18,14 +35,14 @@
 
 		/* OPTIONS */
 		var settings = $.extend({
-			fps: 25, //frame rate that the browser will render the video in - best results when the framerates (src and display) are matching
-			start: 'autoplay', //'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
-			end: 'loop', //'loop', 'rewind', 'stop' any other input will default to 'stop'
-			mask: '', //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
-			alphaMask: false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
-			width: '', //lets you specify a pixel value used as width -- overrides all other calculations
-			height: '', //lets you specify a pixel value used as height -- overrides all other calculations
-			forceRendering: false //set to true forceRendering will force the rendering of canvas elements that are not visible in the viewport
+		  fps: 25, //frame rate that the browser will render the video in - best results when the framerates (src and display) are matching
+		  start: 'autoplay', //'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
+		  end: 'loop', //'loop', 'rewind', 'stop' any other input will default to 'stop'
+		  mask: '', //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
+		  alphaMask: false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
+		  width: '', //lets you specify a pixel value used as width -- overrides all other calculations
+		  height: '', //lets you specify a pixel value used as height -- overrides all other calculations
+		  forceRendering: false //set to true forceRendering will force the rendering of canvas elements that are not visible in the viewport
 		}, options);
 
 		return this.each(function(){
@@ -98,7 +115,7 @@
 				var buffer = bufferCanvas[0].getContext('2d');
 
 				/* ECHO MOUSEEVENTS ON CANVAS*/
-				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove hover dblclick contextmenu',function(e){
+				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove hover dblclick contextmenu focus blur',function(e){
 					$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
 				});
 				
@@ -107,7 +124,7 @@
 					
 					if (alphaMask){ //alpha channel has to be converted into RGB
 					
-						var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
+						/*var convertCanvas = $('<canvas/>',{'width':dimensions.width,'height':dimensions.height}).hide();
 						var convertCtx = convertCanvas[0].getContext('2d');
 						convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 						
@@ -116,13 +133,13 @@
 						for (var i = 3, len = RGBA.data.length; i < len; i = i + 4){
 							RGBA.data[i-1] = RGBA.data[i-2] = RGBA.data[i-3] = RGBA.data[i]; //alpha into RGB
 							RGBA.data[i] = 255; //alpha is 100% opaque
-						}
-						buffer.putImageData(RGBA, 0, dimensions.height);
+						}*/
+						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
 						
 					} else { //no conversion needed, draw image into buffer
 					
 						buffer.drawImage(maskObj, 0, dimensions.height, dimensions.width, dimensions.height);
-						
+					
 					}
 					
 				}
@@ -153,7 +170,7 @@
 					});
 				} else if (settings.start === 'external'){
 					video.play();
-					video.pause();
+					video.pause(); // fake play to initialize playhead
 					$this.bind('timeupdate.seeThru',function(){
 						drawFrame();
 					});
@@ -188,7 +205,6 @@
 				
 				function inViewport(){
 				
-					//var $elem = $(elem);
 					var viewTop = $window.scrollTop();
 					var viewBottom = viewTop + $window.height();
 
@@ -264,7 +280,7 @@
 				
 					if (alphaMask){ //alpha channel has to be converted into RGB
 					
-						var convertCanvas = $('<canvas/>').attr({'width':dimensions.width,'height':dimensions.height}).hide();
+						/*var convertCanvas = $('<canvas/>').attr({'width':dimensions.width,'height':dimensions.height}).hide();
 						var convertCtx = convertCanvas[0].getContext('2d');
 						convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 						
@@ -273,8 +289,9 @@
 						for (var i = 3, len = RGBA.data.length; i < len; i = i + 4){
 							RGBA.data[i-1] = RGBA.data[i-2] = RGBA.data[i-3] = RGBA.data[i]; //alpha into RGB
 							RGBA.data[i] = 255; //alpha is 100% opaque
-						}
-						buffer.putImageData(RGBA, 0, dimensions.height);
+						}*/
+						
+						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
 						
 					} else { //no conversion needed, draw image into buffer
 					
