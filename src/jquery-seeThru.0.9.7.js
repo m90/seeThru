@@ -56,7 +56,7 @@
 			$(this).bind('loadedmetadata.seeThru',function(){
 			
 				var $this = $(this);
-				var video = $this[0];
+				var video = this;
 				var $window = $(window);
 				var divisor = staticMask ? 1 : 2; //static alpha data will not cut the image dimensions
 
@@ -148,14 +148,13 @@
 					video.play();
 					video.pause(); // fake play to initialize playhead
 					drawFrame();
-					$(displayCanvas).one('click.seeThru',function(){
+					displayCanvas.one('click.seeThru',function(){
 						video.play();
 					});
 				} else if (settings.start === 'external'){
 					video.play();
 					video.pause();
-					//drawFrame();
-					$(video).bind('timeupdate.seeThru',function(){
+					$this.bind('timeupdate.seeThru',function(){
 						drawFrame();
 					});
 				} else {
@@ -163,38 +162,38 @@
 				}
 
 				if (settings.end === 'loop') {
-					$(video).bind('ended.seeThru',function(){
+					$this.bind('ended.seeThru',function(){
 						video.play();
 					});
 				} else if (settings.end === 'rewind'){
-					$(video).bind('ended.seeThru',function(){
+					$this.bind('ended.seeThru',function(){
 					video.pause();
 					video.currentTime = 0;
 					if (settings.start == 'clicktoplay'){
-						$(displayCanvas).one('click.seeThru',function(){
+						displayCanvas.one('click.seeThru',function(){
 							video.play();
 						});
 					}
 					});
 				} else {
-					$(video).bind('ended.seeThru',function(){
+					$this.bind('ended.seeThru',function(){
 					video.pause();
 					if (settings.start == 'clicktoplay'){
-						$(displayCanvas).one('click.seeThru',function(){
+						displayCanvas.one('click.seeThru',function(){
 							video.play();
 						});
 					}
 					});
 				}
 				
-				function inViewport(elem){
+				function inViewport(){
 				
-					var $elem = $(elem);
+					//var $elem = $(elem);
 					var viewTop = $window.scrollTop();
 					var viewBottom = viewTop + $window.height();
 
-					var elemTop = $elem.offset().top;
-					var elemBottom = elemTop + $elem.height();
+					var elemTop = displayCanvas.offset().top;
+					var elemBottom = elemTop + displayCanvas.height();
 					
 					return (!((elemTop < viewTop && elemBottom < viewTop) || (elemTop > viewBottom && elemBottom > viewBottom)));
 					
@@ -203,7 +202,7 @@
 				/* draw buffer info into display canvas*/
 				function drawFrame() {
 					
-					var visible = forceRendering ? true : inViewport(displayCanvas); //no need to check visibility if forceRendering is true
+					var visible = forceRendering ? true : inViewport(); //no need to check visibility if forceRendering is true
 					
 					if (visible){ //only calculate new frames if element is visible or flagged for forceRendering
 					
