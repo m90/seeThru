@@ -115,7 +115,7 @@
 				var buffer = bufferCanvas[0].getContext('2d');
 
 				/* ECHO MOUSEEVENTS ON CANVAS*/
-				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove hover dblclick contextmenu focus blur',function(e){
+				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur',function(e){ //see: http://www.w3.org/TR/DOM-Level-3-Events/#events-mouseevents
 					$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
 				});
 				
