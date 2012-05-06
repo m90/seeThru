@@ -89,7 +89,7 @@ $('#myVideo').seeThru('revert').addClass('plainOldVideo');
 ```
 or
 ```javascript
-/* pauses video and binds click handler to resume playback to canvas representation */
+/* pauses video and binds click handler to resume playback */
 $('#myVideo').seeThru('pause').one('click',function(){
    $(this).seeThru('play');
 });

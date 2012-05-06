@@ -12,8 +12,7 @@
 
 	function convertAlphaMask(dimensions, maskObj){
 		
-		var convertCanvas = $('<canvas/>').attr({'width':dimensions.width,'height':dimensions.height});
-		var convertCtx = convertCanvas[0].getContext('2d');
+		var convertCtx = $('<canvas/>').attr({'width':dimensions.width,'height':dimensions.height}).get(0).getContext('2d');
 		convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 		
 		var RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
@@ -114,7 +113,7 @@
 				var display = displayCanvas[0].getContext('2d');
 				var buffer = bufferCanvas[0].getContext('2d');
 
-				/* ECHO MOUSEEVENTS ON CANVAS*/
+				/*echo mouse events*/
 				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur',function(e){ //see: http://www.w3.org/TR/DOM-Level-3-Events/#events-mouseevents
 					$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
 				});
@@ -136,7 +135,7 @@
 				
 				$this.hide().data('seeThru',{'staticMask':staticMask,'alphaMask':alphaMask,interval:interval}).after(bufferCanvas,displayCanvas);
 
-				/* event handling - all events are .seeThru-namespaced */
+				/*event handling - all events are .seeThru-namespaced*/
 				$this.bind('play.seeThru', function() { //refresh canvas elements
 					clearInterval(interval);
 					interval = setInterval(drawFrame, refresh);
@@ -201,7 +200,7 @@
 					
 				}
 
-				/* draw buffer info into display canvas*/
+				/*draw buffer info into display canvas*/
 				function drawFrame() {
 					
 					var visible = forceRendering ? true : inViewport(); //no need to check visibility if forceRendering is true
@@ -249,8 +248,8 @@
 		
 		if ($(settings.mask).length){
 
-			var staticMask = ($this.data('seeThru').staticMask === true);
-			var alphaMask = ($this.data('seeThru').alphaMask === true);
+			var staticMask = $this.data('seeThru').staticMask;
+			var alphaMask = $this.data('seeThru').alphaMask;
 
 			if (staticMask){
 				if ($(settings.mask)[0].tagName === 'IMG'){
