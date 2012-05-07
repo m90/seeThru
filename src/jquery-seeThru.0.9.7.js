@@ -102,10 +102,6 @@
 				
 				}
 				
-				if (staticMask){
-					$(maskObj).attr({width:dimensions.width,height:dimensions.height}); //adjust image dimensions to video dimensions
-				}
-			
 				/*generate canvas elements*/
 				var bufferCanvas = $('<canvas/>',{'class':'seeThru-buffer'}).attr({'width':dimensions.width,'height':dimensions.height * 2}).hide(); //buffer will ALWAYS be twice the height
 				var displayCanvas = $('<canvas/>',{'class':'seeThru-display'}).attr({'width':dimensions.width,'height':dimensions.height});
@@ -120,6 +116,9 @@
 				
 				/*draw static mask if needed*/
 				if (staticMask){
+				
+					maskObj.width = dimensions.width;
+					maskObj.height = dimensions.height; //adjust image dimensions to video dimensions
 					
 					if (alphaMask){ //alpha channel has to be converted into RGB
 						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
