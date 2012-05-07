@@ -106,6 +106,16 @@ If you do not want to use jQuery, but still think transparent video is nice, her
 ##Cross Domain issues with canvas-elements##
 Please note that canvas is very picky about where it gets its contents from, so be aware that the video source file has to be hosted on the same domain.
 
+##Binding mouse events to your video##
+To mimic a behavior as if the original video was still visible it will echo all mouse events fired by the canvas representation. This means that you can still do sth like:
+```javascript
+$('#myVideo').seeThru(); // the <video> is hidden
+$('#myVideo').click(function(){ //this is still working as a click on the `.seeThru-display`-<canvas> will be echoed by the video
+   alert('But I thought I was hidden?');
+});
+```
+The events that are echoed are: `mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur`
+
 ##Mobile devices##
 As most mobile devices use external video players to handle HTML5-video this plugin is *not* working on mobile Safari or Webkit (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
 Apparently Android 3.1+ will play `<video>` inline, but I do not have any experience regarding using it as a canvas source yet.
