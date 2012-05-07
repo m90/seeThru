@@ -43,7 +43,7 @@ $(document).ready(function(){
 });
 ```
 
-If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display:none;` in your CSS.<br/>In case you want to style the generated canvas elements, the generated markup looks like this:
+If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display:none;` in your CSS.<br/>In case you want to style the generated canvas elements, the generated markup (you don't have to add this portion - the plugin does this) looks like this:
 ```html
 <video style="display:none;">...</video><!-- video is hidden -->
 <canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
