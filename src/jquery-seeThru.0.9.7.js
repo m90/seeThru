@@ -1,4 +1,4 @@
-/* jQuery seeThru 0.9.7 WIP - transparent HTML5 video - written by Frederik Ring (frederik.ring@gmail.com) */
+/* jQuery seeThru 0.9.7 - transparent HTML5 video - written by Frederik Ring (frederik.ring@gmail.com) */
 /* based on http://jakearchibald.com/scratch/alphavid/ by Jake Archibald (jaffathecake@gmail.com) */
 
 /* Copyright (c) 2012 Frederik Ring */
@@ -168,22 +168,22 @@
 					});
 				} else if (settings.end === 'rewind'){
 					$this.bind('ended.seeThru',function(){
-					video.pause();
-					video.currentTime = 0;
-					if (settings.start == 'clicktoplay'){
-						displayCanvas.one('click.seeThru',function(){
-							video.play();
-						});
+						video.pause();
+						video.currentTime = 0;
+						if (settings.start == 'clicktoplay'){
+							displayCanvas.one('click.seeThru',function(){
+								video.play();
+							});
 					}
 					});
 				} else {
 					$this.bind('ended.seeThru',function(){
-					video.pause();
-					if (settings.start == 'clicktoplay'){
-						displayCanvas.one('click.seeThru',function(){
-							video.play();
-						});
-					}
+						video.pause();
+						if (settings.start == 'clicktoplay'){
+							displayCanvas.one('click.seeThru',function(){
+								video.play();
+							});
+						}
 					});
 				}
 				
@@ -325,7 +325,7 @@
 			}
 		});
 	
-	}//end rewind
+	} //end rewind
 	
 	}; //end methods-object
 	
