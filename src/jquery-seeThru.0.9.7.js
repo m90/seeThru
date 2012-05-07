@@ -259,6 +259,8 @@
 					};
 					
 					var maskObj = $(settings.mask)[0];
+					maskObj.width = dimensions.width;
+					maskObj.height = dimensions.height;
 					
 					var buffer = $this.nextAll('.seeThru-buffer')[0].getContext('2d');
 				
