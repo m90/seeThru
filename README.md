@@ -104,7 +104,7 @@ $('#myVideo').seeThru('pause').one('click',function(){
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
 ##Cross Domain issues with canvas-elements##
-Please note that canvas is very picky about where it gets its contents from, so be aware that the video source file has to be hosted on the same domain.
+Please note that canvas is very picky about where it gets its contents from, so be aware that the video source file has to be hosted on the same domain (i.e. if your `index.html` is coming from `www.example.net` the video files have to be coming from `www.example.net` as well).
 
 ##Binding mouse events to your video##
 To mimic a behavior as if the original video was still visible it will echo all mouse events fired by the canvas representation. This means that you can still do sth like:
