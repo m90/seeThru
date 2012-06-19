@@ -106,6 +106,9 @@ $('#myVideo').seeThru('pause').one('click',function(){
 ##Too much jQuery?##
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
+##What about `requestAnimationFrame`?##
+Although the **[requestAnimationFrame-API][18]** seems to be a great idea worth pushing, I am not too sure if this is of any help here (it will always aim for a 60fps frame rate which is *way* too high for 99% of all videos). Yet, I have built a **[branch][19]** that uses this API for testing purposes, outcome unknown. In case someone reading this has any input or experience regarding this I'd be happy to hear from you!
+
 ##Cross Domain issues with canvas-elements##
 Please note that canvas is very picky about where it gets its contents from, so be aware that the video source file has to be hosted on the same domain (i.e. if your `index.html` is coming from `www.example.net` the video files have to be coming from `www.example.net` as well).
 
@@ -170,3 +173,5 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [15]:http://en.wikipedia.org/wiki/Alpha_compositing
 [16]:http://www.redgiantsoftware.com/products/all/knoll-unmult-free
 [17]:https://github.com/m90/jquery-seeThru/zipball/master
+[18]:http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+[19]:https://github.com/m90/jquery-seeThru/tree/wip
