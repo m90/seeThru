@@ -2,6 +2,9 @@
 
 This jQuery plugin adds support for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original data will simply be re-rendered into a canvas-element, therefore adding support for alpha information that can either be included in the source file for the video element or in a seperate `<img>`-element.
 
+##Direct Download##
+Click **[here][17]** to download the current version.
+
 ##Video setup##
 In default configuration the plugin assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being fully opaque and black being fully transparent (colored information will be used based on its overall luminance).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
 For a basic introduction of how to encode and embed video for HTML5 pages see the great **[Dive into HTML5][14]**
@@ -166,3 +169,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [14]:http://www.diveintohtml5.info/video.html
 [15]:http://en.wikipedia.org/wiki/Alpha_compositing
 [16]:http://www.redgiantsoftware.com/products/all/knoll-unmult-free
+[17]:https://github.com/m90/jquery-seeThru/zipball/master
