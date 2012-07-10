@@ -145,7 +145,7 @@ Apparently Android 3.1+ will play `<video>` inline, but I do not have any experi
 
 ##Browser support##
 Tested on Chrome, Firefox, Safari, Opera 11 and IE 9.0+ 
-(the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[<canvas>][24]** and **[<video>][25]**<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
+(the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
 
 ##Preparing video sources in Adobe After Effects##
 Put your animation with alpha in a composition:
