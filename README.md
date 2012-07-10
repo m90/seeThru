@@ -186,7 +186,7 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [18]:http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 [19]:https://github.com/m90/jquery-seeThru/tree/wip
 [20]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
-[21]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
-[22]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
-[23]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
+[21]:http://www.frederikring.com/seeThru/img/seeThru_AE_02.jpg
+[22]:http://www.frederikring.com/seeThru/img/seeThru_AE_03.jpg
+[23]:http://www.frederikring.com/seeThru/img/seeThru_AE_04.jpg
 
