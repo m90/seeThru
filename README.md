@@ -135,7 +135,7 @@ Put your animation with alpha in a composition:
 ![After Effects walkthru 1][20]<br/>
 Double the composition's height:
 ![After Effects walkthru 2][21]<br/>
-Duplicate your footage and use the second instance as Alpha Track Matte for a white solid:
+Duplicate your footage layer, align them, and use the second instance as Alpha Track Matte for a white solid:
 ![After Effects walkthru 3][22]<br/>
 Make sure you are using an unmultiplied (straight) version of your color source:
 ![After Effects walkthru 4][23]<br/>
