@@ -130,6 +130,16 @@ Apparently Android 3.1+ will play `<video>` inline, but I do not have any experi
 Tested on Chrome, Firefox, Safari, Opera 11 and IE 9.0+ 
 (the browser has to support `<video>` and `<canvas>` of course)<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
 
+##Preparing video sources in Adobe After Effects##
+Put your animation with alpha in a composition:
+![After Effects walkthru 1][20]<br/>
+Double the composition's height:
+![After Effects walkthru 2][21]<br/>
+Duplicate your footage and use the second instance as Alpha Track Matte for a white solid:
+![After Effects walkthru 3][22]<br/>
+Make sure you are using an unmultiplied (straight) version of your color source:
+![After Effects walkthru 4][23]<br/>
+
 ##tl;dr##
 Put a black-and white alpha channel right underneath your `<video>` source (in the same file), load jQuery and let the plugin do magical things:
 <code>
@@ -175,3 +185,8 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [17]:https://github.com/m90/jquery-seeThru/zipball/master
 [18]:http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 [19]:https://github.com/m90/jquery-seeThru/tree/wip
+[20]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
+[21]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
+[22]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
+[23]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
+
