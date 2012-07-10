@@ -7,7 +7,20 @@ Click **[here][17]** to download the current version.
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
-
+ - <a href="#static-mask">Static Mask</a>
+ - <a href="#basic-plugin-usage">Basic Plugin Usage</a>
+ - <a href="#options">Options</a>
+ - <a href="#additional-methods">Additional methods</a>
+ - <a href="#examples">Examples</a>
+ - <a href="#too-much-jquery">Too much jQuery?</a>
+ - <a href="#what-about-requestanimationframe">What about `requestAnimationFrame`?</a>
+ - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
+ - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
+ - <a href="#browser-support">Browser support</a>
+ - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
+ - <a href="#tldr">tl;dr</a>
+ - <a href="#changelog">Changelog</a>
+ - <a href="#licensing">Licensing</a>
 
 ##Video setup##
 In default configuration the plugin assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being fully opaque and black being fully transparent (colored information will be used based on its overall luminance).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
@@ -132,7 +145,7 @@ Apparently Android 3.1+ will play `<video>` inline, but I do not have any experi
 
 ##Browser support##
 Tested on Chrome, Firefox, Safari, Opera 11 and IE 9.0+ 
-(the browser has to support `<video>` and `<canvas>` of course)<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
+(the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[<canvas>][24]** and **[<video>][25]**<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
 
 ##Preparing video sources in Adobe After Effects##
 Put your animation with alpha in a composition:
@@ -193,4 +206,6 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [21]:http://www.frederikring.com/seeThru/img/seeThru_AE_02.jpg
 [22]:http://www.frederikring.com/seeThru/img/seeThru_AE_03.jpg
 [23]:http://www.frederikring.com/seeThru/img/seeThru_AE_04.jpg
+[24]:http://caniuse.com/#feat=canvas
+[25]:http://caniuse.com/#feat=video
 
