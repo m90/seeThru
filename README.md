@@ -7,7 +7,6 @@ Click **[here][17]** to download the current version.
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
- - <a href="#static-mask">Static Mask</a>
  - <a href="#basic-plugin-usage">Basic Plugin Usage</a>
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
@@ -32,9 +31,8 @@ Note the jagged edges in the color channel(s) due to un-premultiplying:<br/>
 put over a greenish/blueish background results in<br/>
 ![Example image][6]<br/>
 **[Live Demo][1]**
-
-##Static Mask##
-It is also possible to source the alpha information from an `<img>`-element. The plugin lets you use either the luminance information of the RGB channels (i.e. the image) or the image's alpha channel (see options for how to choose). In case the image does not fit your video's dimensions it will be stretched to those.<br/>
+###Static Mask###
+It is also possible to source the alpha information from an `<img>`-element not incorporated into the video. The plugin lets you use either the luminance information of the RGB channels (i.e. the image) or the image's alpha channel (see options for how to choose). In case the image does not fit your video's dimensions it will be stretched to those.<br/>
 **[Live Demo][2]**
 
 ##Basic plugin usage##
