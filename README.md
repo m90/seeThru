@@ -139,7 +139,7 @@ $('#myVideo').click(function(){ //this is still working as a click on the `.seeT
 The events that are echoed are: `mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur`
 
 ##Mobile devices##
-As most mobile devices use external video players to handle HTML5-video this plugin is **not working on mobile Safari or Webkit** (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
+As most mobile devices use external video players to handle HTML5-video this plugin is **not working on mobile Webkit** (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
 Apparently Android 3.1+ will play `<video>` inline, but I do not have any experience regarding using it as a canvas source yet.
 
 ##Browser support##
