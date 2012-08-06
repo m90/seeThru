@@ -122,7 +122,7 @@ $('#myVideo').seeThru('pause').one('click',function(){
 ##Too much jQuery?##
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
-##What about `requestAnimationFrame` hotness?##
+##What about `requestAnimationFrame`?##
 Although the **[requestAnimationFrame-API][18]** seems to be a great idea worth pushing, I am not too sure if this is of any help here (it will always aim for a 60fps frame rate which is *way* too high for 99% of all videos). Yet, I have built a **[branch][19]** that uses this API for testing purposes, outcome unknown (testing very welcome). In case someone reading this has any input or experience regarding this I'd be happy to hear from you!
 
 ##Cross Domain issues with canvas-elements##
