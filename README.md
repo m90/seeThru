@@ -161,7 +161,7 @@ Put a black-and white alpha channel right underneath your `<video>` source (in t
 <code>
 $('#myRadVideoNeedsTransparencies').seeThru();
 </code><br>
-Voila! Here's an [example][1].
+Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
    * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
