@@ -101,17 +101,17 @@ var methods = {
 					
 					if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not set
 					
-						if (!video.width && !video.height){ //<video> has no width- or height-attribute -> source dimensions from video source meta
+						if (!$this.attr(width) && !$this.attr(height)){ //<video> has no width- or height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || video.videoWidth;
 							dimensions.height = dimensions.height || video.videoHeight / divisor;
 					
-						} else if (!video.height){ //<video> has no height-attribute -> source dimensions from video source meta
+						} else if (!$this.attr('height'){ //<video> has no height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || ~~video.width;
 							dimensions.height = dimensions.height || ~~video.width / (video.videoWidth / Math.floor(video.videoHeight / divisor));
 					
-						} else if (!video.width){ //<video> has no height-attribute -> source dimensions from video source meta
+						} else if (!$this.attr('width')){ //<video> has no height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || ~~video.height * (video.videoWidth / Math.floor(video.videoHeight / divisor));
 							dimensions.height = dimensions.height || ~~video.height;
