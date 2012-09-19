@@ -69,7 +69,7 @@
 		
 		if (this.tagName === 'VIDEO'){ //no <video>: no magic!
 
-			$(this).bind('loadedmetadata.seeThru',function(){
+			$(this).bind('loadedmetadata.seeThru', function(){
 			
 				var $this = $(this);
 				var video = this;
@@ -78,8 +78,8 @@
 
 				/* calculate dimensions */
 				var dimensions = {
-				  width: parseInt(settings.width,10),
-				  height: parseInt(settings.height,10)
+				  width: parseInt(settings.width, 10),
+				  height: parseInt(settings.height, 10)
 				};
 				
 				if (!dimensions.height || !dimensions.width){
@@ -89,28 +89,28 @@
 						dimensions.height = dimensions.height || video.videoHeight / divisor;
 					} else if (!$this.attr('height')){
 						var ratio = video.videoWidth / Math.floor(video.videoHeight / divisor);
-						dimensions.width = dimensions.width || parseInt($this.attr('width'),10);
-						dimensions.height = dimensions.height || parseInt($this.attr('width') / ratio,10);
+						dimensions.width = dimensions.width || parseInt($this.attr('width'), 10);
+						dimensions.height = dimensions.height || parseInt($this.attr('width') / ratio, 10);
 					} else if (!$this.attr('width')){
 						var ratio = video.videoWidth / Math.floor(video.videoHeight / divisor);
-						dimensions.width = dimensions.width || parseInt($this.attr('height'),10) * ratio;
-						dimensions.height = dimensions.height || parseInt($this.attr('height'),10);
+						dimensions.width = dimensions.width || parseInt($this.attr('height'), 10) * ratio;
+						dimensions.height = dimensions.height || parseInt($this.attr('height'), 10);
 					} else {
-						dimensions.width = dimensions.width || parseInt($this.attr('width'),10);
-						dimensions.height = dimensions.height || parseInt($this.attr('height'),10) / divisor;
+						dimensions.width = dimensions.width || parseInt($this.attr('width'), 10);
+						dimensions.height = dimensions.height || parseInt($this.attr('height'), 10) / divisor;
 					}
 				
 				}
 				
 				/*generate canvas elements*/
-				var bufferCanvas = $('<canvas/>',{'class':'seeThru-buffer'}).attr({'width':dimensions.width,'height':dimensions.height * 2}).hide(); //buffer will ALWAYS be twice the height
-				var displayCanvas = $('<canvas/>',{'class':'seeThru-display'}).attr({'width':dimensions.width,'height':dimensions.height});
+				var bufferCanvas = $('<canvas/>',{'class' : 'seeThru-buffer'}).attr({'width':dimensions.width, 'height' : dimensions.height * 2}).hide(); //buffer will ALWAYS be twice the height
+				var displayCanvas = $('<canvas/>',{'class' : 'seeThru-display'}).attr({'width':dimensions.width, 'height' : dimensions.height});
 				
 				var display = displayCanvas[0].getContext('2d');
 				var buffer = bufferCanvas[0].getContext('2d');
 
 				/*echo mouse events*/
-				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur',function(e){ //see: http://www.w3.org/TR/DOM-Level-3-Events/#events-mouseevents
+				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur', function(e){ //see: http://www.w3.org/TR/DOM-Level-3-Events/#events-mouseevents
 					$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
 				});
 				
@@ -132,7 +132,7 @@
 				var interval;
 				var refresh = 1 / settings.fps * 1000; //frame rate to ms-interval
 				
-				$this.hide().data('seeThru',{'staticMask':staticMask,'alphaMask':alphaMask,interval:interval}).after(bufferCanvas,displayCanvas);
+				$this.hide().data('seeThru', {'staticMask' : staticMask, 'alphaMask' : alphaMask, interval : interval}).after(bufferCanvas, displayCanvas);
 
 				/*event handling - all events are .seeThru-namespaced*/
 				$this.bind('play.seeThru', function() { //refresh canvas elements
@@ -149,13 +149,13 @@
 					video.play();
 					video.pause(); // fake play to initialize playhead
 					drawFrame();
-					displayCanvas.one('click.seeThru',function(){
+					displayCanvas.one('click.seeThru', function(){
 						video.play();
 					});
 				} else if (settings.start === 'external'){
 					video.play();
 					video.pause(); // fake play to initialize playhead
-					$this.bind('timeupdate.seeThru',function(){
+					$this.bind('timeupdate.seeThru', function(){
 						drawFrame();
 					});
 				} else {
@@ -163,31 +163,31 @@
 				}
 
 				if (settings.end === 'loop') {
-					$this.bind('ended.seeThru',function(){
+					$this.bind('ended.seeThru', function(){
 						video.play();
 					});
 				} else if (settings.end === 'rewind'){
-					$this.bind('ended.seeThru',function(){
+					$this.bind('ended.seeThru', function(){
 						video.pause();
 						video.currentTime = 0;
 						if (settings.start == 'clicktoplay'){
-							displayCanvas.one('click.seeThru',function(){
+							displayCanvas.one('click.seeThru', function(){
 								video.play();
 							});
 					}
 					});
 				} else {
-					$this.bind('ended.seeThru',function(){
+					$this.bind('ended.seeThru', function(){
 						video.pause();
 						if (settings.start == 'clicktoplay'){
-							displayCanvas.one('click.seeThru',function(){
+							displayCanvas.one('click.seeThru', function(){
 								video.play();
 							});
 						}
 					});
 				}
 				
-				function inViewport(){
+				function inViewport(){ //find out if displayCanvas is inside viewport -> if not we can stop the rendering
 				
 					var viewTop = $window.scrollTop();
 					var viewBottom = viewTop + $window.height();
@@ -254,8 +254,8 @@
 				if ($(settings.mask)[0].tagName === 'IMG'){
 
 					var dimensions = {
-					  width:$this.width(),
-					  height:$this.height()
+					  width : $this.width(),
+					  height : $this.height()
 					};
 					
 					var maskObj = $(settings.mask)[0];
@@ -290,8 +290,8 @@
 			var $this = $(this);
 		
 			if ($this.data('seeThru')){
-				clearInterval($this.data('seeThru').interval);
-				$this.show().unbind('.seeThru').removeData('seeThru').nextAll('.seeThru-buffer:first,.seeThru-display:first').remove();
+				clearInterval($this.data('seeThru').interval); //clear interval
+				$this.show().unbind('.seeThru').removeData('seeThru').nextAll('.seeThru-buffer:first, .seeThru-display:first').remove(); //remove all traces in the DOM
 			}
 		});
 	}, // end revert
