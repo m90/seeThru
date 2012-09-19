@@ -96,7 +96,7 @@
 					} else if (!$this.attr('width')){
 						var ratio = video.videoWidth / Math.floor(video.videoHeight / divisor);
 						dimensions.width = dimensions.width || ~~$this.attr('height') * ratio;
-						dimensions.height = dimensions.height || ~~$this.attr('height'), 10);
+						dimensions.height = dimensions.height || ~~$this.attr('height'), 10;
 					} else {
 						dimensions.width = dimensions.width || ~~$this.attr('width');
 						dimensions.height = dimensions.height || ~~$this.attr('height') / divisor;
