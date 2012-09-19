@@ -113,7 +113,7 @@ var methods = {
 					
 						} else if (!video.width){
 					
-							dimensions.width = dimensions.width || ~~video.width * (video.videoWidth / Math.floor(video.videoHeight / divisor));
+							dimensions.width = dimensions.width || ~~video.height * (video.videoWidth / Math.floor(video.videoHeight / divisor));
 							dimensions.height = dimensions.height || ~~video.height;
 					
 						} else {
