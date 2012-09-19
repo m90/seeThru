@@ -50,10 +50,11 @@
 			$.error('seeThru already initialized on selected element');
 		}
 
-		var staticMask = false;
-		var alphaMask = (settings.alphaMask === true);
-		var forceRendering = (settings.forceRendering === true);
-		var maskObj;
+		var
+		staticMask = false,
+		alphaMask = (settings.alphaMask === true),
+		forceRendering = (settings.forceRendering === true),
+		maskObj;
 
 		if ($(settings.mask).length){
 		
@@ -71,15 +72,16 @@
 
 			$(this).bind('loadedmetadata.seeThru', function(){
 			
-				var $this = $(this);
-				var video = this;
-				var $window = $(window);
-				var divisor = staticMask ? 1 : 2; //static alpha data will not cut the image dimensions
+				var
+				$this = $(this),
+				video = this,
+				$window = $(window),
+				divisor = staticMask ? 1 : 2; //static alpha data will not cut the image dimensions
 
 				/* calculate dimensions */
 				var dimensions = {
-				  width: parseInt(settings.width, 10),
-				  height: parseInt(settings.height, 10)
+				  width: ~~settings.width,
+				  height: ~~settings.height
 				};
 				
 				if (!dimensions.height || !dimensions.width){
@@ -89,25 +91,25 @@
 						dimensions.height = dimensions.height || video.videoHeight / divisor;
 					} else if (!$this.attr('height')){
 						var ratio = video.videoWidth / Math.floor(video.videoHeight / divisor);
-						dimensions.width = dimensions.width || parseInt($this.attr('width'), 10);
-						dimensions.height = dimensions.height || parseInt($this.attr('width') / ratio, 10);
+						dimensions.width = dimensions.width || ~~$this.attr('width');
+						dimensions.height = dimensions.height || ~~$this.attr('width');
 					} else if (!$this.attr('width')){
 						var ratio = video.videoWidth / Math.floor(video.videoHeight / divisor);
-						dimensions.width = dimensions.width || parseInt($this.attr('height'), 10) * ratio;
-						dimensions.height = dimensions.height || parseInt($this.attr('height'), 10);
+						dimensions.width = dimensions.width || ~~$this.attr('height') * ratio;
+						dimensions.height = dimensions.height || ~~$this.attr('height'), 10);
 					} else {
-						dimensions.width = dimensions.width || parseInt($this.attr('width'), 10);
-						dimensions.height = dimensions.height || parseInt($this.attr('height'), 10) / divisor;
+						dimensions.width = dimensions.width || ~~$this.attr('width');
+						dimensions.height = dimensions.height || ~~$this.attr('height') / divisor;
 					}
 				
 				}
 				
-				/*generate canvas elements*/
-				var bufferCanvas = $('<canvas/>',{'class' : 'seeThru-buffer'}).attr({'width':dimensions.width, 'height' : dimensions.height * 2}).hide(); //buffer will ALWAYS be twice the height
-				var displayCanvas = $('<canvas/>',{'class' : 'seeThru-display'}).attr({'width':dimensions.width, 'height' : dimensions.height});
-				
-				var display = displayCanvas[0].getContext('2d');
-				var buffer = bufferCanvas[0].getContext('2d');
+				/* generate canvas elements and get their contexts */
+				var
+				bufferCanvas = $('<canvas/>',{'class' : 'seeThru-buffer'}).attr({'width':dimensions.width, 'height' : dimensions.height * 2}).hide(), //buffer will ALWAYS be twice the height
+				displayCanvas = $('<canvas/>',{'class' : 'seeThru-display'}).attr({'width':dimensions.width, 'height' : dimensions.height}),
+				display = displayCanvas[0].getContext('2d'),
+				buffer = bufferCanvas[0].getContext('2d');
 
 				/*echo mouse events*/
 				displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur', function(e){ //see: http://www.w3.org/TR/DOM-Level-3-Events/#events-mouseevents
@@ -129,8 +131,9 @@
 				}
 
 				/*hide video and append canvas elements - DOM manipulation done*/
-				var interval;
-				var refresh = 1 / settings.fps * 1000; //frame rate to ms-interval
+				var
+				interval,
+				refresh = 1 / settings.fps * 1000; //frame rate to ms-interval
 				
 				$this.hide().data('seeThru', {'staticMask' : staticMask, 'alphaMask' : alphaMask, interval : interval}).after(bufferCanvas, displayCanvas);
 
@@ -189,11 +192,11 @@
 				
 				function inViewport(){ //find out if displayCanvas is inside viewport -> if not we can stop the rendering
 				
-					var viewTop = $window.scrollTop();
-					var viewBottom = viewTop + $window.height();
-
-					var elemTop = displayCanvas.offset().top;
-					var elemBottom = elemTop + displayCanvas.height();
+					var
+					viewTop = $window.scrollTop(),
+					viewBottom = viewTop + $window.height(),
+					elemTop = displayCanvas.offset().top,
+					elemBottom = elemTop + displayCanvas.height();
 					
 					return (!((elemTop < viewTop && elemBottom < viewTop) || (elemTop > viewBottom && elemBottom > viewBottom)));
 					
@@ -207,9 +210,10 @@
 					if (visible){ //only calculate new frames if element is visible or flagged for forceRendering
 					
 						buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
-						var image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
 						
-						var alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
+						var
+						image = buffer.getImageData(0, 0, dimensions.width, dimensions.height),
+						alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
 
 						for (var i = 3, len = image.data.length; i < len; i = i + 4) {
 							image.data[i] = Math.floor((alphaData[i - 1] + alphaData[i - 2] + alphaData[i - 3]) / 3); //calculate luminance from buffer part
@@ -247,8 +251,9 @@
 		
 		if ($(settings.mask).length){
 
-			var staticMask = $this.data('seeThru').staticMask;
-			var alphaMask = $this.data('seeThru').alphaMask;
+			var
+			staticMask = $this.data('seeThru').staticMask,
+			alphaMask = $this.data('seeThru').alphaMask;
 
 			if (staticMask){
 				if ($(settings.mask)[0].tagName === 'IMG'){
