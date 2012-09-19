@@ -101,25 +101,25 @@ var methods = {
 					
 					if (!dimensions.height || !dimensions.width){
 					
-						if (!$this.attr('width') && !$this.attr('height')){
+						if (!video.width && !video.height){
 					
 							dimensions.width = dimensions.width || video.videoWidth;
 							dimensions.height = dimensions.height || video.videoHeight / divisor;
 					
-						} else if (!$this.attr('height')){
+						} else if (!video.height){
 					
-							dimensions.width = dimensions.width || ~~$this.attr('width');
-							dimensions.height = dimensions.height || ~~$this.attr('width') / (video.videoWidth / Math.floor(video.videoHeight / divisor));
+							dimensions.width = dimensions.width || ~~video.width;
+							dimensions.height = dimensions.height || ~~video.width / (video.videoWidth / Math.floor(video.videoHeight / divisor));
 					
-						} else if (!$this.attr('width')){
+						} else if (!video.width){
 					
-							dimensions.width = dimensions.width || ~~$this.attr('height') * (video.videoWidth / Math.floor(video.videoHeight / divisor));
-							dimensions.height = dimensions.height || ~~$this.attr('height');
+							dimensions.width = dimensions.width || ~~video.width * (video.videoWidth / Math.floor(video.videoHeight / divisor));
+							dimensions.height = dimensions.height || ~~video.height;
 					
 						} else {
 					
-							dimensions.width = dimensions.width || ~~$this.attr('width');
-							dimensions.height = dimensions.height || ~~$this.attr('height') / divisor;
+							dimensions.width = dimensions.width || ~~video.width;
+							dimensions.height = dimensions.height || ~~video.height / divisor;
 					
 						}
 					
