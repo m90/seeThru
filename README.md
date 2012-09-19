@@ -66,7 +66,7 @@ If you specify dimension-attributes in your markup they will be considered, in c
 ```html
 <video style="display:none;">...</video><!-- video is hidden -->
 <canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
-<canvas height="XXX" width="XXX" class="seeThru-buffer" style="display:none;"></canvas><!-- this is just a helper element -->
+<canvas height="XXX" width="XXX" class="seeThru-buffer" style="display: none;"></canvas><!-- this is just a helper element -->
 ```
 ##Options##
 There are a few options you can pass when calling the plugin:
@@ -83,11 +83,11 @@ There are a few options you can pass when calling the plugin:
 
 This might look like this:
 ```javascript
-$('#myVideo').seeThru({fps:12,start:'autoplay',end:'stop'});
+$('#myVideo').seeThru({fps : 12 , start : 'autoplay' , end : 'stop'});
 ```
 or
 ```javascript
-$('#myVideo').seeThru({mask:'#imageWithAlpha',alphaMask: true});
+$('#myVideo').seeThru({mask : '#imageWithAlpha', alphaMask: true});
 ```
 ##Additional methods##
 Apart from `init`, these methods are available:
@@ -99,7 +99,7 @@ Apart from `init`, these methods are available:
 This might look like:
 ```javascript
 /* sets mask to element with id "newMask" */
-$('#myVideo').seeThru('updateMask',{mask:'#newMask'});
+$('#myVideo').seeThru('updateMask', {mask : '#newMask'});
 ```
 or
 ```javascript
@@ -109,7 +109,7 @@ $('#myVideo').seeThru('revert').addClass('plainOldVideo');
 or
 ```javascript
 /* pauses video and binds click handler to resume playback */
-$('#myVideo').seeThru('pause').one('click',function(){
+$('#myVideo').seeThru('pause').one('click', function(){
    $(this).seeThru('play');
 });
 ```
