@@ -101,7 +101,7 @@ var methods = {
 					
 					if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not set
 					
-						if (!$this.attr(width) && !$this.attr(height)){ //<video> has no width- or height-attribute -> source dimensions from video source meta
+						if (!$this.attr('width') && !$this.attr('height')){ //<video> has no width- or height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || video.videoWidth;
 							dimensions.height = dimensions.height || video.videoHeight / divisor;
