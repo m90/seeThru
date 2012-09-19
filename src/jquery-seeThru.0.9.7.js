@@ -10,6 +10,7 @@
 
 (function($){
 
+// function receives an <img> and converts its alpha data into a B&W-canvasPixelArray
 function convertAlphaMask(dimensions, maskObj){
 	
 	var convertCtx = $('<canvas/>').attr({'width' : dimensions.width,'height' : dimensions.height}).get(0).getContext('2d');
@@ -277,7 +278,9 @@ var methods = {
 							alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
 
 							for (var i = 3, len = image.data.length; i < len; i = i + 4) {
-								image.data[i] = Math.floor((alphaData[i - 1] + alphaData[i - 2] + alphaData[i - 3]) / 3); //calculate luminance from buffer part
+							
+								image.data[i] = settings.alphaMask ? alphaData[i - 1] : Math.floor((alphaData[i - 1] + alphaData[i - 2] + alphaData[i - 3]) / 3); //calculate luminance from buffer part, no weigthing needed when alpha mask is used
+							
 							}
 
 							display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
