@@ -8,27 +8,27 @@
 
 /* see https://github.com/m90/jquery-seeThru for documentation */
 
-(function($) {
+(function($){
 
-	function convertAlphaMask(dimensions, maskObj){
+function convertAlphaMask(dimensions, maskObj){
+	
+	var convertCtx = $('<canvas/>').attr({'width' : dimensions.width,'height' : dimensions.height}).get(0).getContext('2d');
+	convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
+	
+	var RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
+	
+	for (var i = 3, len = RGBA.data.length; i < len; i = i + 4){ //alpha data is on each 4th position -> [0+(4*n)] => R, [1+(4*n)] => G, [2+(4*n)] => B, [3+(4*n)] => A
 		
-		var convertCtx = $('<canvas/>').attr({'width' : dimensions.width,'height' : dimensions.height}).get(0).getContext('2d');
-		convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
-		
-		var RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
-		
-		for (var i = 3, len = RGBA.data.length; i < len; i = i + 4){ //alpha data is on each 4th position -> [0+(4*n)] => R, [1+(4*n)] => G, [2+(4*n)] => B, [3+(4*n)] => A
-			
-			RGBA.data[i-1] = RGBA.data[i-2] = RGBA.data[i-3] = RGBA.data[i]; //alpha into RGB
-			RGBA.data[i] = 255; //alpha is 100% opaque
-		
-		}
-		
-		return RGBA;
-		
+		RGBA.data[i-1] = RGBA.data[i-2] = RGBA.data[i-3] = RGBA.data[i]; //alpha into RGB
+		RGBA.data[i] = 255; //alpha is 100% opaque
+	
 	}
+	
+	return RGBA;
+	
+}
 
-	var methods = {
+var methods = {
 
 	init : function(options) {
 		
@@ -425,24 +425,24 @@
 	
 	} //end rewind
 	
-	}; //end methods-object, pardon the indentation milord
+}; //end methods-object, pardon the indentation milord
 	
-	$.fn.seeThru = function(method){ // Method calling logic -- see: http://docs.jquery.com/Plugins/Authoring
+$.fn.seeThru = function(method){ // Method calling logic -- see: http://docs.jquery.com/Plugins/Authoring
 		
-		if (methods[method]){
+	if (methods[method]){
 		
-			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
 		
-		} else if ( typeof method === 'object' || ! method ) {
+	} else if ( typeof method === 'object' || ! method ) {
 		
-			return methods.init.apply( this, arguments );
+		return methods.init.apply( this, arguments );
 		
-		} else {
+	} else {
 		
-			$.error( 'Method ' +  method + ' does not exist on jQuery.seeThru' );
-		
-		}
+		$.error( 'Method ' +  method + ' does not exist on jQuery.seeThru' );
 		
 	}
+		
+}
 	
 })(jQuery);
