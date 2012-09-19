@@ -99,24 +99,24 @@ var methods = {
 					
 					};
 					
-					if (!dimensions.height || !dimensions.width){
+					if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not set
 					
-						if (!video.width && !video.height){
+						if (!video.width && !video.height){ //<video> has no width- or height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || video.videoWidth;
 							dimensions.height = dimensions.height || video.videoHeight / divisor;
 					
-						} else if (!video.height){
+						} else if (!video.height){ //<video> has no height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || ~~video.width;
 							dimensions.height = dimensions.height || ~~video.width / (video.videoWidth / Math.floor(video.videoHeight / divisor));
 					
-						} else if (!video.width){
+						} else if (!video.width){ //<video> has no height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || ~~video.height * (video.videoWidth / Math.floor(video.videoHeight / divisor));
 							dimensions.height = dimensions.height || ~~video.height;
 					
-						} else {
+						} else { //get values from height and width attributes of <video>
 					
 							dimensions.width = dimensions.width || ~~video.width;
 							dimensions.height = dimensions.height || ~~video.height / divisor;
@@ -434,15 +434,15 @@ $.fn.seeThru = function(method){ // Method calling logic -- see: http://docs.jqu
 		
 	if (methods[method]){
 		
-		return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		
-	} else if ( typeof method === 'object' || ! method ) {
+	} else if (typeof method === 'object' || !method) {
 		
-		return methods.init.apply( this, arguments );
+		return methods.init.apply(this, arguments);
 		
 	} else {
 		
-		$.error( 'Method ' +  method + ' does not exist on jQuery.seeThru' );
+		$.error('Method ' +  method + ' does not exist on jQuery.seeThru');
 		
 	}
 		
