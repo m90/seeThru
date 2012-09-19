@@ -106,7 +106,7 @@ var methods = {
 							dimensions.width = dimensions.width || video.videoWidth;
 							dimensions.height = dimensions.height || video.videoHeight / divisor;
 					
-						} else if (!$this.attr('height'){ //<video> has no height-attribute -> source dimensions from video source meta
+						} else if (!$this.attr('height')){ //<video> has no height-attribute -> source dimensions from video source meta
 					
 							dimensions.width = dimensions.width || ~~video.width;
 							dimensions.height = dimensions.height || ~~video.width / (video.videoWidth / Math.floor(video.videoHeight / divisor));
