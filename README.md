@@ -68,7 +68,7 @@ If you specify dimension-attributes in your markup they will be considered, in c
 <canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
 <canvas height="XXX" width="XXX" class="seeThru-buffer" style="display: none;"></canvas><!-- this is just a helper element -->
 ```
-If you just want to test this without having to prepare your video you can download and use the example videos in the **[media](https://github.com/m90/jquery-seeThru/tree/master/media)** folder (also included in the zipped download).
+If you just want to test this without having to prepare your own video you can download and use the example videos in the **[media](https://github.com/m90/jquery-seeThru/tree/master/media)** folder (also included in the zipped download).
 
 ##Options##
 There are a few options you can pass when calling the plugin:
