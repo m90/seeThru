@@ -68,6 +68,8 @@ If you specify dimension-attributes in your markup they will be considered, in c
 <canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
 <canvas height="XXX" width="XXX" class="seeThru-buffer" style="display: none;"></canvas><!-- this is just a helper element -->
 ```
+If you just want to test this without having to prepare your video you can download and use the example videos in the **[media](https://github.com/m90/jquery-seeThru/tree/master/media)** folder (also included in the zipped download).
+
 ##Options##
 There are a few options you can pass when calling the plugin:
 
@@ -118,6 +120,7 @@ $('#myVideo').seeThru('pause').one('click', function(){
 **[Static alpha][2]**<br>
 **[Swapping alpha sources][3]**<br>
 **[Video listening to external JS calls][4]**<br>
+**[Video plaing on hover][26]**<br>
 
 ##Too much jQuery?##
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
@@ -207,4 +210,5 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [23]:http://www.frederikring.com/seeThru/img/seeThru_AE_04.jpg
 [24]:http://caniuse.com/#feat=canvas
 [25]:http://caniuse.com/#feat=video
+[26]:http://www.frederikring.com/seeThru/hover
 
