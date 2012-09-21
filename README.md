@@ -126,13 +126,13 @@ If you do not want to use jQuery, but still think transparent video is nice, her
 Although the **[requestAnimationFrame-API][18]** seems to be a great idea worth pushing, I am not too sure if this is of any help here (it will always aim for a 60fps frame rate which is *way* too high for 99% of all videos). Yet, I have built a **[branch][19]** that uses this API for testing purposes, outcome unknown (testing very welcome). In case someone reading this has any input or experience regarding this I'd be happy to hear from you!
 
 ##Cross Domain issues with canvas-elements##
-Please note that canvas is very picky about where it gets its contents from, so be aware that the video source file has to be hosted on the same domain (i.e. if your `index.html` is coming from `www.example.net` the video files have to be coming from `www.example.net` as well).
+Please note that JavaScript's canvas-methods are subject to cross domain security restrictions, so please be aware that the video source files have to be coming from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will get a DOM Security Exception. Please also note that this also applies to subdomains, therefore you shouldn't mix www and non-www-URLs (an easy way to avoid this would be using relative pathes, btw).
 
 ##Binding mouse events to your video##
 To mimic a behavior as if the original video was still visible it will echo all mouse events fired by the canvas representation. This means that you can still do sth like:
 ```javascript
 $('#myVideo').seeThru(); // the <video> is hidden
-$('#myVideo').click(function(){ //this is still working as a click on the `.seeThru-display`-<canvas> will be echoed by the video
+$('#myVideo').click(function(){ //this is still working as a click on the `.seeThru-display`-<canvas> will be echoed by the video`
    alert('But I thought I was hidden?');
 });
 ```
