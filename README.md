@@ -120,7 +120,7 @@ $('#myVideo').seeThru('pause').one('click', function(){
 **[Static alpha][2]**<br>
 **[Swapping alpha sources][3]**<br>
 **[Video listening to external JS calls][4]**<br>
-**[Video plaing on hover][26]**<br>
+**[Video playing on hover][26]**<br>
 
 ##Too much jQuery?##
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
