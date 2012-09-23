@@ -112,7 +112,16 @@ or
 ```javascript
 /* pauses video and binds click handler to resume playback */
 $('#myVideo').seeThru('pause').one('click', function(){
-   $(this).seeThru('play');
+	$(this).seeThru('play');
+});
+```
+or
+```javascript
+/* makes video play only on hover */
+$('#myVideo').seeThru({start : 'external'}).hover(function(){
+	this.play(); //we can use the DOM element's methods here as well as `this` is the video
+}, function(){
+	this.pause(); //we can use the DOM element's methods here as well as `this` is the video
 });
 ```
 ##Examples##
