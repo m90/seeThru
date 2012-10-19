@@ -279,7 +279,7 @@ var methods = {
 
 							for (var i = 3, len = image.data.length; i < len; i = i + 4) {
 							
-								image.data[i] = settings.alphaMask ? alphaData[i - 1] : Math.floor((alphaData[i - 1] + alphaData[i - 2] + alphaData[i - 3]) / 3); //calculate luminance from buffer part, no weigthing needed when alpha mask is used
+								image.data[i] = settings.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]); //calculate luminance from buffer part, no weigthing needed when alpha mask is used
 							
 							}
 
