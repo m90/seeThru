@@ -15,7 +15,7 @@ Click **[here][17]** to download the current version.
  - <a href="#what-about-requestanimationframe">What about `requestAnimationFrame`?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
- - <a href="#mobile-devices">Mobile devices</a>
+ - <a href="#mobile-devices--tablets">Mobile devices & tablets</a>
  - <a href="#browser-support">Browser support</a>
  - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#tldr">tl;dr</a>
