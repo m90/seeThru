@@ -279,18 +279,6 @@ var methods = {
 					
 						});
 					}
-					
-					function inViewport(){ //find out if displayCanvas is inside viewport -> if not we can stop the rendering
-					
-						var
-						viewTop = $window.scrollTop(),
-						viewBottom = viewTop + $window.height(),
-						elemTop = displayCanvas.offset().top,
-						elemBottom = elemTop + displayCanvas.height();
-						
-						return (!((elemTop < viewTop && elemBottom < viewTop) || (elemTop > viewBottom && elemBottom > viewBottom)));
-						
-					}
 
 					/*draw buffer info into display canvas*/
 					function drawFrame(req) {
