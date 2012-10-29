@@ -1,4 +1,4 @@
-/* jQuery seeThru 0.9.7 - transparent HTML5 video - written by Frederik Ring (frederik.ring@gmail.com) */
+/* jQuery seeThru 0.9.7 WIP - transparent HTML5 video - written by Frederik Ring (frederik.ring@gmail.com) */
 /* based on http://jakearchibald.com/scratch/alphavid/ by Jake Archibald (jaffathecake@gmail.com) */
 
 /* Copyright (c) 2012 Frederik Ring */
@@ -9,6 +9,32 @@
 /* see https://github.com/m90/jquery-seeThru for documentation */
 
 (function($){
+
+
+(function() {
+	var lastTime = 0;
+	var vendors = ['ms', 'moz', 'webkit', 'o'];
+	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+		window.cancelAnimationFrame = 
+		  window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+	}
+ 
+	if (!window.requestAnimationFrame)
+		window.requestAnimationFrame = function(callback, element) {
+			var currTime = new Date().getTime();
+			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+			var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+			  timeToCall);
+			lastTime = currTime + timeToCall;
+			return id;
+		};
+ 
+	if (!window.cancelAnimationFrame)
+		window.cancelAnimationFrame = function(id) {
+			clearTimeout(id);
+		};
+}());
 
 // function receives an <img> and converts its alpha data into a B&W-canvasPixelArray
 function convertAlphaMask(dimensions, maskObj){
@@ -167,13 +193,15 @@ var methods = {
 					/*event handling - all events are .seeThru-namespaced*/
 					$this.bind('play.seeThru', function() { //refresh canvas elements
 					
-						clearInterval(interval);
-						interval = setInterval(drawFrame, refresh);
+						cancelAnimationFrame(interval);
+						interval = requestAnimationFrame(function(){
+							drawFrame(true);
+						});
 						$this.data('seeThru').interval = interval;
 					
 					}).bind('pause.seeThru', function(){ //stop interval on pause
 					
-						clearInterval(interval);
+						cancelAnimationFrame(interval);
 					
 					});
 					
@@ -265,30 +293,30 @@ var methods = {
 					}
 
 					/*draw buffer info into display canvas*/
-					function drawFrame() {
-						
-						var visible = forceRendering ? true : inViewport(); //no need to check visibility if forceRendering is true
-						
-						if (visible){ //only calculate new frames if element is visible or flagged for forceRendering
-						
-							buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
+					function drawFrame(req) {
+												
+						buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
 							
-							var
-							image = buffer.getImageData(0, 0, dimensions.width, dimensions.height),
-							alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
+						var
+						image = buffer.getImageData(0, 0, dimensions.width, dimensions.height),
+						alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
 
-							for (var i = 3, len = image.data.length; i < len; i = i + 4) {
+						for (var i = 3, len = image.data.length; i < len; i = i + 4) {
 							
-								image.data[i] = settings.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]); //calculate luminance from buffer part, no weigthing needed when alpha mask is used
+							image.data[i] = settings.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]); //calculate luminance from buffer part, no weigthing needed when alpha mask is used
 							
-							}
+						}
 
-							display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
+						display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
 						
+						if (req){
+							interval = requestAnimationFrame(function(){
+								drawFrame(true);
+							});
 						}
 						
 					}
-
+					
 				});
 				
 				if (this.videoWidth && this.videoHeight){
@@ -296,7 +324,9 @@ var methods = {
 				}
 
 			} else {
+				
 				$.error('Selected element must be <video> element');
+			
 			}
  
 		});
@@ -376,7 +406,7 @@ var methods = {
 		
 			if ($this.data('seeThru')){
 	
-				clearInterval($this.data('seeThru').interval); //clear interval
+				cancelAnimationFrame($this.data('seeThru').interval); //clear interval
 				$this.show().unbind('.seeThru').removeData('seeThru').nextAll('.seeThru-buffer:first, .seeThru-display:first').remove(); //remove all traces in the DOM
 	
 			}
