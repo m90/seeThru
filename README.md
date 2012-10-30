@@ -53,7 +53,7 @@ Include jQuery (I built the plugin with 1.7.1 but it should be working with olde
 
 ```html 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="jquery-seeThru.0.9.7.min.js"></script>
+<script type="text/javascript" src="jquery-seeThru.0.9.8.min.js"></script>
 ```
 and then call the following jQuery method on your video (preferrably on `$(document).ready`):
 
