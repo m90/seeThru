@@ -64,14 +64,12 @@ var methods = {
 		/* OPTIONS */
 		var settings = $.extend({
 		
-			fps : 25, //frame rate that the browser will render the video in - best results when the framerates (src and display) are matching
 			start : 'autoplay', //'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
 			end : 'loop', //'loop', 'rewind', 'stop' any other input will default to 'stop'
 			mask : '', //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
 			alphaMask : false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width : '', //lets you specify a pixel value used as width -- overrides all other calculations
 			height : '', //lets you specify a pixel value used as height -- overrides all other calculations
-			forceRendering : false //set to true forceRendering will force the rendering of canvas elements that are not visible in the viewport
 		
 		}, options);
 
@@ -87,7 +85,6 @@ var methods = {
 			var
 			staticMask = false,
 			alphaMask = (settings.alphaMask === true),
-			forceRendering = (settings.forceRendering === true),
 			maskObj;
 
 			if ($(settings.mask).length){
@@ -184,9 +181,7 @@ var methods = {
 					}
 
 					/*hide video and append canvas elements - DOM manipulation done*/
-					var
-					interval,
-					refresh = 1 / settings.fps * 1000; //frame rate to ms-interval
+					var	interval;
 					
 					$this.hide().data('seeThru', {'staticMask' : staticMask, 'alphaMask' : alphaMask, interval : interval}).after(bufferCanvas, displayCanvas);
 
@@ -298,9 +293,11 @@ var methods = {
 						display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
 						
 						if (req){
+
 							interval = requestAnimationFrame(function(){
 								drawFrame(true);
 							});
+						
 						}
 						
 					}
