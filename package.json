@@ -1,6 +1,6 @@
 {
   "name": "jquery.seethru",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "author":  {
     "name" : "Frederik Ring",
     "email" : "frederik.ring@gmail.com",
@@ -22,7 +22,7 @@
      "type": "MIT",
      "url": "http://www.opensource.org/licenses/mit-license.php"
   }],
-  "files": ["src/jquery-seeThru.0.9.7.min.js"],
+  "files": ["src/jquery-seeThru.0.9.8.min.js"],
   "repository": {
     "type": "git",
     "url": "git://github.com/m90/jquery-seeThru.git"
