@@ -15,6 +15,7 @@ Click **[here][17]** to download the current version.
  - <a href="#what-about-requestanimationframe">What about `requestAnimationFrame`?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
+ - <a href="#safari-6-issues">Safari 6 issues</a>
  - <a href="#mobile-devices--tablets">Mobile devices & tablets</a>
  - <a href="#browser-support">Browser support</a>
  - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
@@ -73,19 +74,16 @@ If you just want to give the plugin a test-drive without having to prepare your 
 ##Options##
 There are a few options you can pass when calling the plugin:
 
- - `fps` expects a number specifying the frame rate that will be used for rendering the video. It defaults to `25` and should be adjusted to the frame rate of your source file for best results. If you are concerned about performance issues you can try decreasing the frame rate and therefore reduce the rendering effort the browser has to handle.
  - `start` defines the video's behavior on load. It defaults to `'autoplay'` which will automatically start the video as soon as possible. Other options are `'clicktoplay'` which will display the first frame of the video until it is clicked or `'external'` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
  - `end` defines the video's behavior when it has reached its end. It defaults to `'loop'` which will loop the video. Other possibilities are `'stop'` (it will just stop), or `'rewind'` which will jump back to the first frame and stop. If you use `start:'clicktoplay'` along with `'rewind'` or `'end'` the video will be clickable again when finished.
  - `mask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `'#fancyMask'`. In case it returns a collection (class passed), the first element is used - in case the selector matches nothing or a non-image node the option is ignored. Defaults to an empty string, so video information is used for the alpha.
  - `alphaMask` specifies if the plugin uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
- - `forceRendering` is a flag used to control if the browser will stop rendering the canvas elements when they are scrolled out of the viewport (therefore not visible). This is set to false by default as it greatly improves performance (especially with more than one video on a single page), yet if it messes with something you want to do with the canvas elements you can always set the option to true and the canvas will be forced to update all the time.
-
 
 This might look like this:
 ```javascript
-$('#myVideo').seeThru({fps : 12 , start : 'autoplay' , end : 'stop'});
+$('#myVideo').seeThru({start : 'autoplay' , end : 'stop'});
 ```
 or
 ```javascript
@@ -135,7 +133,7 @@ $('#myVideo').seeThru({start : 'external'}).hover(function(){
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
 ##What about `requestAnimationFrame`?##
-Although the **[requestAnimationFrame-API][18]** seems to be a great idea worth pushing, I am not too sure if this is of any help here (it will always aim for a 60fps frame rate which is *way* too high for 99% of all videos). Yet, I have built a **[branch][19]** that uses this API for testing purposes, outcome unknown (testing very welcome). In case someone reading this has any input or experience regarding this I'd be happy to hear from you!
+<s>Although the **[requestAnimationFrame-API][18]** seems to be a great idea worth pushing, I am not too sure if this is of any help here (it will always aim for a 60fps frame rate which is *way* too high for 99% of all videos). Yet, I have built a **[branch][19]** that uses this API for testing purposes, outcome unknown (testing very welcome). In case someone reading this has any input or experience regarding this I'd be happy to hear from you!</s> We're using it now, so go charge your client some extra $$$
 
 ##Cross Domain issues with canvas-elements##
 Please note that JavaScript's canvas-methods are subject to cross domain security restrictions, so please be aware that the video source files have to be coming from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will get a DOM Security Exception. Please also note that this also applies to subdomains, therefore you shouldn't mix www and non-www-URLs (an easy way to avoid this would be using relative pathes, btw).
@@ -150,12 +148,15 @@ $('#myVideo').click(function(){ //this is still working as a click on the `.seeT
 ```
 The events that are echoed are: `mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur`
 
+##Safari 6 issues###
+Apparently Safari 6 on Mac has severe problems using video as source elements for canvas operations. Nightly webkit builds already fixed this problem, yet if you need advice on this topic there's **[a question on Stackoverflow](http://stackoverflow.com/questions/9929546/canvas-to-video-is-very-slow-on-safari-lion-mountain-lion)** tackling this problem. Feedback is welcome.
+
 ##Mobile devices & tablets##
 As most mobile devices and tablets (iPad I'm looking at you) use external video players to handle HTML5-video this plugin is **not working on mobile Webkit / Safari / Android Browser** (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
 Apparently Android 3.1+ will play `<video>` inline, but I do not have any experience regarding using it as a canvas source yet.
 
 ##Browser support##
-Tested on Chrome, Firefox, Safari, Opera 11 and IE 9.0+ 
+Tested on Chrome, Firefox, Safari, Opera and IE 9.0+ 
 (the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
 
 ##Preparing video sources in Adobe After Effects##
@@ -176,6 +177,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore
    * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
    * v0.9.6: elements that are not visible in the viewport will stop rendering to lower CPU usage, added the `forceRendering` option
    * v0.9.5: added simple video playback control methods: `play` and `pause`
