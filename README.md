@@ -1,6 +1,6 @@
 #jQuery seeThru - HTML5 video with alpha channel transparencies#
 
-This jQuery plugin adds support for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original data will simply be re-rendered into a canvas-element, therefore adding support for alpha information that can either be included in the source file for the video element or in a seperate `<img>`-element.
+This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
 
 ##Direct Download##
 Click **[here][17]** to download the current version.
@@ -52,8 +52,8 @@ To make the magic happen you just have to do the following:<br/>
 Include jQuery (I built the plugin with 1.7.1 but it should be working with older versions down to 1.4 as well) and the plugin in your `<head>`:
 
 ```html 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="jquery-seeThru.0.9.8.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-seeThru.0.9.9.min.js"></script>
 ```
 and then call the following jQuery method on your video (preferrably on `$(document).ready`):
 
@@ -168,7 +168,7 @@ Duplicate your footage layer, align them, and use the second instance as Alpha T
 ![After Effects walkthru 3][22]<br/>
 Make sure you are using an unmultiplied (straight) version of your color source:
 ![After Effects walkthru 4][23]<br/>
-
+If you don't want to use a GUI based approach, this can also be done using ffmpeg something like **[this](http://stackoverflow.com/questions/9293265/ffmpeg-2-videos-transcoded-and-side-by-side-in-1-frame)**
 ##tl;dr##
 Put a black-and white alpha channel right underneath your `<video>` source (in the same file), load jQuery and let the plugin do magical things:
 <code>
@@ -177,6 +177,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com
    * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore
    * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
    * v0.9.6: elements that are not visible in the viewport will stop rendering to lower CPU usage, added the `forceRendering` option
@@ -222,4 +223,3 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [24]:http://caniuse.com/#feat=canvas
 [25]:http://caniuse.com/#feat=video
 [26]:http://www.frederikring.com/seeThru/hover
-
