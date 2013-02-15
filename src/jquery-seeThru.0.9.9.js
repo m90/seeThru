@@ -66,7 +66,7 @@ var methods = {
 		var settings = $.extend({
 		
 			start : 'autoplay', //'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
-			end : 'loop', //'loop', 'rewind', 'stop' any other input will default to 'stop'
+			end : 'loop', //'loop', 'rewind', 'stop' any other input will default to 'loop'
 			mask : '', //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
 			alphaMask : false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width : '', //lets you specify a pixel value used as width -- overrides all other calculations
@@ -179,6 +179,13 @@ var methods = {
 					
 						}
 						
+					}
+
+					/* override video's loop flag if the plugins config is explicitly set to 'end' */
+					if (settings.end === 'stop' && video.loop){
+						
+						video.loop = false;
+
 					}
 
 					/*hide video and append canvas elements - DOM manipulation done*/
