@@ -41,8 +41,8 @@ Basic HTML5 video markup should look something like this:
 
 ```html
 <video id="myVideo">
-    <source src="src.mp4" type="video/mp4" />
-    <source src="src.ogg" type="video/ogg" />
+    <source src="src.mp4" type="video/mp4">
+    <source src="src.ogg" type="video/ogg">
     ....
 </video>
 ```
@@ -177,7 +177,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
-   * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com
+   * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com, video's loop attribute will be overridden if the plugin is set to `'end' : 'stop'`
    * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore
    * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
    * v0.9.6: elements that are not visible in the viewport will stop rendering to lower CPU usage, added the `forceRendering` option
