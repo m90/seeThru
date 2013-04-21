@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | Play on hover</title>
+	<link href="http://fonts.googleapis.com/css?family=Lekton:400,700" rel="stylesheet" type="text/css" />
+	<link href="http://www.frederikring.com/ext/normalize.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+	body{
+		font-family: Lekton, Arial, Helvetica;
+		text-align: center;
+		min-height: 100%;
+	}
+	#wrap{
+		height: 100%;
+		width: 600px;
+		margin: auto;
+		background-color: white;
+		-moz-box-shadow:
+		inset 5px 0 5px -5px #333,
+		inset -5px 0 5px -5px #333;
+		-webkit-box-shadow:
+		inset 5px 0 5px -5px #333,
+		inset -5px 0 5px -5px #333;
+		box-shadow:
+		inset 5px 0 5px -5px #333,
+		inset -5px 0 5px -5px #333;
+		background-color: #b3b3b3;
+	}
+	h1{
+		font-size: 48px;
+		font-weight: bold;
+	}
+	h3{
+		font-weight: bold;
+	}
+	.demo {
+		padding: 20px 20px 20px 20px;
+		border-bottom: 1px dotted white;
+	}
+	.demo video, .demo canvas, .demo img{
+	}
+	.code{
+		font-family: Courier, monospace;
+		background-color: white;
+	}
+	.inAction{
+		display: none;
+	}
+	#alphaToggle{
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	.button{
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	#content{
+		border-top: 1px dotted white;
+	}
+	#video{
+		display: none;
+	}
+	.seeThru-display{
+		cursor: pointer;
+	}
+	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://www.frederikring.com/seeThru/js/jquery-seeThru.0.9.8.min.js"></script>
+
+	<script>
+	$(document).ready(function(){
+
+		$('#video').seeThru({start:'external'}).hover(function(){
+		
+			this.play();
+
+		}, function(){
+		
+			this.pause();
+
+		});
+
+
+	});
+
+	</script>
+	<!-- HELLO THERE FELLOW SOURCE CODE READER! IF YOU ARE COPYING THIS TO TRY THINGS OUT PLEASE OMIT THE FOLLOWING GOOGLE ANALYTICS SNIPPET OR YOUR TRAFFIC WILL APPEAR IN MY ACCOUNT. THANK YOU! -->
+	<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-365790-10']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<h1>jQuery seeThru</h1>
+		<h2>a jQuery-plugin for HTML5 video with alpha channel transparencies</h2>
+		<div id="content">
+
+			<div class="demo">
+				<h3>Video playing on hover</h3>
+				<video id="video">
+					<source src="video/kolor.mp4" type="video/mp4" />
+					<source src="video/kolor.ogg" type="video/ogg" />
+				</video>
+				<p>Hover over the video to see Mr. Kolor chase fame and money</p>
+			</div>
+			<div class="demo">Back to <a href="https://github.com/m90/jquery-seeThru">GitHub</a></div>
+			<div class="demo">
+				<div class="g-plusone"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	(function() {
+		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		po.src = 'https://apis.google.com/js/plusone.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
+	</script>
+</body>
+</html>
