@@ -1,6 +1,5 @@
 ###DOWNLOAD NOTES##
-The minified version is built using **[uglify.js](https://github.com/mishoo/UglifyJS)** and should always be safe to use.
+The minified version can be found in the repo's `dist` folder
 
-Compression ratio is about 1/3 (15kb become 5kb).
 ![Footer image][10]
 [10]:http://www.frederikring.com/seeThru/img/footer.png

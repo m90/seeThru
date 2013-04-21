@@ -8,7 +8,7 @@
 
 /* see https://github.com/m90/jquery-seeThru for documentation */
 
-(function($){
+;(function($, undefined){
 
 // function receives an <img> and converts its alpha data into a B&W-canvasPixelArray
 function convertAlphaMask(dimensions, maskObj){
@@ -26,6 +26,19 @@ function convertAlphaMask(dimensions, maskObj){
 	}
 
 	return RGBA;
+
+}
+
+function unmultiply(rgbData, alphaData){
+
+	for (var i = 3, len = rgbData.data.length; i < len; i = i + 4){
+
+		rgbData.data[i] = alphaData[i - 1]; //copy B value into A channel
+		rgbData.data[i - 3] = rgbData.data[i - 3] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply B
+		rgbData.data[i - 2] = rgbData.data[i - 2] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply G
+		rgbData.data[i - 1] = rgbData.data[i - 1] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply R
+
+	}
 
 }
 
@@ -47,11 +60,13 @@ var methods = {
 			alphaMask : false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width : '', //lets you specify a pixel value used as width -- overrides all other calculations
 			height : '', //lets you specify a pixel value used as height -- overrides all other calculations
-			shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API
+			unmult : false, //set this to true if your video material is premultiplied on black - might cause performance issues
+			shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API - only set to false if you know what you're doing
 
 		}, options);
 
-		if (shimRAF){
+		//shim requestAnimationFrame API if needed and not already done
+		if (shimRAF && !window.requestAnimationFrame){
 
 			(function() {
 
@@ -300,6 +315,12 @@ var methods = {
 						var
 						image = buffer.getImageData(0, 0, dimensions.width, dimensions.height),
 						alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
+
+						if (settings.unmult){
+
+							unmultiply(image.data, alphaData);
+
+						}
 
 						for (var i = 3, len = image.data.length; i < len; i = i + 4) {
 

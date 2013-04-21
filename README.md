@@ -53,7 +53,7 @@ In case you are planning to have your video set to autoplay or loop you can do t
 To make the magic happen you just have to do the following:<br/>
 Include jQuery (I built the plugin with 1.7.1 but it should be working with older versions down to 1.4 as well) and the plugin in your `<head>`:
 
-```html 
+```html
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="jquery-seeThru.min.js"></script>
 ```
@@ -82,6 +82,7 @@ There are a few options you can pass when calling the plugin:
  - `alphaMask` specifies if the plugin uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
+ - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the plugin to un-premultiply the imagery. Note that this might have bad effects on performance, so it is recommended to work with unpremultiplied video sources
  - `shimRAF` can be set to false if you don't want the plugin to shim the `requestAnimationFrame` API (e.g when you are already doing this yourself or only need to support browsers that support an unprefixed `requestAnimationFrame`). The plugin is using the [Paul Irish polyfill][18]
 
 This might look like this:
@@ -156,7 +157,7 @@ As most mobile devices and tablets (iPad I'm looking at you) use external video 
 Apparently Android 3.1+ will play `<video>` inline, but I do not have any experience regarding using it as a canvas source yet.
 
 ##Browser support##
-Tested on Chrome, Firefox, Safari, Opera and IE 9.0+ 
+Tested on Chrome, Firefox, Safari, Opera and IE 9.0+
 (the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
 
 ##Preparing video sources in Adobe After Effects##
@@ -177,7 +178,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
-   * v1.0.0: code clean up, using grunt for minification and linting now, removed version number from files
+   * v1.0.0: code clean up, using grunt for minification and linting now, removed version number from files, added a `shimRAF` option, added `unmult` option
    * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com, video's loop attribute will be overridden if the plugin is set to `'end' : 'stop'`
    * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore
    * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
