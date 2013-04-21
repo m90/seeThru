@@ -66,7 +66,7 @@ var methods = {
 		}, options);
 
 		//shim requestAnimationFrame API if needed and not already done
-		if (shimRAF && !window.requestAnimationFrame){
+		if (settings.shimRAF && !window.requestAnimationFrame){
 
 			(function() {
 
