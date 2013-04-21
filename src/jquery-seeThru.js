@@ -10,34 +10,6 @@
 
 (function($){
 
-(function() {
-
-	var lastTime = 0;
-	var vendors = ['ms', 'moz', 'webkit', 'o'];
-	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-		window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
-	}
-
-	if (!window.requestAnimationFrame)
-		window.requestAnimationFrame = function(callback, element) {
-			var currTime = new Date().getTime();
-			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-			var id = window.setTimeout(function(){
-				callback(currTime + timeToCall);
-			},
-			timeToCall);
-			lastTime = currTime + timeToCall;
-			return id;
-		};
-
-	if (!window.cancelAnimationFrame)
-		window.cancelAnimationFrame = function(id) {
-			clearTimeout(id);
-		};
-
-}());
-
 // function receives an <img> and converts its alpha data into a B&W-canvasPixelArray
 function convertAlphaMask(dimensions, maskObj){
 
@@ -74,9 +46,42 @@ var methods = {
 			mask : '', //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
 			alphaMask : false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width : '', //lets you specify a pixel value used as width -- overrides all other calculations
-			height : '' //lets you specify a pixel value used as height -- overrides all other calculations
+			height : '', //lets you specify a pixel value used as height -- overrides all other calculations
+			shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API
 
 		}, options);
+
+		if (shimRAF){
+
+			(function() {
+
+				var lastTime = 0;
+				var vendors = ['ms', 'moz', 'webkit', 'o'];
+				for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+					window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+					window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+				}
+
+				if (!window.requestAnimationFrame)
+					window.requestAnimationFrame = function(callback, element) {
+						var currTime = new Date().getTime();
+						var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+						var id = window.setTimeout(function(){
+							callback(currTime + timeToCall);
+						},
+						timeToCall);
+						lastTime = currTime + timeToCall;
+						return id;
+				};
+
+				if (!window.cancelAnimationFrame)
+					window.cancelAnimationFrame = function(id) {
+						clearTimeout(id);
+					};
+
+			}());
+
+		}
 
 		return this.each(function(){
 

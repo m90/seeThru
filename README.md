@@ -3,7 +3,10 @@
 This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
 
 ##Direct Download##
-Click **[here][17]** to download the current version.
+Click **[here][17]** to download the current version or clone the repo:
+´´´
+$ git clone //find when online again
+```
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
@@ -12,7 +15,6 @@ Click **[here][17]** to download the current version.
  - <a href="#additional-methods">Additional methods</a>
  - <a href="#examples">Examples</a>
  - <a href="#too-much-jquery">Too much jQuery?</a>
- - <a href="#what-about-requestanimationframe">What about `requestAnimationFrame`?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
  - <a href="#safari-6-issues">Safari 6 issues</a>
@@ -52,8 +54,8 @@ To make the magic happen you just have to do the following:<br/>
 Include jQuery (I built the plugin with 1.7.1 but it should be working with older versions down to 1.4 as well) and the plugin in your `<head>`:
 
 ```html 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script type="text/javascript" src="jquery-seeThru.0.9.9.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-seeThru.min.js"></script>
 ```
 and then call the following jQuery method on your video (preferrably on `$(document).ready`):
 
@@ -80,6 +82,7 @@ There are a few options you can pass when calling the plugin:
  - `alphaMask` specifies if the plugin uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
+ - `shimRAF` can be set to false if you don't want the plugin to shim the `requestAnimationFrame` API (e.g when you are already doing this yourself or only need to support browsers that support an unprefixed `requestAnimationFrame`). The plugin is using the [Paul Irish polyfill][18]
 
 This might look like this:
 ```javascript
@@ -132,9 +135,6 @@ $('#myVideo').seeThru({start : 'external'}).hover(function(){
 ##Too much jQuery?##
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
-##What about `requestAnimationFrame`?##
-<del>Although the **[requestAnimationFrame-API][18]** seems to be a great idea worth pushing, I am not too sure if this is of any help here (it will always aim for a 60fps frame rate which is *way* too high for 99% of all videos). Yet, I have built a **[branch][19]** that uses this API for testing purposes, outcome unknown (testing very welcome). In case someone reading this has any input or experience regarding this I'd be happy to hear from you!</del> We're using it now, so go charge your client some extra **$$$**
-
 ##Cross Domain issues with canvas-elements##
 Please note that JavaScript's canvas-methods are subject to cross domain security restrictions, so please be aware that the video source files have to be coming from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will get a DOM Security Exception. Please also note that this also applies to subdomains, therefore you shouldn't mix www and non-www-URLs (an easy way to avoid this would be using relative pathes, btw).
 
@@ -177,6 +177,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v1.0.0: code clean up, using grunt for minification and linting now, removed version number from files
    * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com, video's loop attribute will be overridden if the plugin is set to `'end' : 'stop'`
    * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore
    * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
@@ -215,7 +216,6 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [16]:http://www.redgiantsoftware.com/products/all/knoll-unmult-free
 [17]:https://github.com/m90/jquery-seeThru/zipball/master
 [18]:http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-[19]:https://github.com/m90/jquery-seeThru/tree/wip
 [20]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
 [21]:http://www.frederikring.com/seeThru/img/seeThru_AE_02.jpg
 [22]:http://www.frederikring.com/seeThru/img/seeThru_AE_03.jpg
