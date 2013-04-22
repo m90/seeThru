@@ -2,7 +2,8 @@
 <html>
 <head>
 	<meta charset=utf-8>
-	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | Swap Alpha Demo</title>
+	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | Swap Static Alpha Demo</title>
+	<link href="css/normalize.css" rel="stylesheet" type="text/css" />
 	<link href="//fonts.googleapis.com/css?family=Lekton:400,700" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 	body{
@@ -28,6 +29,13 @@
 	h1{
 		font-size: 48px;
 		font-weight: bold;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		padding-top: 24px;
+	}
+	h2{
+		font-weight: normal;
+		margin-top: 0px;
 	}
 	h3{
 		font-weight: bold;
@@ -53,26 +61,6 @@
 		border-top: 1px dotted white;
 	}
 	</style>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery-seeThru.min.js"></script>
-	<script>
-	$(document).ready(function(){
-		$('#swapAlphaDemo').seeThru({mask:'#swapAlphaMask'});
-
-		var toggle = false;
-
-		$('#alphaToggle').click(function(){
-			
-			var nextMask = toggle ? '#swapAlphaMask' : '#swapAlphaAltMask';
-			$('#swapAlphaDemo').seeThru('updateMask',{mask:nextMask});
-			toggle = !toggle;
-			
-		});
-
-	});
-
-	</script>
-	<!-- HELLO THERE FELLOW SOURCE CODE READER! IF YOU ARE COPYING THIS TO TRY THINGS OUT PLEASE OMIT THE FOLLOWING GOOGLE ANALYTICS SNIPPET OR YOUR TRAFFIC WILL APPEAR IN MY ACCOUNT. THANK YOU! -->
 	<script type="text/javascript">
 
 	var _gaq = _gaq || [];
@@ -120,6 +108,27 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-seeThru.min.js"></script>
+
+	<script>
+	$(document).ready(function(){
+		$('#swapAlphaDemo').seeThru({mask:'#swapAlphaMask'});
+
+		var toggle = false;
+
+		$('#alphaToggle').click(function(){
+
+			var nextMask = toggle ? '#swapAlphaMask' : '#swapAlphaAltMask';
+			$('#swapAlphaDemo').seeThru('updateMask',{mask:nextMask});
+			toggle = !toggle;
+
+		});
+
+	});
+
+	</script>
+
 	<script type="text/javascript">
 	(function() {
 		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
