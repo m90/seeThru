@@ -29,14 +29,14 @@ function convertAlphaMask(dimensions, maskObj){
 
 }
 
-function unmultiply(rgbData, alphaData){
+function unmultiply(rgb, alphaData){
 
-	for (var i = 3, len = rgbData.data.length; i < len; i = i + 4){
+	for (var i = 3, len = rgb.data.length; i < len; i = i + 4){
 
-		rgbData.data[i] = alphaData[i - 1]; //copy B value into A channel
-		rgbData.data[i - 3] = rgbData.data[i - 3] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply B
-		rgbData.data[i - 2] = rgbData.data[i - 2] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply G
-		rgbData.data[i - 1] = rgbData.data[i - 1] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply R
+		rgb.data[i] = alphaData[i - 1]; //copy B value into A channel
+		rgb.data[i - 3] = rgb.data[i - 3] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply B
+		rgb.data[i - 2] = rgb.data[i - 2] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply G
+		rgb.data[i - 1] = rgb.data[i - 1] / (alphaData[i - 1] ? (alphaData[i - 1] / 255) : 1); //un-premultiply R
 
 	}
 
@@ -318,7 +318,7 @@ var methods = {
 
 						if (settings.unmult){
 
-							unmultiply(image.data, alphaData);
+							unmultiply(image, alphaData);
 
 						}
 
