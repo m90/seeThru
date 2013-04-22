@@ -6,7 +6,7 @@ This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video
 Click **[here][17]** to download the current version or clone the repo:
 ´´´
 $ git clone git://github.com/m90/jquery-seeThru.git
-```
+´´´
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
