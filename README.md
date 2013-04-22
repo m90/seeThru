@@ -5,7 +5,7 @@ This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video
 ##Direct Download##
 Click **[here][17]** to download the current version or clone the repo:
 ´´´
-$ git clone //find when online again
+$ git clone git://github.com/m90/jquery-seeThru.git
 ```
 
 ##Table of contents##
@@ -178,7 +178,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
-   * v1.0.0: code clean up, using grunt for minification and linting now, removed version number from files, added a `shimRAF` option, added `unmult` option
+   * v1.0.0: using grunt for minification and linting now, removed version number from files, added a `shimRAF` option, added `unmult` option, code clean up
    * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com, video's loop attribute will be overridden if the plugin is set to `'end' : 'stop'`
    * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore
    * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
