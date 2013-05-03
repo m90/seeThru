@@ -10,7 +10,7 @@
   "description" : "HTML5 video with alpha channel transparencies",
   "homepage" : "https://github.com/m90/jquery-seeThru",
   "docs" : "https://github.com/m90/jquery-seeThru",
-  "demo" : "http://www.frederikring.com/seethru/movingAlpha",
+  "demo" : "http://www.frederikring.com/seeThru/movingAlpha",
   "bugs" : "https://github.com/m90/jquery-seeThru/issues",
   "keywords" : [
     "html5",
