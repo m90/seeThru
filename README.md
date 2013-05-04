@@ -158,7 +158,7 @@ Apparently Android 3.1+ will play `<video>` inline, but I do not have any experi
 
 ##Browser support##
 Tested on Chrome, Firefox, Safari, Opera and IE 9.0+
-(the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features you should have a look at <a href="http://www.modernizr.com/">modernizr</a>
+(the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features have a look at <a href="http://www.modernizr.com/">Modernizr</a>
 
 ##Preparing video sources in Adobe After Effects##
 Put your animation with alpha in a composition:
@@ -199,10 +199,10 @@ This plugin is licensed under the **[MIT License][11]**, demo content, video and
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
 ![Footer image][10]
 
-[1]:http://www.frederikring.com/seeThru/movingAlpha
-[2]:http://www.frederikring.com/seeThru/staticAlpha
-[3]:http://www.frederikring.com/seeThru/swapAlpha
-[4]:http://www.frederikring.com/seeThru/external
+[1]:http://m90.github.io/jquery-seeThru/movingAlpha.html
+[2]:http://m90.github.io/jquery-seeThru/staticAlpha.html
+[3]:http://m90.github.io/jquery-seeThru/swapAlpha.html
+[4]:http://m90.github.io/jquery-seeThru/external.html
 [5]:http://www.frederikring.com/seeThru/img/seeThruDemo.png
 [6]:http://www.frederikring.com/seeThru/img/seeThruResult.png
 [7]:http://www.jakearchibald.com
@@ -223,4 +223,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [23]:http://www.frederikring.com/seeThru/img/seeThru_AE_04.jpg
 [24]:http://caniuse.com/#feat=canvas
 [25]:http://caniuse.com/#feat=video
-[26]:http://www.frederikring.com/seeThru/hover
+[26]:http://m90.github.io/jquery-seeThru/hover.html
