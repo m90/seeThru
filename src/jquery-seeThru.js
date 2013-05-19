@@ -290,10 +290,7 @@ var methods = {
 
 						video.play();
 						video.pause(); // fake play to initialize playhead
-
-						$this.on('timeupdate.seeThru', function(){
-							drawFrame();
-						});
+						drawFrame();
 
 					} else {
 
@@ -304,6 +301,12 @@ var methods = {
 					if (settings.end === 'loop') {
 
 						$this.on('ended.seeThru', function(){
+
+							$this.one('pause', function(e){
+
+								e.stopImmediatePropagation();
+
+							});
 
 							video.play();
 
