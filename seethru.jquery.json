@@ -1,6 +1,6 @@
 {
   "name" : "seethru",
-  "version" : "1.0.0",
+  "version" : "1.0.1",
   "author" :  {
     "name" : "Frederik Ring",
     "email" : "frederik.ring@gmail.com",
@@ -27,6 +27,6 @@
     }
   ],
   "dependencies" : {
-    "jquery" : ">=1.4"
+    "jquery" : ">=1.7"
   }
 }

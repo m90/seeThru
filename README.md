@@ -54,7 +54,7 @@ Basic HTML5 video markup should look something like this:
 
 In case you are planning to have your video set to autoplay or loop you can do this when initializing the plugin. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
 To make the magic happen you just have to do the following:<br/>
-Include jQuery (I built the plugin with 1.7.1 but it should be working with older versions down to 1.4 as well) and the plugin in your `<head>`:
+Include jQuery (needs 1.7+) and the plugin in your `<head>`:
 
 ```html
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -181,6 +181,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v1.0.1: added poster option, plugin now requires jquery 1.7+ as it's using `.on()` instead of `.bind()` now
    * v1.0.0: using grunt for minification and linting now, removed version number from files, added a `shimRAF` option, added `unmult` option, code clean up
    * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com, video's loop attribute will be overridden if the plugin is set to `'end' : 'stop'`
    * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore

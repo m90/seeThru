@@ -13,7 +13,7 @@
 // function receives an <img> and converts its alpha data into a B&W-canvasPixelArray
 function convertAlphaMask(dimensions, maskObj){
 
-	var convertCtx = $('<canvas/>').attr({'width' : dimensions.width,'height' : dimensions.height}).get(0).getContext('2d');
+	var convertCtx = $('<canvas/>').attr({'width' : dimensions.width, 'height' : dimensions.height}).get(0).getContext('2d');
 	convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 
 	var RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
@@ -60,6 +60,7 @@ var methods = {
 			alphaMask : false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width : '', //lets you specify a pixel value used as width -- overrides all other calculations
 			height : '', //lets you specify a pixel value used as height -- overrides all other calculations
+			poster : false, // if you pass in the location of an image it will be used as posterframe when the video is not playing
 			unmult : false, //set this to true if your video material is premultiplied on black - might cause performance issues
 			shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API - only set to false if you know what you're doing
 
@@ -130,7 +131,7 @@ var methods = {
 
 			if (this.tagName === 'VIDEO'){ //no <video>: no magic!
 
-				$(this).bind('loadedmetadata.seeThru', function(){
+				$(this).on('loadedmetadata.seeThru', function(){
 
 					var
 					$this = $(this),
@@ -179,12 +180,6 @@ var methods = {
 					display = displayCanvas[0].getContext('2d'),
 					buffer = bufferCanvas[0].getContext('2d');
 
-					/*echo mouse events*/
-					displayCanvas.bind('mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur', function(e){ //see: http://www.w3.org/TR/DOM-Level-3-Events/#events-mouseevents
-
-						$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
-
-					});
 
 					/*draw static mask if needed*/
 					if (staticMask){
@@ -214,10 +209,56 @@ var methods = {
 					/*hide video and append canvas elements - DOM manipulation done*/
 					var	interval;
 
+					/* in case of posterframe usage we need a container element to position the posterframe above the canvas */
+					if (settings.poster){
+
+						$this.wrap($('<div>').css({
+
+							'position' : 'relative',
+							'width' : dimensions.width + 'px',
+							'height' : dimensions.height + 'px'
+
+						}).addClass('seeThru-container'));
+
+					}
+
 					$this.hide().data('seeThru', {'staticMask' : staticMask, 'alphaMask' : alphaMask, interval : interval}).after(bufferCanvas, displayCanvas);
 
+					/* generate poster frame overlay */
+					var $posterframe = $({});
+
+					if (settings.poster){
+
+						$posterframe = $('<div>').addClass('seeThru-poster').css({
+
+							'width' : dimensions.width + 'px',
+							'height' : dimensions.height + 'px',
+							'position' : 'absolute',
+							'top' : 0,
+							'left' : 0,
+							'background-size' : 'cover',
+							'background-position' : 'center',
+							'background-image' : 'url("' + settings.poster + '")'
+
+						});
+
+						$this.after($posterframe);
+
+					}
+
+					/*echo mouse events*/
+					displayCanvas.add($posterframe).on('mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur', function(e){ //see: http://www.w3.org/TR/DOM-Level-3-Events/#events-mouseevents
+
+						$this.trigger(e); //mouse events on the canvas representation will be echoed by the video
+
+					});
+
 					/*event handling - all events are .seeThru-namespaced*/
-					$this.bind('play.seeThru', function() { //refresh canvas elements
+					$this.on('play.seeThru', function() { //refresh canvas elements
+
+						if (settings.poster){
+							$posterframe.hide();
+						}
 
 						cancelAnimationFrame(interval);
 						interval = requestAnimationFrame(function(){
@@ -225,9 +266,13 @@ var methods = {
 						});
 						$this.data('seeThru').interval = interval;
 
-					}).bind('pause.seeThru', function(){ //stop interval on pause
+					}).on('pause.seeThru', function(){ //stop interval on pause
 
 						cancelAnimationFrame(interval);
+
+						if (settings.poster){
+							$posterframe.show();
+						}
 
 					});
 
@@ -250,7 +295,7 @@ var methods = {
 						video.play();
 						video.pause(); // fake play to initialize playhead
 
-						$this.bind('timeupdate.seeThru', function(){
+						$this.on('timeupdate.seeThru', function(){
 							drawFrame();
 						});
 
@@ -262,7 +307,7 @@ var methods = {
 
 					if (settings.end === 'loop') {
 
-						$this.bind('ended.seeThru', function(){
+						$this.on('ended.seeThru', function(){
 
 							video.play();
 
@@ -270,7 +315,7 @@ var methods = {
 
 					} else if (settings.end === 'rewind'){
 
-						$this.bind('ended.seeThru', function(){
+						$this.on('ended.seeThru', function(){
 
 							video.pause();
 							video.currentTime = 0;
@@ -289,7 +334,7 @@ var methods = {
 
 					} else {
 
-						$this.bind('ended.seeThru', function(){
+						$this.on('ended.seeThru', function(){
 
 							video.pause();
 
