@@ -8,6 +8,9 @@ Click **[here][17]** to download the current version or clone the repo:
 $ git clone git://github.com/m90/jquery-seeThru.git
 ```
 
+##Word of warning##
+This plugin is a cheap hack! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!).
+
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
  - <a href="#basic-plugin-usage">Basic Plugin Usage</a>
