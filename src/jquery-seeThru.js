@@ -60,7 +60,7 @@ var methods = {
 			alphaMask : false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width : '', //lets you specify a pixel value used as width -- overrides all other calculations
 			height : '', //lets you specify a pixel value used as height -- overrides all other calculations
-			poster : false, // if you pass in the location of an image it will be used as posterframe when the video is not playing
+			poster : false, // the plugin will display the image set in the video's poster-attribute when not playing if set to true
 			unmult : false, //set this to true if your video material is premultiplied on black - might cause performance issues
 			shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API - only set to false if you know what you're doing
 
@@ -227,7 +227,7 @@ var methods = {
 					/* generate poster frame overlay */
 					var $posterframe = $({});
 
-					if (settings.poster){
+					if (settings.poster && $this.attr('poster')){
 
 						$posterframe = $('<div>').addClass('seeThru-poster').css({
 
@@ -238,7 +238,7 @@ var methods = {
 							'left' : 0,
 							'background-size' : 'cover',
 							'background-position' : 'center',
-							'background-image' : 'url("' + settings.poster + '")'
+							'background-image' : 'url("' + video.poster + '")'
 
 						});
 
@@ -256,9 +256,7 @@ var methods = {
 					/*event handling - all events are .seeThru-namespaced*/
 					$this.on('play.seeThru', function() { //refresh canvas elements
 
-						if (settings.poster){
-							$posterframe.hide();
-						}
+						$posterframe.hide();
 
 						cancelAnimationFrame(interval);
 						interval = requestAnimationFrame(function(){
@@ -270,9 +268,7 @@ var methods = {
 
 						cancelAnimationFrame(interval);
 
-						if (settings.poster){
-							$posterframe.show();
-						}
+						$posterframe.show();
 
 					});
 
