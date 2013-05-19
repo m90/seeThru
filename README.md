@@ -85,6 +85,7 @@ There are a few options you can pass when calling the plugin:
  - `alphaMask` specifies if the plugin uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
+ - `poster` can be set to `true` if you want the video to be replaced by the image specified in the `<video>`s `poster`-attribute when in a paused state
  - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the plugin to un-premultiply the imagery. Note that this might have bad effects on performance, so it is recommended to work with unpremultiplied video sources
  - `shimRAF` can be set to false if you don't want the plugin to shim the `requestAnimationFrame` API (e.g when you are already doing this yourself or only need to support browsers that support an unprefixed `requestAnimationFrame`). The plugin is using the [Paul Irish polyfill][18]
 
