@@ -350,8 +350,8 @@ var methods = {
 						});
 					}
 
-					/*draw buffer info into display canvas*/
-					function drawFrame(req) {
+					/*draw buffer info into display canvas @req set to true makes the function call itself again via requestAnimationFrame*/
+					function drawFrame(req){
 
 						buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
 
@@ -380,6 +380,10 @@ var methods = {
 							});
 
 						}
+
+						/* enable instant garbage collection */
+						image = null;
+						alphaData = null;
 
 					}
 
