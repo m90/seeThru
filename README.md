@@ -17,6 +17,7 @@ This plugin is a cheap hack! For the lack of alpha support in HTML5 video it is 
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
  - <a href="#examples">Examples</a>
+ - <a href="#feature-testing">Feature testing</a>
  - <a href="#too-much-jquery">Too much jQuery?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
@@ -137,6 +138,11 @@ $('#myVideo').seeThru({start : 'external'}).hover(function(){
 **[Video listening to external JS calls][4]**<br>
 **[Video playing on hover][26]**<br>
 
+##Feature testing##
+I'm having a hard time finding a proper feature test for a browser's ability to use `<video>` as a source for `<canvas>` (so I could include it into the library), but for anyone interested I did find a hacky and sometimes unreliable **[test][27]** that is at least working on iOS (so one main pitfall is gone at least). If anyone does know of a proper way to test this, do not hesitate to tell me.
+
+If you do need bullet-proof results you might need to rely on UA sniffing though.
+
 ##Too much jQuery?##
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
@@ -229,3 +235,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [24]:http://caniuse.com/#feat=canvas
 [25]:http://caniuse.com/#feat=video
 [26]:http://m90.github.io/jquery-seeThru/hover.html
+[27]:https://gist.github.com/m90/5795556
