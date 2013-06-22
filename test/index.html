@@ -3,7 +3,6 @@
 <head>
 	<meta charset=utf-8>
 	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | Test Suite</title>
-	<link href="lib/qunit.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -17,17 +16,25 @@
 	<script type="text/javascript" src="lib/qunit.js"></script>
 	<script type="text/javascript" src="lib/jquery-seeThru.min.js"></script>
 	<script>
+	test('setup', function(){
+		ok(true, 'qunit up and running');
+	});
+
 	$(document).ready(function(){
 
 		$('#test-video').seeThru({});
 
+		test('visibility', function(){
+
+			ok(!($('#test-video').is(':visible')), 'video is hidden');
+			ok($('.seeThru-display').is(':visible'), 'canvas is shown');
+			ok(!$('.seeThru-buffer').is(':visible'), 'buffer is hidden');
+
+		});
+
 	});
 
-	test('visibility', function(){
 
-		ok(!$('#test-video').is(':visible'));
-
-	});
 	</script>
 </body>
 </html>

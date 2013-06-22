@@ -18,11 +18,21 @@ module.exports = function(grunt){
 			}
 		},
 		qunit: {
-			all: ['test/*.html']
+			options : {
+				urls : ['http://127.0.0.1:8000/index.html']
+			}
+		},
+		connect: {
+			server: {
+				options: {
+					port: 8000,
+					base: 'test/'
+				}
+			}
 		},
 		jshint: {
 			files: ['Gruntfile.js', 'src/*.js'],
-			options: {
+				options: {
 				// options here to override JSHint defaults
 				globals: {
 					jQuery: true,
@@ -36,9 +46,10 @@ module.exports = function(grunt){
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 
-	grunt.registerTask('test', ['uglify:test', 'jshint', 'qunit']);
+	grunt.registerTask('test', ['jshint', 'uglify:test', 'connect' /* canvas needs a webserver for testing */, 'qunit']);
 	grunt.registerTask('default', ['jshint', 'uglify:dist']);
 
 };
