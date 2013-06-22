@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | Test Suite</title>
+	<link href="lib/qunit.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+
+	<video onended="this.play();" autoplay loop id="test-video">
+		<source src="media/kolor.mp4" type="video/mp4" />
+		<source src="media/kolor.ogg" type="video/ogg" />
+	</video>
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/qunit.js"></script>
+	<script type="text/javascript" src="lib/jquery-seeThru.min.js"></script>
+	<script>
+	$(document).ready(function(){
+
+		$('#test-video').seeThru({});
+
+	});
+
+	test('visibility', function(){
+
+		ok(!$('#test-video').is(':visible'));
+
+	});
+	</script>
+</body>
+</html>

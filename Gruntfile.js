@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function(grunt){
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -8,28 +8,37 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'dist/<%= pkg.version %>/jquery-seeThru.min.js': 'src/jquery-seeThru.js'
+					'dist/<%= pkg.version %>/jquery-seeThru.min.js' : 'src/jquery-seeThru.js'
+				}
+			},
+			test: {
+				files: {
+					'test/lib/jquery-seeThru.min.js' : 'src/jquery-seeThru.js'
 				}
 			}
+		},
+		qunit: {
+			all: ['test/*.html']
 		},
 		jshint: {
 			files: ['Gruntfile.js', 'src/*.js'],
 			options: {
-		// options here to override JSHint defaults
-		globals: {
-			jQuery: true,
-			console: true,
-			module: true,
-			document: true
+				// options here to override JSHint defaults
+				globals: {
+					jQuery: true,
+					console: true,
+					module: true,
+					document: true
+				}
+			}
 		}
-	}
-}
-});
+	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-qunit');
 
-	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('default', ['jshint', 'uglify']);
+	grunt.registerTask('test', ['uglify:test', 'jshint', 'qunit']);
+	grunt.registerTask('default', ['jshint', 'uglify:dist']);
 
 };
