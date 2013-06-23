@@ -17,6 +17,7 @@ This plugin is a cheap hack! For the lack of alpha support in HTML5 video it is 
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
  - <a href="#examples">Examples</a>
+ - <a href="#feature-testing">Feature testing</a>
  - <a href="#too-much-jquery">Too much jQuery?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
@@ -137,11 +138,18 @@ $('#myVideo').seeThru({start : 'external'}).hover(function(){
 **[Video listening to external JS calls][4]**<br>
 **[Video playing on hover][26]**<br>
 
+##Feature testing##
+I'm having a hard time finding a proper feature test for a browser's ability to use `<video>` as a source for `<canvas>` (so I could include it into the library), but for anyone interested I did find a hacky and sometimes unreliable **[test][27]** that is at least working on iOS (so one main pitfall is gone at least). If anyone does know of a proper way to test this, do not hesitate to tell me.
+
+If you do need bullet-proof results you might need to rely on UA sniffing though.
+
 ##Too much jQuery?##
 If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
 ##Cross Domain issues with canvas-elements##
-Please note that JavaScript's canvas-methods are subject to cross domain security restrictions, so please be aware that the video source files have to be coming from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will get a DOM Security Exception. Please also note that this also applies to subdomains, therefore you shouldn't mix www and non-www-URLs (an easy way to avoid this would be using relative pathes, btw).
+Please note that JavaScript's canvas-methods are subject to cross domain security restrictions, so please be aware that the video source files have to be coming from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will get a DOM Security Exception. Please also note that this also applies to subdomains, therefore you shouldn't mix www and non-www-URLs.
+
+If you're living on the cutting edge (the 2007 kind of) you can also use **[CORS][28]** of course!
 
 ##Binding mouse events to your video##
 To mimic a behavior as if the original video was still visible it will echo all mouse events fired by the canvas representation. This means that you can still do sth like:
@@ -229,3 +237,5 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [24]:http://caniuse.com/#feat=canvas
 [25]:http://caniuse.com/#feat=video
 [26]:http://m90.github.io/jquery-seeThru/hover.html
+[27]:https://gist.github.com/m90/5795556
+[28]:http://www.html5rocks.com/en/tutorials/cors/

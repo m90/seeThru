@@ -381,10 +381,6 @@ var methods = {
 
 						}
 
-						/* enable instant garbage collection */
-						image = null;
-						alphaData = null;
-
 					}
 
 				});
