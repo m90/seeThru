@@ -119,6 +119,23 @@
 
 		});
 
+		//plugin actually draws frame on canvas
+		test('hasData', 1, function(){
+
+			$testvideo.seeThru({'start' : 'clicktoplay'});
+
+			stop();
+			setTimeout(function(){
+
+				var data = $('.seeThru-display')[0].getContext('2d').getImageData(200, 200, 100, 100).data;
+				ok(Math.max.apply(Math, data) > 0);
+				$testvideo.seeThru('revert');
+				start();
+
+			}, 50);
+
+		});
+
 
 	});
 
