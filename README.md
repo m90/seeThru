@@ -4,9 +4,14 @@ This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video
 
 ##Direct Download##
 Click **[here][17]** to download the current version or clone the repo:
-```
+```sh
 $ git clone git://github.com/m90/jquery-seeThru.git
 ```
+If you're using Bower you can install the package using:
+```sh
+$ bower install jquery-seeThru
+```
+
 
 ##Word of warning##
 This plugin is a cheap hack! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!).
