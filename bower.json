@@ -2,8 +2,13 @@
   "name": "jquery-seeThru",
   "version": "1.0.1",
   "main": "dist/1.0.1/jquery-seeThru.min.js",
+  "dependencies" : {
+    "jquery" : ">=1.7.1"
+  },
   "ignore": [
-    "**/.*",
+    "Gruntfile.js",
+    "package.json",
+    "seethru.jquery.json",
     "node_modules",
     "bower_components",
     "test",
