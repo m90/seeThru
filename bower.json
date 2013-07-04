@@ -1,0 +1,12 @@
+{
+  "name": "jquery-seeThru",
+  "version": "1.0.1",
+  "main": "dist/1.0.1/jquery-seeThru.min.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "media"
+  ]
+}
