@@ -108,6 +108,12 @@
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery-seeThru.min.js"></script>
 	<script>
+	if (new RegExp('(iPad|iPhone|iPod)', 'g').test(navigator.userAgent)){
+
+		alert('Oh Hi! Unfortunately this plugin does not work on iOS. Read the docs for further info on that!');
+
+	}
+
 	$(document).ready(function(){
 		$('#staticAlphaDemo').seeThru({mask:'#staticAlphaMask'});
 	});
