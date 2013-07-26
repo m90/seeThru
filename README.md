@@ -2,19 +2,19 @@
 
 This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
 
-##Direct Download##
+##Download / Installation##
 Click **[here][17]** to download the current version or clone the repo:
-```sh
+```bash
 $ git clone git://github.com/m90/jquery-seeThru.git
 ```
 If you're using Bower you can install the package using:
-```sh
+```bash
 $ bower install jquery-seeThru
 ```
 
 
 ##Word of warning##
-This plugin is a cheap hack! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!).
+This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
