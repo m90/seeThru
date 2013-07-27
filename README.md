@@ -2,6 +2,8 @@
 
 This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
 
+**Breaking News**: Apparently support for VP8/WebM-video with Alpha Transparencies has just landed in Chrome Canary so let's hope other browser vendors will catch up soon. See the **[article at HTML5 Rocks][29]**.
+
 ##Download / Installation##
 Click **[here][17]** to download the current version or clone the repo:
 ```bash
@@ -244,3 +246,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [26]:http://m90.github.io/jquery-seeThru/hover.html
 [27]:https://gist.github.com/m90/5795556
 [28]:http://www.html5rocks.com/en/tutorials/cors/
+[29]:http://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
