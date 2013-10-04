@@ -379,7 +379,7 @@ var methods = {
 								drawFrame(true);
 							});
 
-                            $this.data('seeThru').interval = interval;
+							$this.data('seeThru').interval = interval;
 
 						}
 
