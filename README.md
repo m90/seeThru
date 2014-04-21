@@ -14,7 +14,6 @@ If you're using Bower you can install the package using:
 $ bower install jquery-seeThru
 ```
 
-
 ##Word of warning##
 This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
 
@@ -34,7 +33,7 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#tldr">tl;dr</a>
  - <a href="#changelog">Changelog</a>
- - <a href="#licensing">Licensing</a>
+ - <a href="#license">License</a>
 
 ##Video setup##
 In default configuration the plugin assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being interpreted as fully opaque and black being fully transparent (colored information will be averaged).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
@@ -212,17 +211,17 @@ Voila! Here's an [example][1]. Ready to :shipit:?
 
 Older versions (< 0.9.6) are available at **[Google Code][9]**
 
-##Licensing##
-This plugin is licensed under the **[MIT License][11]**, demo content, video and imagery is **[CC-BY-SA 3.0][12]**
+##License##
+All source code is licensed under the **[MIT License][11]**, demo content, video and imagery is **[CC-BY-SA 3.0][12]**
 
 ##Thank you##
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
 ![Footer image][10]
 
-[1]:http://m90.github.io/jquery-seeThru/movingAlpha.html
-[2]:http://m90.github.io/jquery-seeThru/staticAlpha.html
-[3]:http://m90.github.io/jquery-seeThru/swapAlpha.html
-[4]:http://m90.github.io/jquery-seeThru/external.html
+[1]:http://m90.github.io/jquery-seeThru/moving-alpha/
+[2]:http://m90.github.io/jquery-seeThru/static-alpha/
+[3]:http://m90.github.io/jquery-seeThru/swap-alpha/
+[4]:http://m90.github.io/jquery-seeThru/external/
 [5]:http://www.frederikring.com/seeThru/img/seeThruDemo.png
 [6]:http://www.frederikring.com/seeThru/img/seeThruResult.png
 [7]:http://www.jakearchibald.com
@@ -237,13 +236,13 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [16]:http://www.redgiantsoftware.com/products/all/knoll-unmult-free
 [17]:https://github.com/m90/jquery-seeThru/zipball/master
 [18]:http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-[20]:http://www.frederikring.com/seeThru/img/seeThru_AE_01.jpg
-[21]:http://www.frederikring.com/seeThru/img/seeThru_AE_02.jpg
-[22]:http://www.frederikring.com/seeThru/img/seeThru_AE_03.jpg
-[23]:http://www.frederikring.com/seeThru/img/seeThru_AE_04.jpg
+[20]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_01.jpg
+[21]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_02.jpg
+[22]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_03.jpg
+[23]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_04.jpg
 [24]:http://caniuse.com/#feat=canvas
 [25]:http://caniuse.com/#feat=video
-[26]:http://m90.github.io/jquery-seeThru/hover.html
+[26]:http://m90.github.io/jquery-seeThru/hover/
 [27]:https://gist.github.com/m90/5795556
 [28]:http://www.html5rocks.com/en/tutorials/cors/
 [29]:http://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
