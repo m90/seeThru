@@ -1,9 +1,8 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset=utf-8>
-	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | Moving Alpha Demo</title>
-	<link href="css/normalize.css" rel="stylesheet" type="text/css" />
+	<meta charset="utf-8">
+	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | Static Alpha Demo</title>
 	<link href="//fonts.googleapis.com/css?family=Lekton:400,700" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 	body{
@@ -35,8 +34,8 @@
 	}
 	h2{
 		font-weight: normal;
-		font-size: 90%;
 		margin-top: 0px;
+		font-size: 90%;
 	}
 	h3{
 		font-weight: bold;
@@ -84,17 +83,21 @@
 		<div id="content">
 
 			<div class="demo">
-				<h3>Moving alpha integrated in video</h3>
+				<h3>Static alpha sourced from an image</h3>
 				<video onended="this.play();" autoplay loop>
-					<source src="video/kolor.mp4" type="video/mp4" />
-					<source src="video/kolor.ogg" type="video/ogg" />
+					<source src="../video/robbe.mp4" type="video/mp4" />
+					<source src="../video/robbe.ogg" type="video/ogg" />
 				</video>
-				<p>with <span class="code">$('#select').seeThru();</span> results in:</p>
-				<video autoplay loop id="movingAlphaDemo">
-					<source src="video/kolor.mp4" type="video/mp4" />
-					<source src="video/kolor.ogg" type="video/ogg" />
+				<p>and</p>
+				<img src="../img/robbe-mask.png" alt="Mask" />
+				<p>with <span class="code">$('#select').seeThru({mask:'#myMask'});</span> results in:</p>
+				<video class="inAction" id="staticAlphaDemo" autoplay loop>
+					<source src="../video/robbe.mp4" type="video/mp4" />
+					<source src="../video/robbe.ogg" type="video/ogg" />
 				</video>
+				<img class="inAction" id="staticAlphaMask" src="../img/robbe-mask.png" alt="Mask" />
 			</div>
+
 			<div class="demo">Back to <a href="https://github.com/m90/jquery-seeThru">GitHub</a></div>
 			<div class="demo">
 				<div class="g-plusone"></div>
@@ -102,7 +105,7 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery-seeThru.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-seeThru.min.js"></script>
 	<script>
 	if (new RegExp('(iPad|iPhone|iPod)', 'g').test(navigator.userAgent)){
 
@@ -111,8 +114,9 @@
 	}
 
 	$(document).ready(function(){
-		$('#movingAlphaDemo').seeThru({});
+		$('#staticAlphaDemo').seeThru({mask:'#staticAlphaMask'});
 	});
 	</script>
+
 </body>
 </html>
