@@ -196,6 +196,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v1.0.2: refactor a little and fix issue #11
    * v1.0.1: added poster option, plugin now requires jquery 1.7+ as it's using `.on()` instead of `.bind()` now
    * v1.0.0: using grunt for minification and linting now, removed version number from files, added a `shimRAF` option, added `unmult` option, code clean up
    * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com, video's loop attribute will be overridden if the plugin is set to `'end' : 'stop'`

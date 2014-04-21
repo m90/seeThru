@@ -4,7 +4,7 @@ module.exports = function(grunt){
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> see https://github.com/m90/jquery-seeThru for details*/\n'
+				banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> see https://github.com/m90/jquery-seeThru for details */\n'
 			},
 			dist: {
 				files: {
@@ -19,8 +19,8 @@ module.exports = function(grunt){
 		},
 		jshint: {
 			files: ['Gruntfile.js', 'src/*.js'],
-				options: {
-				// options here to override JSHint defaults
+			options: {
+				laxcomma: true,
 				globals: {
 					jQuery: true,
 					console: true,
