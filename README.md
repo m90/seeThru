@@ -223,12 +223,12 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [2]:http://m90.github.io/jquery-seeThru/static-alpha/
 [3]:http://m90.github.io/jquery-seeThru/swap-alpha/
 [4]:http://m90.github.io/jquery-seeThru/external/
-[5]:http://www.frederikring.com/seeThru/img/seeThruDemo.png
-[6]:http://www.frederikring.com/seeThru/img/seeThruResult.png
+[5]:http://m90.github.io/jquery-seeThru/img/seeThruDemo.png
+[6]:http://m90.github.io/jquery-seeThru/img/seeThruResult.png
 [7]:http://www.jakearchibald.com
 [8]:http://www.kathikaeppel.de
 [9]:http://code.google.com/p/jquery-seethru/
-[10]:http://www.frederikring.com/seeThru/img/footer.png
+[10]:http://m90.github.io/jquery-seeThru/img/footer.png
 [11]:http://www.opensource.org/licenses/mit-license.php
 [12]:http://creativecommons.org/licenses/by-sa/3.0/
 [13]:https://gist.github.com/2469449
