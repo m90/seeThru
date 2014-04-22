@@ -398,7 +398,7 @@ var methods = {
 								drawFrame(true);
 							});
 
-							if ($this.data('seeThru') && 'interval' in $this.data('seeThru')){
+							if ($this.data('seeThru')){
 								$this.data('seeThru').interval = interval;
 							}
 
