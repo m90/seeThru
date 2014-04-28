@@ -17,6 +17,11 @@ module.exports = function(grunt){
 				}
 			}
 		},
+		bump: {
+			options: {
+    			files: ['package.json', 'bower.json', 'seethru.jquery.json']
+			}
+		},
 		jshint: {
 			files: ['Gruntfile.js', 'src/*.js'],
 			options: {
@@ -33,7 +38,9 @@ module.exports = function(grunt){
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-bump');
 	grunt.registerTask('test', ['jshint', 'uglify:test']);
 	grunt.registerTask('default', ['jshint', 'uglify']);
+	grunt.registerTask('patch', ['bump-only:patch']);
 
 };
