@@ -61,7 +61,7 @@ Basic HTML5 video markup should look something like this:
 
 In case you are planning to have your video set to autoplay or loop you can do this when initializing the plugin. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
 To make the magic happen you just have to do the following:<br/>
-Include jQuery (needs 1.7+) and the plugin in your `<head>`:
+Include jQuery (needs 1.7+) and the plugin:
 
 ```html
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -71,6 +71,12 @@ and then call the following jQuery method on your video (preferrably on `$(docum
 
 ```javascript
 $(document).ready(function(){
+    $('#myVideo').seeThru();
+});
+```
+If you're using AMD / require.js load the plugin like:
+```javascript
+require(['jquery', 'jquery-seeThru'], function($){
     $('#myVideo').seeThru();
 });
 ```
@@ -196,6 +202,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v1.0.3: enable AMD usage
    * v1.0.2: refactor a little and fix issue #11
    * v1.0.1: added poster option, plugin now requires jquery 1.7+ as it's using `.on()` instead of `.bind()` now
    * v1.0.0: using grunt for minification and linting now, removed version number from files, added a `shimRAF` option, added `unmult` option, code clean up

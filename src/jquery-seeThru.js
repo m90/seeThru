@@ -10,7 +10,13 @@
 * see https://github.com/m90/jquery-seeThru for documentation
 */
 
-;(function($){
+(function(root, factory){
+	if (typeof define === 'function' && define.amd){
+		define(['jquery'], factory);
+	} else {
+		factory(root.jQuery);
+	}
+})(this, function($){
 
 /**
 * convert an image node into a black & white canvasPixelArray
@@ -548,4 +554,4 @@ $.fn.seeThru = function(method){ // Method calling logic -- see: http://docs.jqu
 
 };
 
-})(jQuery);
+});
