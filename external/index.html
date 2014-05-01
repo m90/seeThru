@@ -1,145 +1,119 @@
 <!doctype html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies | External Controls Demo</title>
-	<link href="//fonts.googleapis.com/css?family=Lekton:400,700" rel="stylesheet" type="text/css" />
-	<style type="text/css">
-	body{
-		font-family: Lekton, Arial, Helvetica;
-		text-align: center;
-	}
-	#wrap{
-		height: 100%;
-		width: 600px;
-		margin: auto;
-		background-color: white;
-		-moz-box-shadow:
-		inset 5px 0 5px -5px #333,
-		inset -5px 0 5px -5px #333;
-		-webkit-box-shadow:
-		inset 5px 0 5px -5px #333,
-		inset -5px 0 5px -5px #333;
-		box-shadow:
-		inset 5px 0 5px -5px #333,
-		inset -5px 0 5px -5px #333;
-		background-color: #b3b3b3;
-	}
-	h1{
-		font-size: 48px;
-		font-weight: bold;
-		margin-top: 0px;
-		margin-bottom: 0px;
-		padding-top: 24px;
-	}
-	h2{
-		font-weight: normal;
-		font-size: 90%;
-		margin-top: 0px;
-	}
-	h3{
-		font-weight: bold;
-	}
-	.demo {
-		padding: 20px 20px 20px 20px;
-		border-bottom: 1px dotted white;
-	}
-	.demo video, .demo canvas, .demo img{
-	}
-	.code{
-		font-family: Courier, monospace;
-		background-color: white;
-	}
-	.inAction{
-		display: none;
-	}
-	#alphaToggle{
-		text-decoration: underline;
-		cursor: pointer;
-	}
-	#content{
-		border-top: 1px dotted white;
-	}
-	.button{
-		cursor: pointer;
-		text-decoration: underline;
-	}
-	</style>
-	<script type="text/javascript">
-
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-365790-10']);
-	_gaq.push(['_trackPageview']);
-
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
-
-	</script>
-</head>
-<body>
-	<div id="wrap">
-		<h1>jQuery seeThru</h1>
-		<h2>Alpha channel transparencies for HTML5 &lt;video&gt;-elements</h2>
-		<div id="content">
-
-			<div class="demo">
-				<h3>Video listening to external JS calls</h3>
-				<video id="video">
-					<source src="../video/kolor.mp4" type="video/mp4" />
-					<source src="../video/kolor.ogg" type="video/ogg" />
-				</video>
-				<p><span id="play" class="button">Play</span> or <span id="pause" class="button">Pause</span><br/>or click the video image to toggle</p>
-			</div>
-			<div class="demo">Back to <a href="https://github.com/m90/jquery-seeThru">GitHub</a></div>
-			<div class="demo">
-				<div class="g-plusone"></div>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/jquery-seeThru.min.js"></script>
-
-	<script>
-
-	if (new RegExp('(iPad|iPhone|iPod)', 'g').test(navigator.userAgent)){
-
-		alert('Oh Hi! Unfortunately this plugin does not work on iOS. Read the docs for further info on that!');
-
-	}
-
-	$(document).ready(function(){
-
-		var playing = false;
-
-		$('#video').seeThru({start:'external'});
-
-		$('#play').click(function(){
-			document.getElementById('video').play();
-			playing = true;
-		});
-
-		$('#pause').click(function(){
-			document.getElementById('video').pause();
-			playing = false;
-		});
-
-		$('#video').click(function(){
-
-			if(playing){
-				document.getElementById('video').pause();
-			}else{
-				document.getElementById('video').play();
-			}
-
-			playing = !playing;
-
-		});
-
-	});
-
-	</script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Control video via external JS interface | jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies</title>
+    <link href="//fonts.googleapis.com/css?family=Lekton:400,700" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+      body {
+        font-family: Lekton, Arial, Helvetica;
+        text-align: center;
+      }
+      #wrap {
+        height: 100%;
+        width: 600px;
+        margin: auto;
+        background-color: white;
+        box-shadow: inset 5px 0 5px -5px #333, inset -5px 0 5px -5px #333;
+        background-color: #b3b3b3;
+      }
+      h1 {
+        font-size: 48px;
+        font-weight: bold;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-top: 24px;
+      }
+      h2 {
+        font-weight: normal;
+        font-size: 90%;
+        margin-top: 0px;
+      }
+      h3 {
+        font-weight: bold;
+      }
+      .demo {
+        padding: 20px 20px 20px 20px;
+        border-bottom: 1px dotted white;
+      }
+      .code {
+        font-family: Courier, monospace;
+        background-color: white;
+      }
+      .inAction {
+        display: none;
+      }
+      #alphaToggle {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      #content {
+        border-top: 1px dotted white;
+      }
+      .button {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    </style>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-365790-10']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-seeThru.min.js"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <h1>jQuery seeThru</h1>
+      <h2>Alpha channel transparencies for HTML5 &lt;video&gt;-elements</h2>
+      <div id="content">
+        <div class="demo">
+          <h3>Video listening to external JS calls</h3>
+          <video id="video">
+            <source src="../video/kolor.mp4" type="video/mp4" />
+            <source src="../video/kolor.ogg" type="video/ogg" />
+          </video>
+          <p><span id="play" class="button">Play</span>  or <span id="pause" class="button">Pause</span> 
+            <br/>or click the video image to toggle</p>
+        </div>
+        <div class="demo">Back to
+          <a href="https://github.com/m90/jquery-seeThru">GitHub</a> 
+        </div>
+        <script>
+          $(document).ready(function() {
+            var playing = false;
+            $('#video').seeThru({
+              start: 'external'
+            });
+            $('#play').click(function() {
+              document.getElementById('video').play();
+              playing = true;
+            });
+            $('#pause').click(function() {
+              document.getElementById('video').pause();
+              playing = false;
+            });
+            $('#video').click(function() {
+              document.getElementById('video')[playing ? 'pause' : 'play']();
+              playing = !playing;
+            });
+          });
+        </script>
+      </div>
+    </div>
+    <script>
+      if (new RegExp('iPad|iPhone|iPod|Android', 'g').test(navigator.userAgent)) {
+        alert('Oh Hi! Unfortunately this plugin does not work on iOS and Android. Read the docs for further info on that!');
+      }
+    </script>
+  </body>
 </html>

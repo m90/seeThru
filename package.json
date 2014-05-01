@@ -1,0 +1,32 @@
+{
+  "name": "jquery-seeThru",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "^0.4.1",
+    "grunt-bump": "^0.0.13",
+    "grunt-contrib-connect": "^0.3.0",
+    "grunt-contrib-qunit": "^0.2.2",
+    "grunt-contrib-jshint": "^0.4.0",
+    "grunt-contrib-uglify": "^0.2.0"
+  },
+  "devDependencies": {
+    "assemble": "^0.4.37",
+    "grunt": "^0.4.4",
+    "pretty": "^0.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/m90/jquery-seeThru.git#gh-pages"
+  },
+  "author": "Frederik Ring",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m90/jquery-seeThru.git#gh-pages/issues"
+  },
+  "homepage": "https://github.com/m90/jquery-seeThru.git#gh-pages"
+}
