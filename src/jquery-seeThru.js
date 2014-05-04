@@ -66,11 +66,6 @@ var methods = {
 
 	init : function(options) {
 
-		//options passed?
-		if (!options){
-			options = {};
-		}
-
 		/* OPTIONS */
 		var settings = $.extend({
 			start : 'autoplay' //'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
@@ -82,22 +77,24 @@ var methods = {
 			, poster : false // the plugin will display the image set in the video's poster-attribute when not playing if set to true
 			, unmult : false //set this to true if your video material is premultiplied on black - might cause performance issues
 			, shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API - only set to false if you know what you're doing
-		}, options);
+		}, options || {});
 
 		//shim requestAnimationFrame API if needed and not already done
 		if (settings.shimRAF && !window.requestAnimationFrame){
 
-			(function() {
+			(function(){
 
-				var lastTime = 0;
-				var vendors = ['ms', 'moz', 'webkit', 'o'];
-				for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+				var
+				lastTime = 0
+				, vendors = ['ms', 'moz', 'webkit', 'o'];
+
+				for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x){
 					window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
 					window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
 				}
 
-				if (!window.requestAnimationFrame)
-					window.requestAnimationFrame = function(callback, element) {
+				if (!window.requestAnimationFrame){
+					window.requestAnimationFrame = function(callback){
 						var currTime = new Date().getTime();
 						var timeToCall = Math.max(0, 16 - (currTime - lastTime));
 						var id = window.setTimeout(function(){
@@ -105,12 +102,14 @@ var methods = {
 						}, timeToCall);
 						lastTime = currTime + timeToCall;
 						return id;
-				};
+					};
+				}
 
-				if (!window.cancelAnimationFrame)
-					window.cancelAnimationFrame = function(id) {
+				if (!window.cancelAnimationFrame){
+					window.cancelAnimationFrame = function(id){
 						clearTimeout(id);
 					};
+				}
 
 			}());
 
@@ -152,7 +151,6 @@ var methods = {
 					var
 					$this = $(this)
 					, video = this
-					, $window = $(window)
 					, divisor = staticMask ? 1 : 2 //static alpha data will not cut the image dimensions
 					, dimensions = { // calculate dimensions
 						width : parseInt(settings.width, 10)
@@ -297,19 +295,13 @@ var methods = {
 						$this.data('seeThru').interval = interval;
 
 					}).on('pause.seeThru', function(){ //stop interval on pause
-
 						cancelAnimationFrame(interval);
-
 						$posterframe.show();
-
 					});
 
 					if (settings.start === 'autoplay'){
-
 						$this.trigger('play.seeThru'); //trigger play
-
 					} else if (settings.start === 'clicktoplay'){
-
 						video.play();
 						video.pause(); // fake play to initialize playhead
 						drawFrame();
@@ -317,17 +309,12 @@ var methods = {
 						displayCanvas.one('click.seeThru', function(){
 							video.play();
 						});
-
 					} else if (settings.start === 'external'){
-
 						video.play();
 						video.pause(); // fake play to initialize playhead
 						drawFrame();
-
 					} else {
-
 						video.play();
-
 					}
 
 					if (settings.end === 'loop') {
@@ -420,7 +407,7 @@ var methods = {
 
 			} else {
 
-				$.error('Selected element must be <video> element');
+				throw new Error('Selected element must be <video> element');
 
 			}
 
@@ -549,7 +536,7 @@ $.fn.seeThru = function(method){ // Method calling logic -- see: http://docs.jqu
 	} else if (typeof method === 'object' || !method) {
 		return methods.init.apply(this, arguments);
 	} else {
-		$.error('Method ' +  method + ' does not exist on jQuery.seeThru');
+		throw new Error('Method ' +  method + ' does not exist on jQuery.seeThru');
 	}
 
 };

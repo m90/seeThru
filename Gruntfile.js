@@ -19,7 +19,7 @@ module.exports = function(grunt){
 		},
 		bump: {
 			options: {
-    			files: ['package.json', 'bower.json', 'seethru.jquery.json']
+				files: ['package.json', 'bower.json', 'seethru.jquery.json']
 			}
 		},
 		jshint: {
