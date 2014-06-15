@@ -167,7 +167,7 @@ $ npm install
 Now you are ready to use the script:
 
 ```sh
-$ ./configure.js --in myvideo.mov --out myvideo-converted.mov
+$ ./converter.js --in myvideo.mov --out myvideo-converted.mov
 ```
 
 ##Preparing video sources in Adobe After Effects##
