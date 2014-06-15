@@ -89,6 +89,12 @@ require(['jquery', 'jquery-seeThru'], function($){
     $('#myVideo').seeThru();
 });
 ```
+Using browserify, simply require the plugin:
+```javascript
+var $ = require('jquery');
+require('jquery-seethru');
+$('#myVideo').seeThru();
+```
 
 If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display:none;` in your CSS.<br/>In case you want to style the generated canvas elements, the generated markup (you don't have to add this portion - the plugin does this) looks like this:
 ```html
@@ -162,7 +168,7 @@ $('#myVideo').seeThru({start : 'external'}).hover(function(){
 ##Preparing video sources using `seethru-convert`##
 The plugin ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (`.mov`s should work best here - also make sure the video actually contains an alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
 
-To use the script you need to have `node.js` and `ffmpeg` installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
+To use the script you need to have [`node.js`][30] and [`ffmpeg`][31] installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
 
 ```sh
 $ npm install jquery-seethru -g
@@ -283,3 +289,5 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [27]:https://gist.github.com/m90/5795556
 [28]:http://www.html5rocks.com/en/tutorials/cors/
 [29]:http://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
+[30]:http://nodejs.org
+[31]:http://ffmpeg.org

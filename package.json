@@ -1,6 +1,6 @@
 {
   "name": "jquery-seethru",
-  "description" : "",
+  "description" : "HTML5 video with alpha channel transparencies",
   "version": "1.1.1",
   "author": {
     "name": "Frederik Ring",
