@@ -19,7 +19,7 @@ $ bower install jquery-seeThru
 ```
 
 ##Word of warning##
-This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
+This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video on an old machine with 39 tabs open. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
@@ -69,7 +69,7 @@ To make the magic happen you just have to do the following:<br/>
 Include jQuery (needs 1.7+) and the plugin:
 
 ```html
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="jquery-seeThru.min.js"></script>
 ```
 and then call the following jQuery method on your video (preferrably on `$(document).ready`):
@@ -181,7 +181,6 @@ Duplicate your footage layer, align them, and use the second instance as Alpha T
 ![After Effects walkthru 3][22]<br/>
 Make sure you are using an unmultiplied (straight) version of your color source:
 ![After Effects walkthru 4][23]<br/>
-If you don't want to use a GUI based approach, this can also be done using ffmpeg something like **[this](http://stackoverflow.com/questions/9293265/ffmpeg-2-videos-transcoded-and-side-by-side-in-1-frame)**
 
 ##Feature testing##
 I'm having a hard time finding a proper feature test for a browser's ability to use `<video>` as a source for `<canvas>` (so I could include it into the library), but for anyone interested I did find a hacky and sometimes unreliable **[test][27]** that is at least working on iOS (so one main pitfall is gone at least). If anyone does know of a proper way to test this, do not hesitate to tell me.
@@ -218,7 +217,7 @@ Tested on Chrome, Firefox, Safari, Opera and IE 9.0+
 (the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features have a look at <a href="http://www.modernizr.com/">Modernizr</a>
 
 ##tl;dr##
-Put a black-and white alpha channel right underneath your `<video>` source (in the same file), load jQuery and let the plugin do magical things:
+Put a black-and white alpha channel right underneath your `<video>` source (in the same file), make sure jQuery is loaded and let the plugin do magical things:
 <code>
 $('#myRadVideoNeedsTransparencies').seeThru();
 </code><br>
