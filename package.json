@@ -1,11 +1,15 @@
 {
   "name": "jQuery-seeThru",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "private": true,
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
     "grunt-contrib-jshint": "~0.4.0",
     "grunt-contrib-uglify": "~0.2.0"
+  },
+  "dependencies": {
+    "fluent-ffmpeg": "^1.7.2",
+    "yargs": "^1.2.3"
   }
 }

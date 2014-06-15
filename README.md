@@ -1,6 +1,10 @@
 #jQuery seeThru - HTML5 video with alpha channel transparencies#
 
-This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video>` elements.<br/>The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
+This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
+
+The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
+
+It also ships with a simple node.js script for automatically converting your video sources.
 
 **Breaking News**: Apparently support for VP8/WebM-video with Alpha Transparencies has just landed in Chrome Canary so let's hope other browser vendors will catch up soon. See the **[article at HTML5 Rocks][29]**.
 
@@ -23,6 +27,8 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
  - <a href="#examples">Examples</a>
+ - <a href="#preparing-video-sources-using-converter-js">Preparing video sources using `converter.js`</a>
+ - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#feature-testing">Feature testing</a>
  - <a href="#too-much-jquery">Too much jQuery?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
@@ -30,7 +36,6 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#safari-6-issues">Safari 6 issues</a>
  - <a href="#mobile-devices--tablets">Mobile devices & tablets</a>
  - <a href="#browser-support">Browser support</a>
- - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#tldr">tl;dr</a>
  - <a href="#changelog">Changelog</a>
  - <a href="#license">License</a>
@@ -150,6 +155,34 @@ $('#myVideo').seeThru({start : 'external'}).hover(function(){
 **[Video listening to external JS calls][4]**<br>
 **[Video playing on hover][26]**<br>
 
+##Preparing video sources using `converter.js`##
+The plugin ships with a CLI script (`converter.js`) that will automatically prepare your video sources for you. Just pass a video with alpha information and it will automatically separate alpha and RGB information and place them in the same video file.
+
+To use the script you need to have `node.js` and `ffmpeg` installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the script's dependencies:
+
+```sh
+$ npm install
+```
+
+Now you are ready to use the script:
+
+```sh
+$ ./configure.js --in myvideo.mov --out myvideo-converted.mov
+```
+
+##Preparing video sources in Adobe After Effects##
+Of course you can also use standard video editing software to prepare the sources. This walkthrough shows how to do it using Adobe After Effects.
+
+Put your animation with alpha in a composition:
+![After Effects walkthru 1][20]<br/>
+Double the composition's height:
+![After Effects walkthru 2][21]<br/>
+Duplicate your footage layer, align them, and use the second instance as Alpha Track Matte for a white solid:
+![After Effects walkthru 3][22]<br/>
+Make sure you are using an unmultiplied (straight) version of your color source:
+![After Effects walkthru 4][23]<br/>
+If you don't want to use a GUI based approach, this can also be done using ffmpeg something like **[this](http://stackoverflow.com/questions/9293265/ffmpeg-2-videos-transcoded-and-side-by-side-in-1-frame)**
+
 ##Feature testing##
 I'm having a hard time finding a proper feature test for a browser's ability to use `<video>` as a source for `<canvas>` (so I could include it into the library), but for anyone interested I did find a hacky and sometimes unreliable **[test][27]** that is at least working on iOS (so one main pitfall is gone at least). If anyone does know of a proper way to test this, do not hesitate to tell me.
 
@@ -184,16 +217,6 @@ Apparently Android 3.1+ will play `<video>` inline, but I do not have any experi
 Tested on Chrome, Firefox, Safari, Opera and IE 9.0+
 (the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features have a look at <a href="http://www.modernizr.com/">Modernizr</a>
 
-##Preparing video sources in Adobe After Effects##
-Put your animation with alpha in a composition:
-![After Effects walkthru 1][20]<br/>
-Double the composition's height:
-![After Effects walkthru 2][21]<br/>
-Duplicate your footage layer, align them, and use the second instance as Alpha Track Matte for a white solid:
-![After Effects walkthru 3][22]<br/>
-Make sure you are using an unmultiplied (straight) version of your color source:
-![After Effects walkthru 4][23]<br/>
-If you don't want to use a GUI based approach, this can also be done using ffmpeg something like **[this](http://stackoverflow.com/questions/9293265/ffmpeg-2-videos-transcoded-and-side-by-side-in-1-frame)**
 ##tl;dr##
 Put a black-and white alpha channel right underneath your `<video>` source (in the same file), load jQuery and let the plugin do magical things:
 <code>
@@ -202,6 +225,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v1.1.0: add `converter.js` script
    * v1.0.3: enable AMD usage
    * v1.0.2: refactor a little and fix issue #11
    * v1.0.1: added poster option, plugin now requires jquery 1.7+ as it's using `.on()` instead of `.bind()` now
