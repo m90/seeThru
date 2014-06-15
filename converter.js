@@ -6,7 +6,7 @@ var fs = require('fs');
 var argv = require('yargs')
 	.alias('i', 'in')
 	.alias('o', 'out')
-	.usage('Usage: $0 --in [num] --out [num]')
+	.usage('Usage: $0 --in [originalfile] --out [convertedfile]')
 	.demand(['in','out'])
 	.argv;
 
