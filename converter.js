@@ -7,11 +7,10 @@ var argv = require('yargs')
 	.alias('i', 'in')
 	.alias('o', 'out')
 	.usage('Usage: $0 --in [num] --out [num]')
-    .demand(['in','out'])
-    .argv;
+	.demand(['in','out'])
+	.argv;
 
 var src = argv.in;
-var format = src.split('.')[src.split('.').length - 1];
 
 var alpha = new FFmpeg({ source: src })
 	.addOption('-vf', '[in] format=rgba,\
