@@ -27,7 +27,7 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
  - <a href="#examples">Examples</a>
- - <a href="#preparing-video-sources-using-converter-js">Preparing video sources using `converter.js`</a>
+ - <a href="#preparing-video-sources-using-converterjs">Preparing video sources using `converter.js`</a>
  - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#feature-testing">Feature testing</a>
  - <a href="#too-much-jquery">Too much jQuery?</a>
