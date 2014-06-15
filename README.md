@@ -235,6 +235,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v1.1.2: fix in converter script, bump to keep packages up to date
    * v1.1.1: enable browserify usage, enable global installation of converter script, publish on npm
    * v1.1.0: add `converter.js` script
    * v1.0.3: enable AMD usage
