@@ -15,7 +15,7 @@ $ git clone git://github.com/m90/jquery-seeThru.git
 ```
 If you're using Bower you can install the package using:
 ```sh
-$ bower install jquery-seeThru
+$ bower install jquery-seethru
 ```
 If you're using npm / browserify you can install the package using:
 ```sh
@@ -165,7 +165,7 @@ The plugin ships with a CLI script (`seethru-convert`) that will automatically p
 To use the script you need to have `node.js` and `ffmpeg` installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
 
 ```sh
-$ npm install jquery-seeThru -g
+$ npm install jquery-seethru -g
 ```
 
 Now you are ready to go:
