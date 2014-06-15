@@ -15,11 +15,11 @@ $ git clone git://github.com/m90/jquery-seeThru.git
 ```
 If you're using Bower you can install the package using:
 ```sh
-$ bower install jquery-seethru
+$ bower install jquery-seeThru
 ```
 If you're using npm / browserify you can install the package using:
 ```sh
-$ npm install jquery-seeThru
+$ npm install jquery-seethru
 ```
 
 ##Word of warning##
