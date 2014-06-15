@@ -29,7 +29,7 @@ var alpha = new FFmpeg({ source: src })
 				scale=iw:ih [bottom];\
 				[top][bottom] overlay=0:h [out]')
 			.on('end', function(){
-				fs.unlink('tmp-alpha.mov', function(){
+				fs.unlink('seethru-tmp-alpha.mov', function(){
 					console.log('Processing ' + argv.in + ' finished!');
 				});
 			})

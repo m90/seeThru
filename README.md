@@ -10,12 +10,16 @@ It also ships with a simple node.js script for automatically converting your vid
 
 ##Download / Installation##
 Click **[here][17]** to download the current version or clone the repo:
-```bash
+```sh
 $ git clone git://github.com/m90/jquery-seeThru.git
 ```
 If you're using Bower you can install the package using:
-```bash
+```sh
 $ bower install jquery-seeThru
+```
+If you're using npm / browserify you can install the package using:
+```sh
+$ npm install jquery-seeThru
 ```
 
 ##Word of warning##
@@ -27,7 +31,7 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
  - <a href="#examples">Examples</a>
- - <a href="#preparing-video-sources-using-converterjs">Preparing video sources using `converter.js`</a>
+ - <a href="#preparing-video-sources-using-seethru-convert">Preparing video sources using `seethru-convert`</a>
  - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#feature-testing">Feature testing</a>
  - <a href="#too-much-jquery">Too much jQuery?</a>
@@ -120,7 +124,7 @@ Apart from `init`, these methods are available:
 
  - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `mask` parameter, the value for `alphaMask` will be kept from init.
  - `revert` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
- - `play` and `pause` can be used to control the playback of the video - basically the same as `$('#video')[0].play()`, but still chainable
+ - `play` and `pause` are convenience methods to control the playback of the video - basically the same as `$('#video')[0].play()`, but still chainable
 
 This might look like:
 ```javascript
@@ -155,20 +159,21 @@ $('#myVideo').seeThru({start : 'external'}).hover(function(){
 **[Video listening to external JS calls][4]**<br>
 **[Video playing on hover][26]**<br>
 
-##Preparing video sources using `converter.js`##
-The plugin ships with a CLI script (`converter.js`) that will automatically prepare your video sources for you. Just pass a video with alpha information and it will automatically separate alpha and RGB information and place them in the same video file.
+##Preparing video sources using `seethru-convert`##
+The plugin ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (`.mov`s should work best here - also make sure the video actually contains an alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
 
-To use the script you need to have `node.js` and `ffmpeg` installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the script's dependencies:
-
-```sh
-$ npm install
-```
-
-Now you are ready to use the script:
+To use the script you need to have `node.js` and `ffmpeg` installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
 
 ```sh
-$ ./converter.js --in myvideo.mov --out myvideo-converted.mov
+$ npm install jquery-seeThru -g
 ```
+
+Now you are ready to go:
+
+```sh
+$ seethru-convert --in myvideo.mov --out myvideo-converted.mov
+```
+As a rule of thumb you should be doing this conversion on your uncompressed / high-quality video source once, and then convert the output into whatever files you need (mp4, ogg et. al.).
 
 ##Preparing video sources in Adobe After Effects##
 Of course you can also use standard video editing software to prepare the sources. This walkthrough shows how to do it using Adobe After Effects.
@@ -224,6 +229,7 @@ $('#myRadVideoNeedsTransparencies').seeThru();
 Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##Changelog##
+   * v1.1.1: enable browserify usage, enable global installation of converter script, publish on npm
    * v1.1.0: add `converter.js` script
    * v1.0.3: enable AMD usage
    * v1.0.2: refactor a little and fix issue #11
