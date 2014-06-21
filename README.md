@@ -41,7 +41,6 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#mobile-devices--tablets">Mobile devices & tablets</a>
  - <a href="#browser-support">Browser support</a>
  - <a href="#tldr">tl;dr</a>
- - <a href="#changelog">Changelog</a>
  - <a href="#license">License</a>
 
 ##Video setup##
@@ -233,27 +232,6 @@ Put a black-and white alpha channel right underneath your `<video>` source (in t
 $('#myRadVideoNeedsTransparencies').seeThru();
 </code><br>
 Voila! Here's an [example][1]. Ready to :shipit:?
-
-##Changelog##
-   * v1.1.2: fix in converter script, bump to keep packages up to date
-   * v1.1.1: enable browserify usage, enable global installation of converter script, publish on npm
-   * v1.1.0: add `converter.js` script
-   * v1.0.3: enable AMD usage
-   * v1.0.2: refactor a little and fix issue #11
-   * v1.0.1: added poster option, plugin now requires jquery 1.7+ as it's using `.on()` instead of `.bind()` now
-   * v1.0.0: using grunt for minification and linting now, removed version number from files, added a `shimRAF` option, added `unmult` option, code clean up
-   * v0.9.9: changed version number to be able to push new tag to plugins.jquery.com, video's loop attribute will be overridden if the plugin is set to `'end' : 'stop'`
-   * v0.9.8: the plugin is now using `requestAnimationFrame` when possible and falls back to `setInterval` when needed, `fps` and `forceRendering` options are therefore deprecated / of no use anymore
-   * v0.9.7: the original video will now echo mouse events triggered by the canvas represenation, so you can still "use" the hidden video element to bind events for user interaction, faster
-   * v0.9.6: elements that are not visible in the viewport will stop rendering to lower CPU usage, added the `forceRendering` option
-   * v0.9.5: added simple video playback control methods: `play` and `pause`
-   * v0.9.4: fixed canvas updating issues when listening to external interfaces
-   * v0.9.3: added the `revert` method and `width` and `height` options, fixed even more chaining issues, proper event namespacing
-   * v0.9.2: added support for `alphaMask`, added the possibility to swap static masks via `updateMask`, improved interpretation of colored images as black and white mask, improved performance, properly namespaced (`seeThru`-prefix) the applied classes, fixed chaining issues, added error messages, nicer example pages
-   * v0.9.1: added the `mask` option that enables the use of a static image as alpha information, also some minor improvements in overall perfomance
-   * v0.9.0: first version
-
-Older versions (< 0.9.6) are available at **[Google Code][9]**
 
 ##License##
 All source code is licensed under the **[MIT License][11]**, demo content, video and imagery is **[CC-BY-SA 3.0][12]**
