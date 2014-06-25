@@ -37,7 +37,7 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#too-much-jquery">Too much jQuery?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
- - <a href="#safari-6-issues">Safari 6 issues</a>
+ - <a href="#chrome-and-m4v-issues">Chrome and `m4v` issues</a>
  - <a href="#mobile-devices--tablets">Mobile devices & tablets</a>
  - <a href="#browser-support">Browser support</a>
  - <a href="#tldr">tl;dr</a>
@@ -215,8 +215,10 @@ $('#myVideo').click(function(){ //this is still working as a click on the `.seeT
 ```
 The events that are echoed are: `mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur`
 
-##Safari 6 issues###
-Apparently Safari 6 on Mac has severe problems using video as source elements for canvas operations. Nightly webkit builds already fixed this problem, yet if you need advice on this topic there's **[a question on Stackoverflow](http://stackoverflow.com/questions/9929546/canvas-to-video-is-very-slow-on-safari-lion-mountain-lion)** tackling this problem. Feedback is welcome.
+##Chrome and `m4v` issues###
+Apparently there are some machine setups where external color management software and video hardware will mess with the gamma settings of `m4v` playback in Chrome (see **[issue #12][32]** for an example), which will result in black pixels rendered as dark grey - therefore rendering the alpha information saved in RGB useless/incorrect.
+
+If you experience similar problems, use `webm`-video sources for playback in Chrome, they seem to work just fine. Safari and other browsers using `m4v` don't show any issues like this.
 
 ##Mobile devices & tablets##
 As most mobile devices and tablets (iPad I'm looking at you) use external video players to handle HTML5-video this plugin is **not working on mobile Webkit / Safari / Android Browser** (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
@@ -270,3 +272,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [29]:http://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
 [30]:http://nodejs.org
 [31]:http://ffmpeg.org
+[32]:https://github.com/m90/jquery-seeThru/issues/12
