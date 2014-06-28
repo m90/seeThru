@@ -61,6 +61,7 @@ Basic HTML5 video markup should look something like this:
 
 ```html
 <video id="myVideo">
+    <source src="src.webm" type="video/ebm">
     <source src="src.mp4" type="video/mp4">
     <source src="src.ogg" type="video/ogg">
     ....
