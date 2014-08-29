@@ -8,7 +8,7 @@ module.exports = function(grunt){
 			},
 			dist: {
 				files: {
-					'dist/<%= pkg.version %>/jquery-seeThru.min.js' : 'src/jquery-seeThru.js'
+					'dist/<%= pkg.version %>/seeThru.min.js' : 'src/seeThru.js'
 				}
 			},
 			test: {

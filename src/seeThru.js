@@ -104,9 +104,9 @@
 
 	function insertAfter(node, after){
 		if (after.nextSibling) {
-  			after.parentNode.insertBefore(node, after.nextSibling);
+			after.parentNode.insertBefore(node, after.nextSibling);
 		} else {
-  			after.parentNode.appendChild(node);
+			after.parentNode.appendChild(node);
 		}
 	}
 
@@ -120,6 +120,35 @@
 		} else {
 			return null;
 		}
+	}
+
+	function attachSelfAsPlugin($){
+
+		$ = $ || window.jQuery;
+
+		$.fn.seeThru = function(){
+
+			var args = slice(arguments);
+
+			return this.each(function(){
+				if (!args.length || (args.length === 1 && toString(args[0]) === '[object Object]')){
+					if ($(this).data('seeThru')){
+						return;
+					} else {
+						$(this).data('seeThru', new SeeThru(this, args[0]).init());
+					}
+				} else if (args.length && toString(args[0]) === '[object String]'){
+					if ($(this).data('seeThru')){
+						$(this).data('seeThru')[args[0]](args[1]);
+						if (args[0] === 'revert'){
+							$(this).data('seeThru', null);
+						}
+					} else {
+						return;
+					}
+				}
+			});
+		};
 	}
 
 
@@ -213,7 +242,6 @@
 					if (options.alphaMask){ //alpha channel has to be converted into RGB
 						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
 					} else { //no conversion needed, draw image into buffer
-						console.log('drawing');
 						buffer.drawImage(maskObj, 0, dimensions.height, dimensions.width, dimensions.height);
 					}
 
@@ -340,9 +368,9 @@
 
 			if (this._options.start === 'clicktoplay'){
 				if (this._options.poster){
-					this._seeThru.getPoster().addEventListener('click', playSelfAndUnbind)
+					this._seeThru.getPoster().addEventListener('click', playSelfAndUnbind);
 				} else {
-					this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind)
+					this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
 				}
 			} else if (this._options.start === 'autoplay' && options.poster){
 				this._seeThru.getPoster().style.display = 'none';
@@ -351,7 +379,7 @@
 			if (this._options.end === 'rewind'){
 				this._video.addEventListener('ended', function(){
 					self._video.currentTime = 0;
-					self._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind)
+					self._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
 				});
 			} else if (this._options.end !== 'stop'){
 				this._video.addEventListener('ended', function(){
@@ -394,40 +422,13 @@
 		};
 	}
 
-	// <includejQuery>
-	if (window.jQuery){
-		window.jQuery.fn.seeThru = function(){
-
-			var
-			args = slice(arguments)
-			, $ = window.jQuery;
-
-			return this.each(function(){
-				if (!args.length || (args.length === 1 && toString(args[0]) === '[object Object]')){
-					if ($(this).data('seeThru')){
-						return;
-					} else {
-						$(this).data('seeThru', new SeeThru(this, args[0]).init());
-					}
-				} else if (args.length && toString(args[0]) === '[object String]'){
-					if ($(this).data('seeThru')){
-						$(this).data('seeThru')[args[0]](args[1]);
-						if (args[0] === 'revert'){
-							$(this).data('seeThru', null);
-						}
-					} else {
-						return;
-					}
-				}
-			});
-		}
-	}
-	// </includejQuery>
+	if (window.jQuery){ attachSelfAsPlugin(window.jQuery); }
 
 	return {
 		create : function(DOMCollection, options){
 			return new SeeThru(DOMCollection, options).init();
 		}
+		, attach : attachSelfAsPlugin
 	};
 
 });
