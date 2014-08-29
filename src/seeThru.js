@@ -141,6 +141,7 @@
 		, buffer = bufferCanvas.getContext('2d')
 		, displayCanvas = document.createElement('canvas')
 		, display = displayCanvas.getContext('2d')
+		, posterframe
 		, interval
 		, drawFrame = function(recurse){
 
@@ -203,6 +204,20 @@
 			insertAfter(bufferCanvas, video);
 			insertAfter(displayCanvas, video);
 
+			if (options.poster && video.poster){
+				posterframe = document.createElement('div');
+				posterframe.className = 'seeThru-poster';
+				posterframe.style.width = dimensions.width + 'px';
+				posterframe.style.height = dimensions.height + 'px';
+				posterframe.style.position = 'absolute';
+				posterframe.style.top = 0;
+				posterframe.style.left = 0;
+				posterframe.style.backgroundSize = 'cover';
+				posterframe.style.backgroundPosition = 'center';
+				posterframe.style.backgroundImage = 'url("' + video.poster + '")';
+				insertAfter(posterframe, video);
+			}
+
 			initialDisplayProp = window.getComputedStyle(video).display;
 			video.style.display = 'none';
 
@@ -234,6 +249,10 @@
 
 		this.getCanvas = function(){
 			return displayCanvas;
+		};
+
+		this.getPoster = function(){
+			return posterframe;
 		};
 
 		if (video.readyState > 0){
@@ -283,8 +302,14 @@
 
 			function playSelfAndUnbind(){
 				self._video.play();
-				self._seeThru.getCanvas().removeEventListener('click', playSelfAndUnbind);
+				if (self._options.poster){
+					self._seeThru.getPoster().removeEventListener('click', playSelfAndUnbind);
+				} else {
+					self._seeThru.getCanvas().removeEventListener('click', playSelfAndUnbind);
+				}
 			}
+
+			var posterframe;
 
 			if (this._options.shimRAF && (!window.requestAnimationFrame || !window.cancelAnimationFrame)){
 				applyShim();
@@ -292,23 +317,38 @@
 
 			this._seeThru = new TransparentVideo(this._video, this._options);
 
-			this._seeThru.startRendering();
 			if (this._options.start === 'clicktoplay'){
-				this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind)
+				if (this._options.poster){
+					this._seeThru.getPoster().addEventListener('click', playSelfAndUnbind)
+				} else {
+					this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind)
+				}
+			} else if (this._options.start === 'autoplay'){
+				this._seeThru.getPoster().style.display = 'none';
 			}
+
 			if (this._options.end === 'rewind'){
 				this._video.addEventListener('ended', function(){
 					self._video.currentTime = 0;
 					self._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind)
 				});
-			} else if (this._options.end === 'stop'){
-
-			} else {
+			} else if (this._options.end !== 'stop'){
 				this._video.addEventListener('ended', function(){
 					self._video.currentTime = 0;
 					self._video.play();
 				});
 			}
+
+			if (this._options.poster && this._video.poster){
+				this._video.addEventListener('play', function(){
+					self._seeThru.getPoster().style.display = 'none';
+				});
+				this._video.addEventListener('pause', function(){
+					self._seeThru.getPoster().style.display = 'block';
+				});
+			}
+
+			this._seeThru.startRendering();
 
 			return this;
 

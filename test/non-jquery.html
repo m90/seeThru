@@ -9,7 +9,7 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 
-	<video id="test-video">
+	<video id="test-video" poster="http://www.gaestebuchbilder.net/data/media/63/jehovas.gif">
 		<source src="media/kolor.mp4" type="video/mp4" />
 		<source src="media/kolor.ogg" type="video/ogg" />
 	</video>
@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="../src/seeThru.js"></script>
 	<script>
 
-		$('video').seeThru();
+		$('video').seeThru({start : 'clicktoplay' });
 
 		// var test = seeThru.create('video', {start : 'clicktoplay'});
 		setTimeout(function(){
