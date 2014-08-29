@@ -9,18 +9,20 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 
-	<video onended="this.play();" autoplay loop id="test-video">
+	<video id="test-video">
 		<source src="media/kolor.mp4" type="video/mp4" />
 		<source src="media/kolor.ogg" type="video/ogg" />
 	</video>
-
 
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="../src/seeThru.js"></script>
 	<script>
 
-		var test = seeThru.create(document.getElementsByTagName('video'));
+		var test = seeThru.create('video', {start : 'clicktoplay'});
+		// setTimeout(function(){
+		// 	test.revert()
+		// }, 5000);
 
 	</script>
 </body>
