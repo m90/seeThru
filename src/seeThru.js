@@ -333,13 +333,35 @@
 		};
 	}
 
+	// <includejQuery>
 	if (window.jQuery){
 		window.jQuery.fn.seeThru = function(){
+
+			var
+			args = slice(arguments)
+			, $ = window.jQuery;
+
 			return this.each(function(){
-				new SeeThru(window.jQuery(this)[0], options).init();
+				if (!args.length || (args.length === 1 && toString(args[0]) === '[object Object]')){
+					if ($(this).data('seeThru')){
+						return;
+					} else {
+						$(this).data('seeThru', new SeeThru(this, args[0]).init());
+					}
+				} else if (args.length && toString(args[0]) === '[object String]'){
+					if ($(this).data('seeThru')){
+						$(this).data('seeThru')[args[0]](args[1]);
+						if (args[0] === 'revert'){
+							$(this).data('seeThru', null);
+						}
+					} else {
+						return;
+					}
+				}
 			});
 		}
 	}
+	// </includejQuery>
 
 	return {
 		create : function(DOMCollection, options){

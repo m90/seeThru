@@ -19,10 +19,12 @@
 	<script type="text/javascript" src="../src/seeThru.js"></script>
 	<script>
 
-		var test = seeThru.create('video', {start : 'clicktoplay'});
-		// setTimeout(function(){
-		// 	test.revert()
-		// }, 5000);
+		$('video').seeThru();
+
+		// var test = seeThru.create('video', {start : 'clicktoplay'});
+		setTimeout(function(){
+			$('video').seeThru('pause')
+		}, 5000);
 
 	</script>
 </body>
