@@ -13,7 +13,7 @@ module.exports = function(grunt){
 			},
 			test: {
 				files: {
-					'test/lib/jquery-seeThru.min.js' : 'src/jquery-seeThru.js'
+					'test/lib/seeThru.min.js' : 'src/seeThru.js'
 				}
 			}
 		},

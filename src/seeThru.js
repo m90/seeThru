@@ -110,6 +110,8 @@
 		}
 	}
 
+	// if the passed element is DOM node, use it, in case it's a collection use it's first member
+	// if that fails try to use it as a CSS selector and use the first match
 	function getNode(input){
 		if (input.tagName){
 			return input;
@@ -324,16 +326,14 @@
 			, end : 'loop' //'loop', 'rewind', 'stop' any other input will default to 'loop'
 			, mask : false //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
 			, alphaMask : false //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
-			, width : '' //lets you specify a pixel value used as width -- overrides all other calculations
-			, height : '' //lets you specify a pixel value used as height -- overrides all other calculations
+			, width : null //lets you specify a pixel value used as width -- overrides all other calculations
+			, height : null //lets you specify a pixel value used as height -- overrides all other calculations
 			, poster : false // the plugin will display the image set in the video's poster-attribute when not playing if set to true
 			, unmult : false //set this to true if your video material is premultiplied on black - might cause performance issues
 			, shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API - only set to false if you know what you're doing
 		};
 
 		options = options || {};
-		// if the passed element is DOM node, use it, in case it's a collection use it's first member
-		// if that fails try to use it as a CSS selector and use the first match
 		this._video = getNode(DOMNode);
 
 		if (!this._video || this._video.tagName !== 'VIDEO'){ throw new Error('Could not use specified source'); }
