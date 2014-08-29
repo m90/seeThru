@@ -126,13 +126,10 @@
 	function TransparentVideo(video, options){
 
 		var
-		staticMask = false
-		, ready = false
+		ready = false
 		, self = this
-		, alphaMask = (options.alphaMask === true)
-		, maskObj
 		, initialDisplayProp
-		, divisor = staticMask ? 1 : 2 //static alpha data will not cut the image dimensions
+		, divisor = options.staticMask ? 1 : 2 //static alpha data will not cut the image dimensions
 		, dimensions = { // calculate dimensions
 			width : parseInt(options.width, 10)
 			, height : parseInt(options.height, 10)
@@ -143,6 +140,7 @@
 		, display = displayCanvas.getContext('2d')
 		, posterframe
 		, interval
+		, maskObj
 		, drawFrame = function(recurse){
 
 			var image, alphaData, i, len;
@@ -152,13 +150,11 @@
 				image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
 				alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
 
-				if (options.unmult){
-					unmultiply(image, alphaData);
-				}
+				if (options.unmult){ unmultiply(image, alphaData); }
 
 				//calculate luminance from buffer part, no weighting needed when alpha mask is used
 				for (i = 3, len = image.data.length; i < len; i = i + 4) {
-					image.data[i] = Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
+					image.data[i] = options.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
 				}
 
 				display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
@@ -171,6 +167,7 @@
 			}
 
 		};
+
 
 		this.init = function(){
 
@@ -203,6 +200,30 @@
 
 			insertAfter(bufferCanvas, video);
 			insertAfter(displayCanvas, video);
+
+			// draw static mask if needed
+			if (options.staticMask){
+
+				maskObj = getNode(options.staticMask); //first occurence in case class is selected
+				if (maskObj.tagName === 'IMG'){
+
+					maskObj.width = dimensions.width;
+					maskObj.height = dimensions.height; //adjust image dimensions to video dimensions
+
+					if (options.alphaMask){ //alpha channel has to be converted into RGB
+						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
+					} else { //no conversion needed, draw image into buffer
+						console.log('drawing');
+						buffer.drawImage(maskObj, 0, dimensions.height, dimensions.width, dimensions.height);
+					}
+
+					maskObj.style.display = 'none';
+
+				} else {
+					throw new Error('Cannot use non-image element as mask!');
+				}
+
+			}
 
 			if (options.poster && video.poster){
 				posterframe = document.createElement('div');
@@ -323,7 +344,7 @@
 				} else {
 					this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind)
 				}
-			} else if (this._options.start === 'autoplay'){
+			} else if (this._options.start === 'autoplay' && options.poster){
 				this._seeThru.getPoster().style.display = 'none';
 			}
 
