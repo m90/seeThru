@@ -9,7 +9,7 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 
-	<video id="test-video">
+	<video id="test-video" style="display: none;">
 		<source src="../media/kolor.mp4" type="video/mp4" />
 		<source src="../media/kolor.ogg" type="video/ogg" />
 	</video>
@@ -20,9 +20,9 @@
 	<script>
 
 		// seeThru.attach($);
-		$('video').seeThru();
+		// $('video').seeThru();
 
-		// var test = seeThru.create('video', {staticMask : '#mask' });
+		var test = seeThru.create('video', { width: 400, height: 300 });
 		// setTimeout(function(){
 		// 	$('video').seeThru('pause')
 		// }, 5000);

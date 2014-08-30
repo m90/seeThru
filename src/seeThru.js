@@ -62,36 +62,44 @@
 		return rgb;
 	}
 
-	/**
-	* shim the requestAnimationFrame API if needed
-	*/
-	function applyShim(){
+
+
+	function getRequestAnimationFrame(){
+
+		if (window.requestAnimationFrame){ return window.requestAnimationFrame; }
+
 		var
 		lastTime = 0
 		, vendors = ['ms', 'moz', 'webkit', 'o'];
 
-		for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x){
-			window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-			window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+		for (var x = 0; x < vendors.length; x++){
+			if (window[vendors[x] + 'RequestAnimationFrame']){ return window[vendors[x] + 'RequestAnimationFrame']; }
 		}
 
-		if (!window.requestAnimationFrame){
-			window.requestAnimationFrame = function(callback){
-				var currTime = new Date().getTime();
-				var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-				var id = window.setTimeout(function(){
-					callback(currTime + timeToCall);
-				}, timeToCall);
-				lastTime = currTime + timeToCall;
-				return id;
-			};
+		return function(callback){
+			var currTime = new Date().getTime();
+			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+			var id = window.setTimeout(function(){
+				callback(currTime + timeToCall);
+			}, timeToCall);
+			lastTime = currTime + timeToCall;
+			return id;
+		};
+
+	}
+
+	function getCancelAnimationFrame(){
+
+		if (window.cancelAnimationFrame){ return window.cancelAnimationFrame; }
+
+		var vendors = ['ms', 'moz', 'webkit', 'o'];
+
+		for (var x = 0; x < vendors.length; x++){
+			if (window[vendors[x] + 'CancelAnimationFrame']){ return window[vendors[x] + 'CancelAnimationFrame']; }
+			if (window[vendors[x] + 'CancelRequestAnimationFrame']){ return window[vendors[x] + 'CancelRequestAnimationFrame']; }
 		}
 
-		if (!window.cancelAnimationFrame){
-			window.cancelAnimationFrame = function(id){
-				clearTimeout(id);
-			};
-		}
+		return function(id){ clearTimeout(id); };
 	}
 
 	function slice(el){
@@ -172,6 +180,8 @@
 		, posterframe
 		, interval
 		, maskObj
+		, cancelAnimationFrame = getCancelAnimationFrame()
+		, requestAnimationFrame = getRequestAnimationFrame()
 		, drawFrame = function(recurse){
 
 			var image, alphaData, i, len;
@@ -330,7 +340,6 @@
 			, height : null //lets you specify a pixel value used as height -- overrides all other calculations
 			, poster : false // the plugin will display the image set in the video's poster-attribute when not playing if set to true
 			, unmult : false //set this to true if your video material is premultiplied on black - might cause performance issues
-			, shimRAF : true //set this to false if you don't want the plugin to shim the requestAnimationFrame API - only set to false if you know what you're doing
 		};
 
 		options = options || {};
@@ -359,10 +368,6 @@
 			}
 
 			var posterframe;
-
-			if (this._options.shimRAF && (!window.requestAnimationFrame || !window.cancelAnimationFrame)){
-				applyShim();
-			}
 
 			this._seeThru = new TransparentVideo(this._video, this._options);
 
