@@ -62,12 +62,7 @@
 		return rgb;
 	}
 
-
-
 	function getRequestAnimationFrame(){
-
-		if (window.requestAnimationFrame){ return window.requestAnimationFrame; }
-
 		var
 		lastTime = 0
 		, vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -85,13 +80,9 @@
 			lastTime = currTime + timeToCall;
 			return id;
 		};
-
 	}
 
 	function getCancelAnimationFrame(){
-
-		if (window.cancelAnimationFrame){ return window.cancelAnimationFrame; }
-
 		var vendors = ['ms', 'moz', 'webkit', 'o'];
 
 		for (var x = 0; x < vendors.length; x++){
@@ -180,8 +171,8 @@
 		, posterframe
 		, interval
 		, maskObj
-		, cancelAnimationFrame = getCancelAnimationFrame()
-		, requestAnimationFrame = getRequestAnimationFrame()
+		, requestAnimationFrame = window.requestAnimationFrame || getRequestAnimationFrame()
+		, cancelAnimationFrame = window.cancelAnimationFrame || getCancelAnimationFrame()
 		, drawFrame = function(recurse){
 
 			var image, alphaData, i, len;
@@ -340,7 +331,34 @@
 			, height : null //lets you specify a pixel value used as height -- overrides all other calculations
 			, poster : false // the plugin will display the image set in the video's poster-attribute when not playing if set to true
 			, unmult : false //set this to true if your video material is premultiplied on black - might cause performance issues
-		};
+		}
+		, canConstructEvents = (function(){
+			try{
+				if (new Event('submit', { bubbles: false }).bubbles !== false) {
+					return false;
+				} else if (new Event('submit', { bubbles: true }).bubbles !== true) {
+					return false;
+				} else {
+					return true;
+				}
+			} catch (e){
+				return false;
+			}
+		})()
+		, eventsToEcho = [
+			'mouseenter'
+			, 'mouseleave'
+			, 'click'
+			, 'mousedown'
+			, 'mouseup'
+			, 'mousemove'
+			, 'mouseover'
+			, 'hover'
+			, 'dblclick'
+			, 'contextmenu'
+			, 'focus'
+			, 'blur'
+		];
 
 		options = options || {};
 		this._video = getNode(DOMNode);
@@ -401,6 +419,19 @@
 					self._seeThru.getPoster().style.display = 'block';
 				});
 			}
+
+			eventsToEcho.forEach(function(eventName){
+				self._seeThru.getCanvas().addEventListener(eventName, function(){
+					var evt;
+					if (canConstructEvents){
+						evt = new Event(eventName);
+					} else {
+						evt = document.createEvent('Event');
+						evt.initEvent(eventName, true, true);
+					}
+					self._video.dispatchEvent(evt);
+				});
+			})
 
 			this._seeThru.startRendering();
 

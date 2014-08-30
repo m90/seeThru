@@ -1,6 +1,6 @@
-#jQuery seeThru - HTML5 video with alpha channel transparencies#
+#seeThru - HTML5 video with alpha channel transparencies#
 
-This jQuery plugin adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
+This script adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
 
 The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
 
