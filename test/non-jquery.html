@@ -23,11 +23,7 @@
 		// seeThru.attach($);
 		// $('video').seeThru();
 
-		var test = seeThru.create('#test-video').ready(function(st){
-			setTimeout(function(){
-				st.revert();
-			}, 5000);
-		});
+		var test = seeThru.create('#test-video', {start: 'clicktoplay'});
 
 
 		// $('video').click(function(e){

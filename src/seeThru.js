@@ -159,7 +159,7 @@
 		var res = [];
 		for (var prop in obj){
 			if (obj.hasOwnProperty(prop)){
-				res.push(prop + ': ' + obj[prop] + ';')
+				res.push(prop + ': ' + obj[prop] + ';');
 			}
 		}
 		return res.join('');
@@ -200,7 +200,7 @@
 		var elements = [];
 		this.push = function(el){
 			if (el){
-				elements.push(el._video);
+				elements.push(el);
 				return el;
 			} else {
 				return null;
@@ -221,8 +221,7 @@
 	function TransparentVideo(video, options){
 
 		var
-		self = this
-		, initialDisplayProp
+		initialDisplayProp
 		, divisor = options.mask ? 1 : 2 //static alpha data will not cut the image dimensions
 		, dimensions = { // calculate dimensions
 			width : parseInt(options.width, 10)
