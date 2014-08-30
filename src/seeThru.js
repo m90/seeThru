@@ -221,8 +221,7 @@
 	function TransparentVideo(video, options){
 
 		var
-		ready = false
-		, self = this
+		self = this
 		, initialDisplayProp
 		, divisor = options.mask ? 1 : 2 //static alpha data will not cut the image dimensions
 		, dimensions = { // calculate dimensions
@@ -241,20 +240,18 @@
 
 			var image, alphaData, i, len;
 
-			if (ready){
-				buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
-				image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
-				alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
+			buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
+			image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
+			alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
 
-				if (options.unmult){ unmultiply(image, alphaData); }
+			if (options.unmult){ unmultiply(image, alphaData); }
 
-				//calculate luminance from buffer part, no weighting needed when alpha mask is used
-				for (i = 3, len = image.data.length; i < len; i = i + 4) {
-					image.data[i] = options.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
-				}
-
-				display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
+			//calculate luminance from buffer part, no weighting needed when alpha mask is used
+			for (i = 3, len = image.data.length; i < len; i = i + 4) {
+				image.data[i] = options.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
 			}
+
+			display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
 
 			if (recurse){
 				interval = requestAnimationFrame(function(){
@@ -280,68 +277,6 @@
 
 		};
 
-
-		this.init = function(){
-
-			var elementDimensions = video.getBoundingClientRect();
-
-			if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not set
-				if (video.width && !video.height){ //<video> has no width- or height-attribute -> source dimensions from video source meta
-					dimensions.width = dimensions.width || video.videoWidth;
-					dimensions.height = dimensions.height || video.videoHeight / divisor;
-				} else if (video.height){ //<video> has no height-attribute -> source dimensions from video source meta
-					dimensions.width = dimensions.width || parseInt(elementDimensions.width, 10);
-					dimensions.height = dimensions.height || parseInt(elementDimensions.width, 10) / (video.videoWidth / Math.floor(video.videoHeight / divisor));
-				} else if (video.width){ //<video> has no height-attribute -> source dimensions from video source meta
-					dimensions.width = dimensions.width || parseInt(elementDimensions.height, 10) * (video.videoWidth / Math.floor(video.videoHeight / divisor));
-					dimensions.height = dimensions.height || parseInt(elementDimensions.height, 10);
-				} else { //get values from height and width attributes of <video>
-					dimensions.width = dimensions.width || parseInt(elementDimensions.width, 10);
-					dimensions.height = dimensions.height || parseInt(elementDimensions.height, 10) / divisor;
-				}
-			}
-
-			bufferCanvas.width = dimensions.width;
-			bufferCanvas.height = dimensions.height * 2;
-			bufferCanvas.style.display = 'none';
-			bufferCanvas.className = 'seeThru-buffer';
-
-			displayCanvas.width = dimensions.width;
-			displayCanvas.height = dimensions.height;
-			displayCanvas.className = 'seeThru-display';
-
-			insertAfter(bufferCanvas, video);
-			insertAfter(displayCanvas, video);
-
-			// draw static mask if needed
-			if (options.mask){ drawStaticMask(getNode(options.mask)); }
-
-			if (options.poster && video.poster){
-				posterframe = document.createElement('div');
-				posterframe.className = 'seeThru-poster';
-				posterframe.style.cssText = cssObjectToString({
-					width : dimensions.width + 'px'
-					, height : dimensions.height + 'px'
-					, position : 'absolute'
-					, top : 0
-					, left : 0
-					, backgroundSize : 'cover'
-					, backgroundPosition : 'center'
-					, backgroundImage : 'url("' + video.poster + '")'
-				});
-				insertAfter(posterframe, video);
-			}
-
-			initialDisplayProp = window.getComputedStyle(video).display;
-			video.style.display = 'none';
-
-			if (options.start === 'autoplay'){
-				video.play();
-			}
-
-			ready = true;
-
-		};
 
 		this.startRendering = function(){
 			drawFrame(true);
@@ -373,13 +308,59 @@
 			return posterframe;
 		};
 
-		if (video.readyState > 0){
-			this.init();
-		} else {
-			video.addEventListener('loadedmetadata', function(){
-				self.init();
-			});
+		var elementDimensions = video.getBoundingClientRect();
+
+		if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not set
+			if (video.width && !video.height){ //<video> has no width- or height-attribute -> source dimensions from video source meta
+				dimensions.width = dimensions.width || video.videoWidth;
+				dimensions.height = dimensions.height || video.videoHeight / divisor;
+			} else if (video.height){ //<video> has no height-attribute -> source dimensions from video source meta
+				dimensions.width = dimensions.width || parseInt(elementDimensions.width, 10);
+				dimensions.height = dimensions.height || parseInt(elementDimensions.width, 10) / (video.videoWidth / Math.floor(video.videoHeight / divisor));
+			} else if (video.width){ //<video> has no height-attribute -> source dimensions from video source meta
+				dimensions.width = dimensions.width || parseInt(elementDimensions.height, 10) * (video.videoWidth / Math.floor(video.videoHeight / divisor));
+				dimensions.height = dimensions.height || parseInt(elementDimensions.height, 10);
+			} else { //get values from height and width attributes of <video>
+				dimensions.width = dimensions.width || parseInt(elementDimensions.width, 10);
+				dimensions.height = dimensions.height || parseInt(elementDimensions.height, 10) / divisor;
+			}
 		}
+
+		bufferCanvas.width = dimensions.width;
+		bufferCanvas.height = dimensions.height * 2;
+		bufferCanvas.style.display = 'none';
+		bufferCanvas.className = 'seeThru-buffer';
+
+		displayCanvas.width = dimensions.width;
+		displayCanvas.height = dimensions.height;
+		displayCanvas.className = 'seeThru-display';
+
+		insertAfter(bufferCanvas, video);
+		insertAfter(displayCanvas, video);
+
+		// draw static mask if needed
+		if (options.mask){ drawStaticMask(getNode(options.mask)); }
+
+		if (options.poster && video.poster){
+			posterframe = document.createElement('div');
+			posterframe.className = 'seeThru-poster';
+			posterframe.style.cssText = cssObjectToString({
+				width : dimensions.width + 'px'
+				, height : dimensions.height + 'px'
+				, position : 'absolute'
+				, top : 0
+				, left : 0
+				, backgroundSize : 'cover'
+				, backgroundPosition : 'center'
+				, backgroundImage : 'url("' + video.poster + '")'
+			});
+			insertAfter(posterframe, video);
+		}
+
+		initialDisplayProp = window.getComputedStyle(video).display;
+		video.style.display = 'none';
+
+		if (options.start === 'autoplay'){ video.play(); }
 
 	}
 
@@ -387,6 +368,8 @@
 
 		var
 		self = this
+		, ready = false
+		, callbacks = []
 		, defaultOptions = {
 			start : 'autoplay' //'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
 			, end : 'loop' //'loop', 'rewind', 'stop' any other input will default to 'loop'
@@ -432,7 +415,7 @@
 
 		this._options = (function(options){
 			for (var key in defaultOptions){
-				if (options.hasOwnProperty(key)){
+				if (defaultOptions.hasOwnProperty(key)){
 					if (!(key in options)){
 						options[key] = defaultOptions[key];
 					}
@@ -443,64 +426,82 @@
 
 		this.init = function(){
 
-			function playSelfAndUnbind(){
-				self._video.play();
-				if (self._options.poster){
-					self._seeThru.getPoster().removeEventListener('click', playSelfAndUnbind);
-				} else {
-					self._seeThru.getCanvas().removeEventListener('click', playSelfAndUnbind);
-				}
-			}
+			var runInit = function(){
 
-			if (elementStore.has(this._video)) { throw new Error('seeThru already initialized on passed video element!'); }
-
-			this._seeThru = new TransparentVideo(this._video, this._options);
-
-			if (this._options.start === 'clicktoplay'){
-				if (this._options.poster){
-					this._seeThru.getPoster().addEventListener('click', playSelfAndUnbind);
-				} else {
-					this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
-				}
-			} else if (this._options.start === 'autoplay' && options.poster){
-				this._seeThru.getPoster().style.display = 'none';
-			}
-
-			if (this._options.end === 'rewind'){
-				this._video.addEventListener('ended', function(){
-					self._video.currentTime = 0;
-					self._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
-				});
-			} else if (this._options.end !== 'stop'){
-				this._video.addEventListener('ended', function(){
-					self._video.currentTime = 0;
+				function playSelfAndUnbind(){
 					self._video.play();
-				});
-			}
-
-			if (this._options.poster && this._video.poster){
-				this._video.addEventListener('play', function(){
-					self._seeThru.getPoster().style.display = 'none';
-				});
-				this._video.addEventListener('pause', function(){
-					self._seeThru.getPoster().style.display = 'block';
-				});
-			}
-
-			eventsToEcho.forEach(function(eventName){
-				self._seeThru.getCanvas().addEventListener(eventName, function(){
-					var evt;
-					if (canConstructEvents){
-						evt = new Event(eventName);
+					if (self._options.poster){
+						self._seeThru.getPoster().removeEventListener('click', playSelfAndUnbind);
 					} else {
-						evt = document.createEvent('Event');
-						evt.initEvent(eventName, true, true);
+						self._seeThru.getCanvas().removeEventListener('click', playSelfAndUnbind);
 					}
-					self._video.dispatchEvent(evt);
-				});
-			});
+				}
 
-			this._seeThru.startRendering();
+				if (elementStore.has(this._video)) { throw new Error('seeThru already initialized on passed video element!'); }
+
+				this._seeThru = new TransparentVideo(this._video, this._options);
+
+				if (this._options.start === 'clicktoplay'){
+					if (this._options.poster){
+						this._seeThru.getPoster().addEventListener('click', playSelfAndUnbind);
+					} else {
+						this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
+					}
+				} else if (this._options.start === 'autoplay' && options.poster){
+					this._seeThru.getPoster().style.display = 'none';
+				}
+
+				if (this._options.end === 'rewind'){
+					this._video.addEventListener('ended', function(){
+						self._video.currentTime = 0;
+						self._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
+					});
+				} else if (this._options.end !== 'stop'){
+					this._video.addEventListener('ended', function(){
+						self._video.currentTime = 0;
+						self._video.play();
+					});
+				}
+
+				if (this._options.poster && this._video.poster){
+					this._video.addEventListener('play', function(){
+						self._seeThru.getPoster().style.display = 'none';
+					});
+					this._video.addEventListener('pause', function(){
+						self._seeThru.getPoster().style.display = 'block';
+					});
+				}
+
+				eventsToEcho.forEach(function(eventName){
+					self._seeThru.getCanvas().addEventListener(eventName, function(){
+						var evt;
+						if (canConstructEvents){
+							evt = new Event(eventName);
+						} else {
+							evt = document.createEvent('Event');
+							evt.initEvent(eventName, true, true);
+						}
+						self._video.dispatchEvent(evt);
+					});
+				});
+
+				this._seeThru.startRendering();
+
+				ready = true;
+
+				elementStore.push(this._video);
+
+				callbacks.forEach(function(cb){ cb(self); });
+
+			}.bind(this);
+
+			if (this._video.readyState > 0){
+				runInit();
+			} else {
+				this._video.addEventListener('loadedmetadata', function(){
+					runInit();
+				});
+			}
 
 			return this;
 
@@ -527,8 +528,12 @@
 			return this;
 		};
 
-		this._getVideo = function(){
-			return this._video;
+		this.ready = function(cb){
+			if (ready){
+				cb(this);
+			} else {
+				callbacks.push(cb);
+			}
 		};
 
 	}
@@ -539,7 +544,7 @@
 
 	return {
 		create : function(DOMCollection, options){
-			return elementStore.push(new SeeThru(DOMCollection, options).init());
+			return new SeeThru(DOMCollection, options).init();
 		}
 		, attach : attachSelfAsPlugin
 	};

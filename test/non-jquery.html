@@ -23,9 +23,11 @@
 		// seeThru.attach($);
 		// $('video').seeThru();
 
-		var test = seeThru.create('#test-video');
-		test.revert();
-		var bar = seeThru.create('#test-video');
+		var test = seeThru.create('#test-video').ready(function(st){
+			setTimeout(function(){
+				st.revert();
+			}, 5000);
+		});
 
 
 		// $('video').click(function(e){
