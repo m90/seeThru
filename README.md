@@ -23,11 +23,11 @@ $ npm install jquery-seethru
 ```
 
 ##Word of warning##
-This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video on an old machine with 39 tabs open. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
+This approch is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video on an old machine with 39 tabs open. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
- - <a href="#basic-plugin-usage">Basic Script Usage</a>
+ - <a href="#basic-script-usage">Basic Script Usage</a>
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
  - <a href="#usage-as-a-jquery-plugin">Usage as a jQuery-plugin</a>
@@ -43,7 +43,7 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
  - <a href="#license">License</a>
 
 ##Video setup##
-In default configuration the plugin assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being interpreted as fully opaque and black being fully transparent (colored information will be averaged).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
+In default configuration the script assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being interpreted as fully opaque and black being fully transparent (colored information will be averaged).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
 For a basic introduction of how to encode and embed video for HTML5 pages see the great **[Dive into HTML5][14]**
 ###Example image:###
 Note the jagged edges in the color channel(s) due to un-premultiplying:<br/>
@@ -52,10 +52,10 @@ put over a greenish/blueish background results in<br/>
 ![Example image][6]<br/>
 **[Live Demo][1]**
 ###Static Mask###
-It is also possible to source the alpha information from an `<img>`-element not incorporated into the video. The plugin lets you use either the luminance information of the RGB channels (i.e. the image) or the image's alpha channel (see options for how to choose). In case the image does not fit your video's dimensions it will be stretched to those.<br/>
+It is also possible to source the alpha information from an `<img>`-element not incorporated into the video. The script lets you use either the luminance information of the RGB channels (i.e. the image) or the image's alpha channel (see options for how to choose). In case the image does not fit your video's dimensions it will be stretched to those.<br/>
 **[Live Demo][2]**
 
-##Basic plugin usage##
+##Basic script usage##
 Basic HTML5 video markup should look something like this:
 
 ```html
@@ -67,7 +67,7 @@ Basic HTML5 video markup should look something like this:
 </video>
 ```
 
-In case you are planning to have your video set to autoplay or loop you can do this when initializing the plugin. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
+In case you are planning to have your video set to autoplay or loop you can do this when initializing your instance. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
 To use the script include the source:<br/>
 
 ```html
@@ -78,13 +78,13 @@ and then pass your element to `seeThru.create()`:
 ```javascript
 var transparentVideo = seeThru.create('#myVideo');
 ```
-If you're using AMD / require.js load the plugin like:
+If you're using AMD / require.js load the script like:
 ```javascript
 require(['seeThru'], function(seeThru){
     var transparentVideo = seeThru.create('#myVideo');
 });
 ```
-Using browserify, simply require the plugin:
+Using browserify, simply require the script:
 ```javascript
 var seeThru = require('seethru');
 var transparentVideo = seeThru.create('#myVideo');
@@ -96,16 +96,16 @@ If you specify dimension-attributes in your markup they will be considered, in c
 If you just want to give the script a test-drive without having to prepare your own video you can download and use the example videos in the repo's **[media folder](https://github.com/m90/jquery-seeThru/tree/master/media)** (also included in the zipped download).
 
 ##Options##
-There are a few options you can pass when calling the plugin:
+There are a few options you can pass when building an instance:
 
  - `start` defines the video's behavior on load. It defaults to `'autoplay'` which will automatically start the video as soon as possible. Other options are `'clicktoplay'` which will display the first frame of the video until it is clicked or `'external'` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
  - `end` defines the video's behavior when it has reached its end. It defaults to `'loop'` which will loop the video. Other possibilities are `'stop'` (it will just stop), or `'rewind'` which will jump back to the first frame and stop. If you use `start:'clicktoplay'` along with `'rewind'` or `'end'` the video will be clickable again when finished.
- - `mask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `'#fancyMask'`. In case it returns a collection (class passed), the first element is used - in case the selector matches nothing or a non-image node the option is ignored. Defaults to an empty string, so video information is used for the alpha.
- - `alphaMask` specifies if the plugin uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
+ - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `'#fancyMask'`. In case it returns a collection (class passed), the first element is used - in case the selector matches nothing or a non-image node the option is ignored. Defaults to an empty string, so video information is used for the alpha.
+ - `alphaMask` specifies if the script uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `poster` can be set to `true` if you want the video to be replaced by the image specified in the `<video>`s `poster`-attribute when in a paused state
- - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the plugin to un-premultiply the imagery. Note that this might have really bad effects on performance, so it is recommended to work with unpremultiplied video sources
+ - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the script to un-premultiply the imagery. Note that this might have really bad effects on performance, so it is recommended to work with unpremultiplied video sources
 
 This might look like this:
 ```javascript
@@ -113,12 +113,12 @@ seeThru.create('#myVideo', {start : 'autoplay' , end : 'stop'});
 ```
 or
 ```javascript
-seeThru.create('#myVideo', {mask : '#imageWithAlpha', alphaMask: true});
+seeThru.create('#myVideo', {staticMask : '#imageWithAlpha', alphaMask: true});
 ```
 ##Additional methods
 Apart from `init`, these methods are available:
 
- - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `mask` parameter, the value for `alphaMask` will be kept from initialisation.
+ - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `staticMask` parameter, the value for `alphaMask` will be kept from initialisation.
  - `revert` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
  - `play` and `pause` are convenience methods to control the playback of the video
 
@@ -140,7 +140,7 @@ seeThru.attach(myVersionOfjQuery);
 **[Video playing on hover][26]**<br>
 
 ##Preparing video sources using `seethru-convert`##
-The plugin ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (`.mov`s should work best here - also make sure the video actually contains an alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
+The package ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (`.mov`s should work best here - also make sure the video actually contains an alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
 
 To use the script you need to have [`node.js`][30] and [`ffmpeg`][31] installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
 
@@ -188,7 +188,7 @@ Apparently there are some machine setups where external color management softwar
 If you experience similar problems, use `webm`-video sources for playback in Chrome, they seem to work just fine. Safari and other browsers using `m4v` don't show any issues like this.
 
 ##Mobile devices & tablets##
-As most mobile devices and tablets (iPad I'm looking at you) use external video players to handle HTML5-video this plugin is **not working on mobile Webkit / Safari / Android Browser** (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
+As most mobile devices and tablets (iPad I'm looking at you) use external video players to handle HTML5-video this script is **not working on mobile Webkit / Safari / Android Browser** (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
 Apparently Android 3.1+ will play `<video>` inline, but I do not have any experience regarding using it as a canvas source yet.
 
 ##Browser support##
