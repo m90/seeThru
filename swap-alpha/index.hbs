@@ -4,35 +4,32 @@ title : Swap Static Alpha
 <div class="demo">
 	<h3>Swapping static alpha</h3>
 	<video onended="this.play();" autoplay loop>
-		<source src="../video/robbe.webm" type="video/webm" />
-		<source src="../video/robbe.mp4" type="video/mp4" />
-		<source src="../video/robbe.ogg" type="video/ogg" />
+		<source src="../video/robbe.webm" type="video/webm">
+		<source src="../video/robbe.mp4" type="video/mp4">
+		<source src="../video/robbe.ogg" type="video/ogg">
 	</video>
 	<p>and</p>
-	<img src="../img/robbe-mask.png" alt="Mask" />
+	<img src="../img/robbe-mask.png" alt="Mask">
 	<p>or</p>
 	<img src="../img/robbe-altmask.png" alt="Mask" />
-	<p>with <span class="code">$('#select').seeThru('updateMask',{mask:'#newMask'});</span> <span id="alphaToggle">on click</span> results in:</p>
+	<p>with <code>seeThruInstance.updateMask('#newMask');</code> <span id="alphaToggle">on click</span> results in:</p>
 	<video class="inAction" id="swapAlphaDemo" autoplay loop>
-		<source src="../video/robbe.webm" type="video/webm" />
-		<source src="../video/robbe.mp4" type="video/mp4" />
-		<source src="../video/robbe.ogg" type="video/ogg" />
+		<source src="../video/robbe.webm" type="video/webm">
+		<source src="../video/robbe.mp4" type="video/mp4">
+		<source src="../video/robbe.ogg" type="video/ogg">
 	</video>
-	<img class="inAction" id="swapAlphaMask" src="../img/robbe-mask.png" alt="Mask" />
-	<img class="inAction" id="swapAlphaAltMask" src="../img/robbe-altmask.png" alt="Mask" />
+	<img id="swapAlphaMask" src="../img/robbe-mask.png" alt="Mask" style="display: none;">
+	<img id="swapAlphaAltMask" src="../img/robbe-altmask.png" alt="Mask" style="display: none;">
 </div>
 <div class="demo">Back to <a href="https://github.com/m90/jquery-seeThru">GitHub</a></div>
 <script>
-	$(document).ready(function(){
-		$('#swapAlphaDemo').seeThru({mask:'#swapAlphaMask'});
-
+		var video = seeThru.create('#swapAlphaDemo', { staticMask:'#swapAlphaMask' });
 		var toggle = false;
 
-		$('#alphaToggle').click(function(){
-			var nextMask = toggle ? '#swapAlphaMask' : '#swapAlphaAltMask';
-			$('#swapAlphaDemo').seeThru('updateMask',{mask:nextMask});
+		document.querySelector('#alphaToggle').addEventListener('click', function(){
+			video.updateMask(toggle ? '#swapAlphaMask' : '#swapAlphaAltMask');
 			toggle = !toggle;
 		});
 
-	});
+
 </script>

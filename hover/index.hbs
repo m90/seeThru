@@ -5,20 +5,22 @@ title : Play on hover
 <div class="demo">
 	<h3>Video playing on hover</h3>
 	<video id="video">
-		<source src="../video/kolor.webm" type="video/webm" />
-		<source src="../video/kolor.mp4" type="video/mp4" />
-		<source src="../video/kolor.ogg" type="video/ogg" />
+		<source src="../video/kolor.webm" type="video/webm">
+		<source src="../video/kolor.mp4" type="video/mp4">
+		<source src="../video/kolor.ogg" type="video/ogg">
 	</video>
 	<p>Hover over the video to see Mr. Kolor chase fame and money</p>
 </div>
 <div class="demo">Back to <a href="https://github.com/m90/jquery-seeThru">GitHub</a></div>
 <script>
-$(document).ready(function(){
-	$('#video').seeThru({start:'external'}).hover(function(){
-		this.play();
-	}, function(){
-		this.pause();
+
+	var video = seeThru.create('#video', {start:'external'});
+
+	document.querySelector('#video').addEventListener('mouseenter', function(e){
+		video.play();
 	});
-	$('html').css('transform', 'scale3d(1,1,1)');
-});
+	document.querySelector('#video').addEventListener('mouseleave', function(e){
+		video.pause();
+	});
+
 </script>

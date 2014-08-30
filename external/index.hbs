@@ -5,34 +5,31 @@ title: Control video via external JS interface
 <div class="demo">
 	<h3>Video listening to external JS calls</h3>
 	<video id="video">
-		<source src="../video/kolor.webm" type="video/webm" />
-		<source src="../video/kolor.mp4" type="video/mp4" />
-		<source src="../video/kolor.ogg" type="video/ogg" />
+		<source src="../video/kolor.webm" type="video/webm">
+		<source src="../video/kolor.mp4" type="video/mp4">
+		<source src="../video/kolor.ogg" type="video/ogg">
 	</video>
 	<p><span id="play" class="button">Play</span> or <span id="pause" class="button">Pause</span><br/>or click the video image to toggle</p>
 </div>
 <div class="demo">Back to <a href="https://github.com/m90/jquery-seeThru">GitHub</a></div>
 <script>
-$(document).ready(function(){
 
 	var playing = false;
+	var video = seeThru.create('#video', {start:'external'});
 
-	$('#video').seeThru({start:'external'});
-
-	$('#play').click(function(){
-		document.getElementById('video').play();
+	document.querySelector('#play').addEventListener('click', function(){
+		document.querySelector('#video').play();
 		playing = true;
 	});
 
-	$('#pause').click(function(){
-		document.getElementById('video').pause();
+	document.querySelector('#pause').addEventListener('click', function(){
+		document.querySelector('#video').pause();
 		playing = false;
 	});
 
-	$('#video').click(function(){
-		document.getElementById('video')[playing ? 'pause' : 'play']();
+	document.querySelector('#video').addEventListener('click', function(){
+		document.querySelector('#video')[playing ? 'pause' : 'play']();
 		playing = !playing;
 	});
 
-});
 </script>

@@ -36,12 +36,8 @@
         padding: 20px 20px 20px 20px;
         border-bottom: 1px dotted white;
       }
-      .code {
-        font-family: Courier, monospace;
+      code {
         background-color: white;
-      }
-      .inAction {
-        display: none;
       }
       #alphaToggle {
         text-decoration: underline;
@@ -70,12 +66,11 @@
       ga('create', 'UA-365790-10', 'm90.github.io');
       ga('send', 'pageview');
     </script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-seeThru.min.js"></script>
+    <script type="text/javascript" src="../js/seeThru.min.js"></script>
   </head>
   <body>
     <div id="wrap">
-      <h1>jQuery seeThru</h1>
+      <h1>seeThru</h1>
       <h2>Alpha channel transparencies for HTML5 &lt;video&gt;-elements</h2>
       <div id="content">
         <div class="demo">
@@ -92,29 +87,27 @@
           <a href="https://github.com/m90/jquery-seeThru">GitHub</a> 
         </div>
         <script>
-          $(document).ready(function() {
-            var playing = false;
-            $('#video').seeThru({
-              start: 'external'
-            });
-            $('#play').click(function() {
-              document.getElementById('video').play();
-              playing = true;
-            });
-            $('#pause').click(function() {
-              document.getElementById('video').pause();
-              playing = false;
-            });
-            $('#video').click(function() {
-              document.getElementById('video')[playing ? 'pause' : 'play']();
-              playing = !playing;
-            });
+          var playing = false;
+          var video = seeThru.create('#video', {
+            start: 'external'
+          });
+          document.querySelector('#play').addEventListener('click', function() {
+            document.querySelector('#video').play();
+            playing = true;
+          });
+          document.querySelector('#pause').addEventListener('click', function() {
+            document.querySelector('#video').pause();
+            playing = false;
+          });
+          document.querySelector('#video').addEventListener('click', function() {
+            document.querySelector('#video')[playing ? 'pause' : 'play']();
+            playing = !playing;
           });
         </script>
       </div>
     </div>
     <script>
-      if (new RegExp('iPad|iPhone|iPod|Android', 'g').test(navigator.userAgent)) {
+      if (/iPad|iPhone|iPod|Android/g.test(navigator.userAgent)) {
         alert('Oh Hi! Unfortunately this plugin does not work on iOS and Android. Read the docs for further info on that!');
       }
     </script>

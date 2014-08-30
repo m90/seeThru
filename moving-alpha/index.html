@@ -36,12 +36,8 @@
         padding: 20px 20px 20px 20px;
         border-bottom: 1px dotted white;
       }
-      .code {
-        font-family: Courier, monospace;
+      code {
         background-color: white;
-      }
-      .inAction {
-        display: none;
       }
       #alphaToggle {
         text-decoration: underline;
@@ -70,12 +66,11 @@
       ga('create', 'UA-365790-10', 'm90.github.io');
       ga('send', 'pageview');
     </script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-seeThru.min.js"></script>
+    <script type="text/javascript" src="../js/seeThru.min.js"></script>
   </head>
   <body>
     <div id="wrap">
-      <h1>jQuery seeThru</h1>
+      <h1>seeThru</h1>
       <h2>Alpha channel transparencies for HTML5 &lt;video&gt;-elements</h2>
       <div id="content">
         <div class="demo">
@@ -85,8 +80,8 @@
             <source src="../video/kolor.mp4" type="video/mp4" />
             <source src="../video/kolor.ogg" type="video/ogg" />
           </video>
-          <p>with <span class="code">$('#select').seeThru();</span>  results in:</p>
-          <video autoplay loop id="movingAlphaDemo">
+          <p>with <code>seeThru.create('#video')</code> results in:</p>
+          <video autoplay loop id="movingAlphaDemo" style="display: none;">
             <source src="../video/kolor.webm" type="video/webm" />
             <source src="../video/kolor.mp4" type="video/mp4" />
             <source src="../video/kolor.ogg" type="video/ogg" />
@@ -97,14 +92,15 @@
         </div>
       </div>
       <script>
-        $(document).ready(function() {
-          $('#movingAlphaDemo').seeThru({});
+        seeThru.create('#movingAlphaDemo', {
+          width: 400,
+          height: 300
         });
       </script>
     </div>
     </div>
     <script>
-      if (new RegExp('iPad|iPhone|iPod|Android', 'g').test(navigator.userAgent)) {
+      if (/iPad|iPhone|iPod|Android/g.test(navigator.userAgent)) {
         alert('Oh Hi! Unfortunately this plugin does not work on iOS and Android. Read the docs for further info on that!');
       }
     </script>

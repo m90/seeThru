@@ -4,27 +4,25 @@ title : Static Alpha
 <div class="demo">
 	<h3>Static alpha sourced from an image</h3>
 	<video onended="this.play();" autoplay loop>
-		<source src="../video/robbe.webm" type="video/webm" />
-		<source src="../video/robbe.mp4" type="video/mp4" />
-		<source src="../video/robbe.ogg" type="video/ogg" />
+		<source src="../video/robbe.webm" type="video/webm">
+		<source src="../video/robbe.mp4" type="video/mp4">
+		<source src="../video/robbe.ogg" type="video/ogg">
 	</video>
 	<p>and</p>
-	<img src="../img/robbe-mask.png" alt="Mask" />
-	<p>with <span class="code">$('#select').seeThru({mask:'#myMask'});</span> results in:</p>
+	<img src="../img/robbe-mask.png" alt="Mask">
+	<p>with <code>seeThru.create('#select', {mask:'#myMask'});</code> results in:</p>
 	<video class="inAction" id="staticAlphaDemo" autoplay loop>
-		<source src="../video/robbe.webm" type="video/webm" />
-		<source src="../video/robbe.mp4" type="video/mp4" />
-		<source src="../video/robbe.ogg" type="video/ogg" />
+		<source src="../video/robbe.webm" type="video/webm">
+		<source src="../video/robbe.mp4" type="video/mp4">
+		<source src="../video/robbe.ogg" type="video/ogg">
 	</video>
-	<img class="inAction" id="staticAlphaMask" src="../img/robbe-mask.png" alt="Mask" />
+	<img id="staticAlphaMask" src="../img/robbe-mask.png" alt="Mask" style="display: none;">
 </div>
 
 <div class="demo">Back to <a href="https://github.com/m90/jquery-seeThru">GitHub</a></div>
-<div class="demo">
-	<div class="g-plusone"></div>
-</div>
+
 <script>
-	$(document).ready(function(){
-		$('#staticAlphaDemo').seeThru({mask:'#staticAlphaMask'});
+	document.addEventListener('DOMContentLoaded', function(){
+		seeThru.create('#staticAlphaDemo', { staticMask:'#staticAlphaMask' });
 	});
 </script>
