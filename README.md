@@ -116,7 +116,7 @@ or
 seeThru.create('#myVideo', {staticMask : '#imageWithAlpha', alphaMask: true});
 ```
 ##Additional methods
-Apart from `init`, these methods are available:
+Apart from `create`, these methods are available:
 
  - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `staticMask` parameter, the value for `alphaMask` will be kept from initialisation.
  - `revert` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
@@ -183,7 +183,7 @@ To mimic a behavior as if the original video was still visible it will echo all 
 The events that are echoed are: `mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur`
 
 ##Chrome and `m4v` issues###
-Apparently there are some machine setups where external color management software and video hardware will mess with the gamma settings of `m4v` playback in Chrome (see **[issue #12][32]** for an example), which will result in black pixels rendered as dark grey - therefore rendering the alpha information saved in RGB useless/incorrect.
+Apparently there are some machine setups where external color management software and video hardware will clash and mess with the gamma settings of `m4v` playback in Chrome (see **[issue #12][32]** for an example), which will result in black pixels rendered as dark grey - therefore rendering the alpha information saved in RGB useless/incorrect.
 
 If you experience similar problems, use `webm`-video sources for playback in Chrome, they seem to work just fine. Safari and other browsers using `m4v` don't show any issues like this.
 

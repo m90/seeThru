@@ -62,6 +62,10 @@
 		return rgb;
 	}
 
+	/**
+	* gets a prefixed rAF version or a polyfill to use if window.requestAnimationFrame is not available
+	* @returns {Function}
+	*/
 	function getRequestAnimationFrame(){
 		var
 		lastTime = 0
@@ -82,6 +86,10 @@
 		};
 	}
 
+	/**
+	* gets a prefixed cAF version or a polyfill to use if window.cancelAnimationFrame is not available
+	* @returns {Function}
+	*/
 	function getCancelAnimationFrame(){
 		var vendors = ['ms', 'moz', 'webkit', 'o'];
 
@@ -93,14 +101,29 @@
 		return function(id){ clearTimeout(id); };
 	}
 
+	/**
+	* turn array like object into real array
+	* @param {Object} el
+	* @returns {Array}
+	*/
 	function slice(el){
 		return [].slice.call(el);
 	}
 
+	/**
+	* check [[Class]] by calling {}.toString on any object
+	* @param {Object} el
+	* @returns {String}
+	*/
 	function toString(el){
 		return Object.prototype.toString.call(el);
 	}
 
+	/**
+	* insert a DOM Node after another
+	* @param {DOMElement} node
+	* @param {DOMElement} after
+	*/
 	function insertAfter(node, after){
 		if (after.nextSibling) {
 			after.parentNode.insertBefore(node, after.nextSibling);
@@ -109,8 +132,12 @@
 		}
 	}
 
-	// if the passed element is DOM node, use it, in case it's a collection use it's first member
-	// if that fails try to use it as a CSS selector and use the first match
+	/**
+	* return a DOM Node matching variable input
+	* input might be a DOMElement, a DOMCollection or a string
+	* @param input
+	* @returns DOMElement
+	*/
 	function getNode(input){
 		if (input.tagName){
 			return input;
@@ -123,6 +150,25 @@
 		}
 	}
 
+	/**
+	* serialize an object into a string of CSS to use for style.cssText
+	* @param {Object} obj
+	* @returns {String}
+	*/
+	function cssObjectToString(obj){
+		var res = [];
+		for (var prop in obj){
+			if (obj.hasOwnProperty(prop)){
+				res.push(prop + ': ' + obj[prop] + ';')
+			}
+		}
+		return res.join('');
+	}
+
+	/**
+	* make the script available as a plugin on the passed jQuery instance
+	* @param {jQuery} $
+	*/
 	function attachSelfAsPlugin($){
 
 		$ = $ || window.jQuery;
@@ -146,13 +192,39 @@
 		};
 	}
 
+	/**
+	* simple store to keep track of video elements that are currently
+	* handled by seeThru
+	*/
+	function Store(){
+		var elements = [];
+		this.push = function(el){
+			if (el){
+				elements.push(el._video);
+				return el;
+			} else {
+				return null;
+			}
+		};
+		this.has = function(el){
+			return elements.some(function(video){
+				return video === el;
+			});
+		};
+		this.remove = function(el){
+			elements = elements.filter(function(video){
+				return video !== el;
+			});
+		};
+	}
+
 	function TransparentVideo(video, options){
 
 		var
 		ready = false
 		, self = this
 		, initialDisplayProp
-		, divisor = options.staticMask ? 1 : 2 //static alpha data will not cut the image dimensions
+		, divisor = options.mask ? 1 : 2 //static alpha data will not cut the image dimensions
 		, dimensions = { // calculate dimensions
 			width : parseInt(options.width, 10)
 			, height : parseInt(options.height, 10)
@@ -242,21 +314,21 @@
 			insertAfter(displayCanvas, video);
 
 			// draw static mask if needed
-			if (options.staticMask){
-				drawStaticMask(getNode(options.staticMask));
-			}
+			if (options.mask){ drawStaticMask(getNode(options.mask)); }
 
 			if (options.poster && video.poster){
 				posterframe = document.createElement('div');
 				posterframe.className = 'seeThru-poster';
-				posterframe.style.width = dimensions.width + 'px';
-				posterframe.style.height = dimensions.height + 'px';
-				posterframe.style.position = 'absolute';
-				posterframe.style.top = 0;
-				posterframe.style.left = 0;
-				posterframe.style.backgroundSize = 'cover';
-				posterframe.style.backgroundPosition = 'center';
-				posterframe.style.backgroundImage = 'url("' + video.poster + '")';
+				posterframe.style.cssText = cssObjectToString({
+					width : dimensions.width + 'px'
+					, height : dimensions.height + 'px'
+					, position : 'absolute'
+					, top : 0
+					, left : 0
+					, backgroundSize : 'cover'
+					, backgroundPosition : 'center'
+					, backgroundImage : 'url("' + video.poster + '")'
+				});
 				insertAfter(posterframe, video);
 			}
 
@@ -360,8 +432,10 @@
 
 		this._options = (function(options){
 			for (var key in defaultOptions){
-				if (!(key in options)){
-					options[key] = defaultOptions[key];
+				if (options.hasOwnProperty(key)){
+					if (!(key in options)){
+						options[key] = defaultOptions[key];
+					}
 				}
 			}
 			return options;
@@ -377,6 +451,8 @@
 					self._seeThru.getCanvas().removeEventListener('click', playSelfAndUnbind);
 				}
 			}
+
+			if (elementStore.has(this._video)) { throw new Error('seeThru already initialized on passed video element!'); }
 
 			this._seeThru = new TransparentVideo(this._video, this._options);
 
@@ -442,6 +518,7 @@
 
 		this.revert = function(){
 			this._seeThru.teardown();
+			elementStore.remove(this._video);
 			return this;
 		};
 
@@ -449,13 +526,20 @@
 			this._seeThru.updateMask(getNode(mask));
 			return this;
 		};
+
+		this._getVideo = function(){
+			return this._video;
+		};
+
 	}
 
 	if (window.jQuery){ attachSelfAsPlugin(window.jQuery); }
 
+	var elementStore = new Store();
+
 	return {
 		create : function(DOMCollection, options){
-			return new SeeThru(DOMCollection, options).init();
+			return elementStore.push(new SeeThru(DOMCollection, options).init());
 		}
 		, attach : attachSelfAsPlugin
 	};

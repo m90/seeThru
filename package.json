@@ -7,10 +7,10 @@
     "email": "frederik.ring@gmail.com"
   },
   "main": "src/jquery-seeThru.js",
-  "repository": "https://github.com/m90/jquery-seeThru.git",
-  "homepage": "https://github.com/m90/jquery-seeThru",
+  "repository": "https://github.com/m90/seeThru.git",
+  "homepage": "https://github.com/m90/seeThru",
   "bugs": {
-    "url": "https://github.com/m90/jquery-seeThru/issues"
+    "url": "https://github.com/m90/seeThru/issues"
   },
   "bin": {
     "seethru-convert": "./converter.js"
