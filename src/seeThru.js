@@ -136,7 +136,7 @@
 					if ($(this).data('seeThru')){ return; }
 					$(this).data('seeThru', new SeeThru(this, args[0]).init());
 				} else if (args.length && toString(args[0]) === '[object String]'){
-					if (!$(this).data('seeThru')){ return }
+					if (!$(this).data('seeThru')){ return; }
 					$(this).data('seeThru')[args[0]](args[1]);
 					if (args[0] === 'revert'){
 						$(this).data('seeThru', null);
@@ -163,7 +163,6 @@
 		, display = displayCanvas.getContext('2d')
 		, posterframe
 		, interval
-		, maskObj
 		, requestAnimationFrame = window.requestAnimationFrame || getRequestAnimationFrame()
 		, cancelAnimationFrame = window.cancelAnimationFrame || getCancelAnimationFrame()
 		, drawFrame = function(recurse){
