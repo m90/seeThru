@@ -2,7 +2,7 @@
 
 This script adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
 
-The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file or in a seperate `<img>`-element.
+The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
 It also ships with a simple node.js script for automatically converting your video sources.
 
@@ -27,20 +27,19 @@ This plugin is a **cheap hack**! For the lack of alpha support in HTML5 video it
 
 ##Table of contents##
  - <a href="#video-setup">Video Setup</a>
- - <a href="#basic-plugin-usage">Basic Plugin Usage</a>
+ - <a href="#basic-plugin-usage">Basic Script Usage</a>
  - <a href="#options">Options</a>
  - <a href="#additional-methods">Additional methods</a>
+ - <a href="#usage-as-a-jquery-plugin">Usage as a jQuery-plugin</a>
  - <a href="#examples">Examples</a>
  - <a href="#preparing-video-sources-using-seethru-convert">Preparing video sources using `seethru-convert`</a>
  - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#feature-testing">Feature testing</a>
- - <a href="#too-much-jquery">Too much jQuery?</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
  - <a href="#chrome-and-m4v-issues">Chrome and `m4v` issues</a>
  - <a href="#mobile-devices--tablets">Mobile devices & tablets</a>
  - <a href="#browser-support">Browser support</a>
- - <a href="#tldr">tl;dr</a>
  - <a href="#license">License</a>
 
 ##Video setup##
@@ -91,13 +90,10 @@ var seeThru = require('seethru');
 var transparentVideo = seeThru.create('#myVideo');
 ```
 
-If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display: none;` in your CSS.<br/>In case you want to style the generated canvas elements, the generated markup (you don't have to add this portion - the plugin does this) looks like this:
-```html
-<video style="display:none;">...</video><!-- video is hidden -->
-<canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
-<canvas height="XXX" width="XXX" class="seeThru-buffer" style="display: none;"></canvas><!-- this is just a helper element -->
-```
-If you just want to give the plugin a test-drive without having to prepare your own video you can download and use the example videos in the repo's **[media folder](https://github.com/m90/jquery-seeThru/tree/master/media)** (also included in the zipped download).
+If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display: none;` in your CSS.
+
+
+If you just want to give the script a test-drive without having to prepare your own video you can download and use the example videos in the repo's **[media folder](https://github.com/m90/jquery-seeThru/tree/master/media)** (also included in the zipped download).
 
 ##Options##
 There are a few options you can pass when calling the plugin:
@@ -113,46 +109,30 @@ There are a few options you can pass when calling the plugin:
 
 This might look like this:
 ```javascript
-$('#myVideo').seeThru({start : 'autoplay' , end : 'stop'});
+seeThru.create('#myVideo', {start : 'autoplay' , end : 'stop'});
 ```
 or
 ```javascript
-$('#myVideo').seeThru({mask : '#imageWithAlpha', alphaMask: true});
+seeThru.create('#myVideo', {mask : '#imageWithAlpha', alphaMask: true});
 ```
-##Additional methods##
+##Additional methods
 Apart from `init`, these methods are available:
 
- - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `mask` parameter, the value for `alphaMask` will be kept from init.
+ - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `mask` parameter, the value for `alphaMask` will be kept from initialisation.
  - `revert` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
- - `play` and `pause` are convenience methods to control the playback of the video - basically the same as `$('#video')[0].play()`, but still chainable
+ - `play` and `pause` are convenience methods to control the playback of the video
 
-This might look like:
+##Usage as a jQuery-plugin
+If `window.jQuery` is present the script will automatically attach itself to jQuery as a plugin, meaning you can also do something like:
 ```javascript
-/* sets mask to element with id "newMask" */
-$('#myVideo').seeThru('updateMask', {mask : '#newMask'});
+$('#myVideo').seeThru().seeThru('play');
 ```
-or
+If your jQuery is *not* global (think AMD) but you still want to attach the script as a plugin you can use the `attach`  method exisiting on `seeThru`.
 ```javascript
-/* destroys seeThru functionality and adds class "plainOldVideo" */
-$('#myVideo').seeThru('revert').addClass('plainOldVideo');
+seeThru.attach(myVersionOfjQuery);
 ```
-or
-```javascript
-/* pauses video and binds click handler to resume playback */
-$('#myVideo').seeThru('pause').one('click', function(){
-	$(this).seeThru('play');
-});
-```
-or
-```javascript
-/* makes video play only on hover */
-$('#myVideo').seeThru({start : 'external'}).hover(function(){
-	this.play(); //we can use the DOM element's methods here as well as `this` is the video
-}, function(){
-	this.pause(); //we can use the DOM element's methods here as well as `this` is the video
-});
-```
-##Examples##
+
+##Examples
 **[Moving alpha][1]**<br>
 **[Static alpha][2]**<br>
 **[Swapping alpha sources][3]**<br>
@@ -187,13 +167,10 @@ Duplicate your footage layer, align them, and use the second instance as Alpha T
 Make sure you are using an unmultiplied (straight) version of your color source:
 ![After Effects walkthru 4][23]<br/>
 
-##Feature testing##
+##Feature testing
 I'm having a hard time finding a proper feature test for a browser's ability to use `<video>` as a source for `<canvas>` (so I could include it into the library), but for anyone interested I did find a hacky and sometimes unreliable **[test][27]** that is at least working on iOS (so one main pitfall is gone at least). If anyone does know of a proper way to test this, do not hesitate to tell me.
 
 If you do need bullet-proof results you might need to rely on UA sniffing though.
-
-##Too much jQuery?##
-If you do not want to use jQuery, but still think transparent video is nice, here's **[a gist][13]** showing how the basic principle works.
 
 ##Cross Domain issues with canvas-elements##
 Please note that JavaScript's canvas-methods are subject to cross domain security restrictions, so please be aware that the video source files have to be coming from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will get a DOM Security Exception. Please also note that this also applies to subdomains, therefore you shouldn't mix www and non-www-URLs.
@@ -201,13 +178,8 @@ Please note that JavaScript's canvas-methods are subject to cross domain securit
 If you're living on the cutting edge (the 2007 kind of) you can also use **[CORS][28]** of course!
 
 ##Binding mouse events to your video##
-To mimic a behavior as if the original video was still visible it will echo all mouse events fired by the canvas representation. This means that you can still do sth like:
-```javascript
-$('#myVideo').seeThru(); // the <video> is hidden
-$('#myVideo').click(function(){ //this is still working as a click on the `.seeThru-display`-<canvas> will be echoed by the video`
-   alert('But I thought I was hidden?');
-});
-```
+To mimic a behavior as if the original video was still visible it will echo all mouse events fired by the canvas representation.
+
 The events that are echoed are: `mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur`
 
 ##Chrome and `m4v` issues###
@@ -222,13 +194,6 @@ Apparently Android 3.1+ will play `<video>` inline, but I do not have any experi
 ##Browser support##
 Tested on Chrome, Firefox, Safari, Opera and IE 9.0+
 (the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features have a look at <a href="http://www.modernizr.com/">Modernizr</a>
-
-##tl;dr##
-Put a black-and white alpha channel right underneath your `<video>` source (in the same file), make sure jQuery is loaded and let the plugin do magical things:
-<code>
-$('#myRadVideoNeedsTransparencies').seeThru();
-</code><br>
-Voila! Here's an [example][1]. Ready to :shipit:?
 
 ##License##
 All source code is licensed under the **[MIT License][11]**, demo content, video and imagery is **[CC-BY-SA 3.0][12]**

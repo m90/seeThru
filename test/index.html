@@ -14,128 +14,116 @@
 		<source src="media/kolor.ogg" type="video/ogg" />
 	</video>
 
-
-
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
 	<script type="text/javascript" src="lib/seeThru.min.js"></script>
 	<script>
 
-	$(document).ready(function(){
+	var
+	testvideo
+	$testvideo = $('#test-video');
 
-		var $testvideo = $('#test-video');
+	// test basic setup, element creation, dimensions and destroy
+	test('default config', 9, function(){
 
-		// test basic setup, element creation, dimensions and destroy
-		test('default config', 10, function(){
+		testvideo = seeThru.create('#test-video');
 
-			$testvideo.seeThru();
+		ok(!$testvideo.is(':visible'), 'video is hidden');
+		ok($('.seeThru-display').length, 'display canvas is created');
+		ok($('.seeThru-display').is(':visible'), 'display canvas is shown');
+		ok(!$('.seeThru-buffer').is(':visible'), 'buffer canvas is hidden');
+		equal($testvideo.height(), $('.seeThru-display').height() * 2, 'height is correct');
+		equal($testvideo.width(), $('.seeThru-display').width(), 'width is correct');
 
-			ok(!$testvideo.is(':visible'), 'video is hidden');
-			ok($('.seeThru-display').length, 'display canvas is created');
-			ok($('.seeThru-display').is(':visible'), 'display canvas is shown');
-			ok(!$('.seeThru-buffer').is(':visible'), 'buffer canvas is hidden');
-			equal($testvideo.height(), $('.seeThru-display').height() * 2, 'height is correct');
-			equal($testvideo.width(), $('.seeThru-display').width(), 'width is correct');
+		testvideo.revert();
 
+		ok($testvideo.is(':visible'), 'video is shown');
+		equal($('.seeThru-buffer').length, 0, 'buffer canvas is deleted');
+		equal($('.seeThru-display').length, 0, 'display canvas is deleted');
+
+	});
+
+	// test if elements triggered on the display canvas are properly routed through to the video element
+	test('event routing', 1, function(){
+
+		testvideo = seeThru.create('#test-video', {start : 'clicktoplay'});
+
+		stop();
+		$testvideo.on('playing', function(){
+
+			$testvideo.off('playing');
+			ok(true, 'click event routed video starts playing');
+			testvideo.revert();
+			start();
+
+		});
+
+		$('.seeThru-display').click();
+
+
+	});
+
+	//test if video can be controlled via non-plugin JavaScript
+	test('external JS calls', 2, function(){
+
+		testvideo = seeThru.create('#test-video', {start : 'external'});
+
+		stop();
+		$testvideo.on('playing', function(){
+
+			$testvideo.off('playing');
+			ok(true, 'video starts playing');
+			testvideo.revert();
 			$testvideo.seeThru('revert');
-
-			ok($testvideo.is(':visible'), 'video is shown');
-			equal($('.seeThru-buffer').length, 0, 'buffer canvas is deleted');
-			equal($('.seeThru-display').length, 0, 'display canvas is deleted');
-			ok(!$testvideo.data('seeThru'), 'stored data is removed');
+			start();
 
 		});
 
-		// test if elements triggered on the display canvas are properly routed through to the video element
-		test('event routing', 1, function(){
-
-			$testvideo.seeThru({start : 'clicktoplay'});
-
-			stop();
-			$testvideo.on('playing', function(){
-
-				$testvideo.off('playing');
-				ok(true, 'click event routed video starts playing');
-				$testvideo.seeThru('revert');
-				start();
-
-			});
-
-			$('.seeThru-display').click();
-
-
+		$testvideo.hover(function(){
+			this.play();
 		});
 
-		//test if video can be controlled via non-plugin JavaScript
-		test('external JS calls', 2, function(){
+		ok($('.seeThru-display').is(':visible'), 'still frame shown');
 
-			$testvideo.seeThru({start : 'external'});
+		$testvideo.trigger('mouseover');
 
-			stop();
-			$testvideo.on('playing', function(){
+	});
 
-				$testvideo.off('playing');
-				ok(true, 'video starts playing');
-				$testvideo.seeThru('revert');
-				start();
+	//plugin should not initialize on non-video elements
+	test('apply on video only', 1, function(){
 
-			});
+		var $div = $('<div>').appendTo($('#qunit-fixture'));
 
-			$testvideo.hover(function(){
-
-				this.play();
-
-			});
-
-			ok($('.seeThru-display').is(':visible'), 'still frame shown');
-
-			$testvideo.trigger('mouseover');
-
-		});
-
-		//plugin should not initialize on non-video elements
-		test('apply on video only', 1, function(){
-
-			var $div = $('<div>').appendTo($('#qunit-fixture'));
-
-			throws(function(){
-
-				$div.seeThru();
-
-			}, 'throws error when applied to div element');
+		throws(function(){
+			seeThru.create($div[0]);
+		}, 'throws error when applied to div element');
 
 
-		});
+	});
 
-		//plugin can only be called once on any video element
-		test('apply only once', 1,function(){
+	//plugin can only be called once on any video element
+	test('apply only once', 1,function(){
 
-			$testvideo.seeThru();
+		testvideo = seeThru.create('#test-video');
+		throws($testvideo.seeThru, 'throws error when applied twice on video element');
+		testvideo.revert();
 
-			throws($testvideo.seeThru, 'throws error when applied twice on video element');
+	});
 
-			$testvideo.seeThru('revert');
+	//plugin actually draws frame on canvas
+	test('hasData', 1, function(){
 
+		testvideo = seeThru.create('#test-video');
 
-		});
+		stop();
+		setTimeout(function(){
 
-		//plugin actually draws frame on canvas
-		test('hasData', 1, function(){
+			var data = $('.seeThru-display')[0].getContext('2d').getImageData(200, 200, 100, 100).data;
+			ok(Math.max.apply(Math, data) > 0);
+			testvideo.revert();
+			start();
 
-			$testvideo.seeThru({'start' : 'clicktoplay'});
-
-			stop();
-			setTimeout(function(){
-
-				var data = $('.seeThru-display')[0].getContext('2d').getImageData(200, 200, 100, 100).data;
-				ok(Math.max.apply(Math, data) > 0);
-				$testvideo.seeThru('revert');
-				start();
-
-			}, 50);
-
-		});
-
+		}, 50);
 
 	});
 

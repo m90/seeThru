@@ -133,25 +133,18 @@
 
 			return this.each(function(){
 				if (!args.length || (args.length === 1 && toString(args[0]) === '[object Object]')){
-					if ($(this).data('seeThru')){
-						return;
-					} else {
-						$(this).data('seeThru', new SeeThru(this, args[0]).init());
-					}
+					if ($(this).data('seeThru')){ return; }
+					$(this).data('seeThru', new SeeThru(this, args[0]).init());
 				} else if (args.length && toString(args[0]) === '[object String]'){
-					if ($(this).data('seeThru')){
-						$(this).data('seeThru')[args[0]](args[1]);
-						if (args[0] === 'revert'){
-							$(this).data('seeThru', null);
-						}
-					} else {
-						return;
+					if (!$(this).data('seeThru')){ return }
+					$(this).data('seeThru')[args[0]](args[1]);
+					if (args[0] === 'revert'){
+						$(this).data('seeThru', null);
 					}
 				}
 			});
 		};
 	}
-
 
 	function TransparentVideo(video, options){
 
@@ -317,7 +310,6 @@
 			});
 		}
 
-
 	}
 
 	function SeeThru(DOMNode, options){
@@ -451,10 +443,12 @@
 
 		this.revert = function(){
 			this._seeThru.teardown();
+			return this;
 		};
 
 		this.updateMask = function(mask){
 			this._seeThru.updateMask(getNode(mask));
+			return this;
 		};
 	}
 
