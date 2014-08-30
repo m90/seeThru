@@ -26,6 +26,7 @@ module.exports = function(grunt){
 			files: ['Gruntfile.js', 'src/*.js'],
 			options: {
 				laxcomma: true,
+				unused : 'vars',
 				globals: {
 					jQuery: true,
 					console: true,

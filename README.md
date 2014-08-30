@@ -69,34 +69,29 @@ Basic HTML5 video markup should look something like this:
 ```
 
 In case you are planning to have your video set to autoplay or loop you can do this when initializing the plugin. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
-To make the magic happen you just have to do the following:<br/>
-Include jQuery (needs 1.7+) and the plugin:
+To use the script include the source:<br/>
 
 ```html
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="jquery-seeThru.min.js"></script>
+<script type="text/javascript" src="seeThru.min.js"></script>
 ```
-and then call the following jQuery method on your video (preferrably on `$(document).ready`):
+and then pass your element to `seeThru.create()`:
 
 ```javascript
-$(document).ready(function(){
-    $('#myVideo').seeThru();
-});
+var transparentVideo = seeThru.create('#myVideo');
 ```
 If you're using AMD / require.js load the plugin like:
 ```javascript
-require(['jquery', 'jquery-seeThru'], function($){
-    $('#myVideo').seeThru();
+require(['seeThru'], function(seeThru){
+    var transparentVideo = seeThru.create('#myVideo');
 });
 ```
 Using browserify, simply require the plugin:
 ```javascript
-var $ = require('jquery');
-require('jquery-seethru');
-$('#myVideo').seeThru();
+var seeThru = require('seethru');
+var transparentVideo = seeThru.create('#myVideo');
 ```
 
-If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display:none;` in your CSS.<br/>In case you want to style the generated canvas elements, the generated markup (you don't have to add this portion - the plugin does this) looks like this:
+If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display: none;` in your CSS.<br/>In case you want to style the generated canvas elements, the generated markup (you don't have to add this portion - the plugin does this) looks like this:
 ```html
 <video style="display:none;">...</video><!-- video is hidden -->
 <canvas height="XXX" width="XXX" class="seeThru-display"></canvas><!-- this is the actual "video" -->
@@ -114,8 +109,7 @@ There are a few options you can pass when calling the plugin:
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `poster` can be set to `true` if you want the video to be replaced by the image specified in the `<video>`s `poster`-attribute when in a paused state
- - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the plugin to un-premultiply the imagery. Note that this might have bad effects on performance, so it is recommended to work with unpremultiplied video sources
- - `shimRAF` can be set to false if you don't want the plugin to shim the `requestAnimationFrame` API (e.g when you are already doing this yourself or only need to support browsers that support an unprefixed `requestAnimationFrame`). The plugin is using the [Paul Irish polyfill][18]
+ - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the plugin to un-premultiply the imagery. Note that this might have really bad effects on performance, so it is recommended to work with unpremultiplied video sources
 
 This might look like this:
 ```javascript

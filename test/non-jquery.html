@@ -10,11 +10,12 @@
 	<div id="qunit-fixture"></div>
 
 	<video id="test-video" style="display: none;">
-		<source src="../media/kolor.mp4" type="video/mp4" />
-		<source src="../media/kolor.ogg" type="video/ogg" />
+		<source src="../media/robbe.mp4" type="video/mp4" />
+		<source src="../media/robbe.ogg" type="video/ogg" />
 	</video>
 
-
+	<img src="../media/robbe-mask.png" id="mask" alt="">
+	<img src="../media/robbe-altmask.png" id="alt-mask" alt="">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="../src/seeThru.js"></script>
 	<script>
@@ -22,10 +23,10 @@
 		// seeThru.attach($);
 		// $('video').seeThru();
 
-		var test = seeThru.create('video', { width: 400, height: 300 });
-		// setTimeout(function(){
-		// 	$('video').seeThru('pause')
-		// }, 5000);
+		var test = seeThru.create('video', { width: 400, height: 300, staticMask: '#mask' });
+		setTimeout(function(){
+			test.updateMask('#alt-mask');
+		}, 5000);
 
 		$('video').click(function(e){
 			console.log(e);

@@ -198,6 +198,22 @@
 				});
 			}
 
+		}
+		, drawStaticMask = function(node){
+
+			if (node.tagName !== 'IMG'){ throw new Error('Cannot use non-image element as mask!'); }
+
+			node.width = dimensions.width;
+			node.height = dimensions.height; //adjust image dimensions to video dimensions
+
+			if (options.alphaMask){ //alpha channel has to be converted into RGB
+				buffer.putImageData(convertAlphaMask(dimensions, node), 0, dimensions.height);
+			} else { //no conversion needed, draw image into buffer
+				buffer.drawImage(node, 0, dimensions.height, dimensions.width, dimensions.height);
+			}
+
+			node.style.display = 'none';
+
 		};
 
 
@@ -235,25 +251,7 @@
 
 			// draw static mask if needed
 			if (options.staticMask){
-
-				maskObj = getNode(options.staticMask); //first occurence in case class is selected
-				if (maskObj.tagName === 'IMG'){
-
-					maskObj.width = dimensions.width;
-					maskObj.height = dimensions.height; //adjust image dimensions to video dimensions
-
-					if (options.alphaMask){ //alpha channel has to be converted into RGB
-						buffer.putImageData(convertAlphaMask(dimensions, maskObj), 0, dimensions.height);
-					} else { //no conversion needed, draw image into buffer
-						buffer.drawImage(maskObj, 0, dimensions.height, dimensions.width, dimensions.height);
-					}
-
-					maskObj.style.display = 'none';
-
-				} else {
-					throw new Error('Cannot use non-image element as mask!');
-				}
-
+				drawStaticMask(getNode(options.staticMask));
 			}
 
 			if (options.poster && video.poster){
@@ -297,6 +295,10 @@
 			video.nextSibling.remove();
 			video.style.display = initialDisplayProp;
 			return this;
+		};
+
+		this.updateMask = function(node){
+			return drawStaticMask(node);
 		};
 
 		this.getCanvas = function(){
@@ -385,8 +387,6 @@
 				}
 			}
 
-			var posterframe;
-
 			this._seeThru = new TransparentVideo(this._video, this._options);
 
 			if (this._options.start === 'clicktoplay'){
@@ -431,7 +431,7 @@
 					}
 					self._video.dispatchEvent(evt);
 				});
-			})
+			});
 
 			this._seeThru.startRendering();
 
@@ -453,8 +453,8 @@
 			this._seeThru.teardown();
 		};
 
-		this.updateMask = function(options){
-			this._seeThru.updateMask(options);
+		this.updateMask = function(mask){
+			this._seeThru.updateMask(getNode(mask));
 		};
 	}
 
