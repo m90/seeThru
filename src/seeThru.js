@@ -171,7 +171,7 @@
 	*/
 	function attachSelfAsPlugin($){
 
-		if (!$.fn){ return; }
+		if (!$.fn || $.fn.seeThru){ return; }
 
 		$.fn.seeThru = function(){
 
@@ -181,9 +181,10 @@
 				var $this = $(this);
 				if (!args.length || (args.length === 1 && toString(args[0]) === '[object Object]')){
 					if ($this.data('seeThru')){ return; }
-					$this.data('seeThru', new SeeThru(this, args[0]).init());
+					$this.data('seeThru', new SeeThru(this, args[0])._init());
 				} else if (args.length && toString(args[0]) === '[object String]'){
 					if (!$this.data('seeThru')){ return; }
+					// all methods other then init will be deferred until `.ready()`
 					$this.data('seeThru').ready(function(){
 						$this.data('seeThru')[args[0]](args[1]);
 						if (args[0] === 'revert'){
@@ -196,8 +197,9 @@
 	}
 
 	/**
-	* simple store to keep track of video elements that are currently
-	* handled by seeThru
+	* @constructor Store
+	* simple wrapper around [] to keep track of video elements that are currently
+	* handled by the script
 	*/
 	function Store(){
 		var elements = [];
@@ -221,6 +223,13 @@
 		};
 	}
 
+	/**
+	* @constructor TransparentVideo
+	* handles the transformation of a video into the canvas elements and keeps track
+	* of intervals and animation loop logic
+	* @param {DOMElement} video
+	* @param {Object options}
+	*/
 	function TransparentVideo(video, options){
 
 		var
@@ -280,16 +289,34 @@
 		};
 
 
+		/**
+		* @method startRendering
+		* kick off the animation loop
+		* @returns self
+		* @API public
+		*/
 		this.startRendering = function(){
 			drawFrame(true);
 			return this;
 		};
 
+		/**
+		* @method stopRendering
+		* ends the animation loop
+		* @returns self
+		* @API public
+		*/
 		this.stopRendering = function(){
 			cancelAnimationFrame(interval);
 			return this;
 		};
 
+		/**
+		* @method stopRendering
+		* ends the animation loop, removes the canvas elements and unhides the video
+		* @returns self
+		* @API public
+		*/
 		this.teardown = function(){
 			cancelAnimationFrame(interval);
 			video.nextSibling.remove();
@@ -298,21 +325,41 @@
 			return this;
 		};
 
+		/**
+		* @method updateMask
+		* draws a new image onto the alpha portion of the buffer
+		* @param {DOMElement} node
+		* @returns self
+		* @API public
+		*/
 		this.updateMask = function(node){
-			return drawStaticMask(node);
+			drawStaticMask(node);
+			return this;
 		};
 
+		/**
+		* @method getCanvas
+		* gets the visible canvas element that is used for display
+		* @returns {DOMElement}
+		* @API public
+		*/
 		this.getCanvas = function(){
 			return displayCanvas;
 		};
 
+		/**
+		* @method getPoster
+		* gets the posterframe element
+		* @returns {DOMElement}
+		* @API public
+		*/
 		this.getPoster = function(){
 			return posterframe;
 		};
 
 		var elementDimensions = video.getBoundingClientRect();
 
-		if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not set
+		if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not explicitly set
 			if (video.width && !video.height){ //<video> has no width- or height-attribute -> source dimensions from video source meta
 				dimensions.width = dimensions.width || video.videoWidth;
 				dimensions.height = dimensions.height || video.videoHeight / divisor;
@@ -366,6 +413,12 @@
 
 	}
 
+	/**
+	* @constructor SeeThru
+	* handles a video element turned into a transparent mock version of itself
+	* @param {String|DOMElement|DOMNode} DOMNode
+	* @param {Object} [options]
+	*/
 	function SeeThru(DOMNode, options){
 
 		var
@@ -426,7 +479,13 @@
 			return options;
 		})(options);
 
-		this.init = function(){
+		/**
+		* @method init
+		* sets up transparent video once the video has metadata
+		* @returns self
+		* @API private
+		*/
+		this._init = function(){
 
 			var runInit = function(){
 
@@ -443,6 +502,7 @@
 
 				this._seeThru = new TransparentVideo(this._video, this._options);
 
+				// attach behavior for start options
 				if (this._options.start === 'clicktoplay'){
 					if (this._options.poster){
 						this._seeThru.getPoster().addEventListener('click', playSelfAndUnbind);
@@ -453,6 +513,7 @@
 					this._seeThru.getPoster().style.display = 'none';
 				}
 
+				// attach behavior for end options
 				if (this._options.end === 'rewind'){
 					this._video.addEventListener('ended', function(){
 						self._video.currentTime = 0;
@@ -465,6 +526,7 @@
 					});
 				}
 
+				// attach behavior for posterframe option
 				if (this._options.poster && this._video.poster){
 					this._video.addEventListener('play', function(){
 						self._seeThru.getPoster().style.display = 'none';
@@ -474,6 +536,10 @@
 					});
 				}
 
+				// some events that are registered on the canvas representation
+				// will be echoed on the original video element so that pre-existing
+				// event handlers bound to the video element will keep working
+				// it is recommended to use `.getCanvas()` to bind new behavior though
 				eventsToEcho.forEach(function(eventName){
 					self._seeThru.getCanvas().addEventListener(eventName, function(){
 						var evt;
@@ -509,48 +575,87 @@
 
 		};
 
+		/**
+		* @method getCanvas
+		* returns the canvas element that is used for on-screen displaylay
+		* @returns {DOMElement}
+		* @API public
+		*/
 		this.getCanvas = function(){
 			return this._seeThru.getCanvas();
 		};
 
+		/**
+		* @method play
+		* starts playback of the associated video element
+		* @returns self
+		* @API public
+		*/
 		this.play = function(){
 			this._video.play();
 			return this;
 		};
 
+		/**
+		* @method pause
+		* halts playback of the associated video element
+		* @returns self
+		* @API public
+		*/
 		this.pause = function(){
 			this._video.pause();
 			return this;
 		};
 
+		/**
+		* @method revert
+		* reverts the transparent video back to its original state
+		* @API public
+		*/
 		this.revert = function(){
 			this._seeThru.teardown();
 			elementStore.remove(this._video);
-			return this;
 		};
 
+		/**
+		* @method updateMask
+		* @param {String|DOMElement|DOMCollection} mask
+		* swaps the static mask currently used for sourcing alpha
+		* @returns self
+		* @API public
+		*/
 		this.updateMask = function(mask){
 			this._seeThru.updateMask(getNode(mask));
 			return this;
 		};
 
+		/**
+		* @method ready
+		* @param {Function} cb
+		* defers the passed callback until the associated video element has metadata
+		* passes itself as the 1st argument of the callback
+		* @returns self
+		* @API public
+		*/
 		this.ready = function(cb){
 			if (ready){
 				cb(this);
 			} else {
 				callbacks.push(cb);
 			}
+			return this;
 		};
 
 	}
 
+	// if we have a global version of jQuery we'll automatically attach the script as a plugin
 	if (window.jQuery){ attachSelfAsPlugin(window.jQuery); }
 
 	var elementStore = new Store();
 
 	return {
 		create : function(DOMCollection, options){
-			return new SeeThru(DOMCollection, options).init();
+			return new SeeThru(DOMCollection, options)._init();
 		}
 		, attach : attachSelfAsPlugin
 	};
