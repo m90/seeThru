@@ -21,12 +21,12 @@
 })(this, function(){
 
 	/**
-	* convert an image node into a black & white canvasPixelArray
-	* @param {Object} dimensions
+	* convert an image's alpha channel into a black & white canvasPixelArray
 	* @param {DOMElement} maskObj
+	* @param {Object} dimensions
 	* @returns {CanvasPixelArray} RGBA
 	*/
-	function convertAlphaMask(dimensions, maskObj){
+	function convertAlphaMask(maskObj, dimensions){
 		var
 		convertCanvas = document.createElement('canvas')
 		, convertCtx = convertCanvas.getContext('2d')
@@ -34,6 +34,7 @@
 
 		convertCanvas.width = dimensions.width;
 		convertCanvas.height = dimensions.height;
+		convertCtx.drawImage(maskObj, 0, 0, dimensions.width, dimensions.height);
 
 		RGBA = convertCtx.getImageData(0, 0, dimensions.width, dimensions.height);
 
@@ -279,7 +280,7 @@
 			node.height = dimensions.height; //adjust image dimensions to video dimensions
 
 			if (options.alphaMask){ //alpha channel has to be converted into RGB
-				buffer.putImageData(convertAlphaMask(dimensions, node), 0, dimensions.height);
+				buffer.putImageData(convertAlphaMask(node, dimensions), 0, dimensions.height);
 			} else { //no conversion needed, draw image into buffer
 				buffer.drawImage(node, 0, dimensions.height, dimensions.width, dimensions.height);
 			}
