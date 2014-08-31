@@ -1,12 +1,12 @@
 {
-  "name": "jquery-seethru",
+  "name": "seethru",
   "description": "HTML5 video with alpha channel transparencies",
   "version": "2.0.0",
   "author": {
     "name": "Frederik Ring",
     "email": "frederik.ring@gmail.com"
   },
-  "main": "src/jquery-seeThru.js",
+  "main": "src/seeThru.js",
   "repository": "https://github.com/m90/seeThru.git",
   "homepage": "https://github.com/m90/seeThru",
   "bugs": {
