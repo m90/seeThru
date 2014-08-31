@@ -171,22 +171,25 @@
 	*/
 	function attachSelfAsPlugin($){
 
-		$ = $ || window.jQuery;
+		if (!$.fn){ return; }
 
 		$.fn.seeThru = function(){
 
 			var args = slice(arguments);
 
 			return this.each(function(){
+				var $this = $(this);
 				if (!args.length || (args.length === 1 && toString(args[0]) === '[object Object]')){
-					if ($(this).data('seeThru')){ return; }
-					$(this).data('seeThru', new SeeThru(this, args[0]).init());
+					if ($this.data('seeThru')){ return; }
+					$this.data('seeThru', new SeeThru(this, args[0]).init());
 				} else if (args.length && toString(args[0]) === '[object String]'){
-					if (!$(this).data('seeThru')){ return; }
-					$(this).data('seeThru')[args[0]](args[1]);
-					if (args[0] === 'revert'){
-						$(this).data('seeThru', null);
-					}
+					if (!$this.data('seeThru')){ return; }
+					$this.data('seeThru').ready(function(){
+						$this.data('seeThru')[args[0]](args[1]);
+						if (args[0] === 'revert'){
+							$this.data('seeThru', null);
+						}
+					});
 				}
 			});
 		};
@@ -314,14 +317,14 @@
 				dimensions.width = dimensions.width || video.videoWidth;
 				dimensions.height = dimensions.height || video.videoHeight / divisor;
 			} else if (video.height){ //<video> has no height-attribute -> source dimensions from video source meta
-				dimensions.width = dimensions.width || parseInt(elementDimensions.width, 10);
-				dimensions.height = dimensions.height || parseInt(elementDimensions.width, 10) / (video.videoWidth / Math.floor(video.videoHeight / divisor));
+				dimensions.width = dimensions.width || elementDimensions.width;
+				dimensions.height = dimensions.height || elementDimensions.width / (video.videoWidth / Math.floor(video.videoHeight / divisor));
 			} else if (video.width){ //<video> has no height-attribute -> source dimensions from video source meta
-				dimensions.width = dimensions.width || parseInt(elementDimensions.height, 10) * (video.videoWidth / Math.floor(video.videoHeight / divisor));
-				dimensions.height = dimensions.height || parseInt(elementDimensions.height, 10);
+				dimensions.width = dimensions.width || elementDimensions.height * (video.videoWidth / Math.floor(video.videoHeight / divisor));
+				dimensions.height = dimensions.height || elementDimensions.height;
 			} else { //get values from height and width attributes of <video>
-				dimensions.width = dimensions.width || parseInt(elementDimensions.width, 10);
-				dimensions.height = dimensions.height || parseInt(elementDimensions.height, 10) / divisor;
+				dimensions.width = dimensions.width || elementDimensions.width;
+				dimensions.height = dimensions.height || elementDimensions.height / divisor;
 			}
 		}
 
@@ -504,6 +507,10 @@
 
 			return this;
 
+		};
+
+		this.getCanvas = function(){
+			return this._seeThru.getCanvas();
 		};
 
 		this.play = function(){

@@ -1,6 +1,6 @@
-#seeThru - HTML5 video with alpha channel transparencies#
+#seeThru - HTML5 video with alpha channel transparencies
 
-This script adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
+> This script adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
 
 The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
@@ -8,7 +8,7 @@ It also ships with a simple node.js script for automatically converting your vid
 
 **Breaking News**: Apparently support for VP8/WebM-video with Alpha Transparencies has just landed in Chrome Canary so let's hope other browser vendors will catch up soon. See the **[article at HTML5 Rocks][29]**.
 
-##Download / Installation##
+##Download / Installation
 Click **[here][17]** to download the current version or clone the repo:
 ```sh
 $ git clone git://github.com/m90/jquery-seeThru.git
@@ -22,10 +22,10 @@ If you're using npm / browserify you can install the package using:
 $ npm install jquery-seethru
 ```
 
-##Word of warning##
+##Word of warning
 This approch is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video on an old machine with 39 tabs open. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
 
-##Table of contents##
+##Table of contents
  - <a href="#video-setup">Video Setup</a>
  - <a href="#basic-script-usage">Basic Script Usage</a>
  - <a href="#options">Options</a>
@@ -42,7 +42,7 @@ This approch is a **cheap hack**! For the lack of alpha support in HTML5 video i
  - <a href="#browser-support">Browser support</a>
  - <a href="#license">License</a>
 
-##Video setup##
+##Video setup
 In default configuration the script assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being interpreted as fully opaque and black being fully transparent (colored information will be averaged).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
 For a basic introduction of how to encode and embed video for HTML5 pages see the great **[Dive into HTML5][14]**
 ###Example image:###
@@ -55,19 +55,19 @@ put over a greenish/blueish background results in<br/>
 It is also possible to source the alpha information from an `<img>`-element not incorporated into the video. The script lets you use either the luminance information of the RGB channels (i.e. the image) or the image's alpha channel (see options for how to choose). In case the image does not fit your video's dimensions it will be stretched to those.<br/>
 **[Live Demo][2]**
 
-##Basic script usage##
+##Basic script usage
 Basic HTML5 video markup should look something like this:
 
 ```html
-<video id="myVideo">
+<video id="my-video">
     <source src="src.webm" type="video/webm">
     <source src="src.mp4" type="video/mp4">
     <source src="src.ogg" type="video/ogg">
     ....
 </video>
 ```
-
 In case you are planning to have your video set to autoplay or loop you can do this when initializing your instance. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
+
 To use the script include the source:<br/>
 
 ```html
@@ -76,26 +76,25 @@ To use the script include the source:<br/>
 and then pass your element to `seeThru.create()`:
 
 ```javascript
-var transparentVideo = seeThru.create('#myVideo');
+var transparentVideo = seeThru.create('#my-video');
 ```
 If you're using AMD / require.js load the script like:
 ```javascript
 require(['seeThru'], function(seeThru){
-    var transparentVideo = seeThru.create('#myVideo');
+    var transparentVideo = seeThru.create('#my-video');
 });
 ```
 Using browserify, simply require the script:
 ```javascript
 var seeThru = require('seethru');
-var transparentVideo = seeThru.create('#myVideo');
+var transparentVideo = seeThru.create('#my-video');
 ```
 
 If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display: none;` in your CSS.
 
-
 If you just want to give the script a test-drive without having to prepare your own video you can download and use the example videos in the repo's **[media folder](https://github.com/m90/jquery-seeThru/tree/master/media)** (also included in the zipped download).
 
-##Options##
+##Options
 There are a few options you can pass when building an instance:
 
  - `start` defines the video's behavior on load. It defaults to `'autoplay'` which will automatically start the video as soon as possible. Other options are `'clicktoplay'` which will display the first frame of the video until it is clicked or `'external'` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
@@ -109,23 +108,35 @@ There are a few options you can pass when building an instance:
 
 This might look like this:
 ```javascript
-seeThru.create('#myVideo', {start : 'autoplay' , end : 'stop'});
+seeThru.create('#my-video', {start : 'autoplay' , end : 'stop'});
 ```
 or
 ```javascript
-seeThru.create('#myVideo', {staticMask : '#imageWithAlpha', alphaMask: true});
+seeThru.create('#my-video', {staticMask : '#image-with-alpha', alphaMask: true});
 ```
+
 ##Additional methods
 Apart from `create`, these methods are available:
 
+ - `ready` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the instance as 1st argument
  - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `staticMask` parameter, the value for `alphaMask` will be kept from initialisation.
  - `revert` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
  - `play` and `pause` are convenience methods to control the playback of the video
+ - `getCanvas` lets you get the visible canvas element so you can interact with it
+
+Example:
+```javascript
+seeThru.create('#my-video').ready(function(st){
+    st.getCanvas().addEventListener('click', function(){
+        st.revert();
+    });
+});
+```
 
 ##Usage as a jQuery-plugin
 If `window.jQuery` is present the script will automatically attach itself to jQuery as a plugin, meaning you can also do something like:
 ```javascript
-$('#myVideo').seeThru().seeThru('play');
+$('#my-video').seeThru().seeThru('play');
 ```
 If your jQuery is *not* global (think AMD) but you still want to attach the script as a plugin you can use the `attach`  method exisiting on `seeThru`.
 ```javascript
@@ -139,7 +150,7 @@ seeThru.attach(myVersionOfjQuery);
 **[Video listening to external JS calls][4]**<br>
 **[Video playing on hover][26]**<br>
 
-##Preparing video sources using `seethru-convert`##
+##Preparing video sources using `seethru-convert`
 The package ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (`.mov`s should work best here - also make sure the video actually contains an alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
 
 To use the script you need to have [`node.js`][30] and [`ffmpeg`][31] installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
@@ -155,7 +166,7 @@ $ seethru-convert --in myvideo.mov --out myvideo-converted.mov
 ```
 As a rule of thumb you should be doing this conversion on your uncompressed / high-quality video source once, and then convert the output into whatever files you need (mp4, ogg et. al.).
 
-##Preparing video sources in Adobe After Effects##
+##Preparing video sources in Adobe After Effects
 Of course you can also use standard video editing software to prepare the sources. This walkthrough shows how to do it using Adobe After Effects.
 
 Put your animation with alpha in a composition:
@@ -172,33 +183,33 @@ I'm having a hard time finding a proper feature test for a browser's ability to 
 
 If you do need bullet-proof results you might need to rely on UA sniffing though.
 
-##Cross Domain issues with canvas-elements##
+##Cross Domain issues with canvas-elements
 Please note that JavaScript's canvas-methods are subject to cross domain security restrictions, so please be aware that the video source files have to be coming from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will get a DOM Security Exception. Please also note that this also applies to subdomains, therefore you shouldn't mix www and non-www-URLs.
 
 If you're living on the cutting edge (the 2007 kind of) you can also use **[CORS][28]** of course!
 
-##Binding mouse events to your video##
+##Binding mouse events to your video
 To mimic a behavior as if the original video was still visible it will echo all mouse events fired by the canvas representation.
 
 The events that are echoed are: `mouseenter mouseleave click mousedown mouseup mousemove mouseover hover dblclick contextmenu focus blur`
 
-##Chrome and `m4v` issues###
+##Chrome and `m4v` issues
 Apparently there are some machine setups where external color management software and video hardware will clash and mess with the gamma settings of `m4v` playback in Chrome (see **[issue #12][32]** for an example), which will result in black pixels rendered as dark grey - therefore rendering the alpha information saved in RGB useless/incorrect.
 
 If you experience similar problems, use `webm`-video sources for playback in Chrome, they seem to work just fine. Safari and other browsers using `m4v` don't show any issues like this.
 
-##Mobile devices & tablets##
+##Mobile devices & tablets
 As most mobile devices and tablets (iPad I'm looking at you) use external video players to handle HTML5-video this script is **not working on mobile Webkit / Safari / Android Browser** (yet). This is definitely on our to-do-list (wishlist rather), although outcome is uncertain.
 Apparently Android 3.1+ will play `<video>` inline, but I do not have any experience regarding using it as a canvas source yet.
 
-##Browser support##
+##Browser support
 Tested on Chrome, Firefox, Safari, Opera and IE 9.0+
 (the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features have a look at <a href="http://www.modernizr.com/">Modernizr</a>
 
-##License##
+##License
 All source code is licensed under the **[MIT License][11]**, demo content, video and imagery is **[CC-BY-SA 3.0][12]**
 
-##Thank you##
+##Thank you
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
 ![Footer image][10]
 
