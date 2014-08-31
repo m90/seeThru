@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Swap Static Alpha | jQuery seeThru | a jQuery-plugin for HTML5 video with alpha channel transparencies</title>
+    <title>Swap Static Alpha | seeThru | HTML5 video with alpha channel transparencies</title>
     <link href="//fonts.googleapis.com/css?family=Lekton:400,700" rel="stylesheet" type="text/css" />
     <style type="text/css">
       body {
@@ -94,11 +94,11 @@
           <img id="swapAlphaAltMask" src="../img/robbe-altmask.png" alt="Mask" style="display: none;">
         </div>
         <div class="demo">Back to
-          <a href="https://github.com/m90/jquery-seeThru">GitHub</a> 
+          <a href="https://github.com/m90/seeThru">GitHub</a> 
         </div>
         <script>
           var video = seeThru.create('#swapAlphaDemo', {
-            staticMask: '#swapAlphaMask'
+            mask: '#swapAlphaMask'
           });
           var toggle = false;
           document.querySelector('#alphaToggle').addEventListener('click', function() {
