@@ -1,25 +1,25 @@
 #seeThru - HTML5 video with alpha channel transparencies
 
-> This script adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
+> This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
 
-The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use alpha information for your video. The alpha channel can either be included in the video's source file (moving) or in a seperate `<img>`-element (static).
+The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use transparencies for your video. Alpha information can either be included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
-It also ships with a simple node.js script for automatically converting your video sources.
+The package also ships with a simple node.js script for automatically converting your RGBA video sources into the correct format.
 
 **Breaking News**: Apparently support for VP8/WebM-video with Alpha Transparencies has just landed in Chrome Canary so let's hope other browser vendors will catch up soon. See the **[article at HTML5 Rocks][29]**.
 
 ##Download / Installation
 Click **[here][17]** to download the current version or clone the repo:
 ```sh
-$ git clone git://github.com/m90/jquery-seeThru.git
+$ git clone git://github.com/m90/seeThru.git
 ```
 If you're using Bower you can install the package using:
 ```sh
-$ bower install jquery-seeThru
+$ bower install seeThru
 ```
 If you're using npm / browserify you can install the package using:
 ```sh
-$ npm install jquery-seethru
+$ npm install seethru
 ```
 
 ##Word of warning
@@ -43,37 +43,32 @@ This approch is a **cheap hack**! For the lack of alpha support in HTML5 video i
  - <a href="#license">License</a>
 
 ##Video setup
-In default configuration the script assumes that the alpha information is added underneath the original video track (in the exact same dimensions, therefore a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image with white being interpreted as fully opaque and black being fully transparent (colored information will be averaged).<br/>For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.<br/>
+In default configuration the script assumes that the alpha information is added underneath the original video track (in the exact same dimensions: a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image, with white being interpreted as fully opaque and black being fully transparent (colored input will be averaged).
+
+For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.
+
+
 For a basic introduction of how to encode and embed video for HTML5 pages see the great **[Dive into HTML5][14]**
-###Example image:###
+
+###Example image:
 Note the jagged edges in the color channel(s) due to un-premultiplying:<br/>
 ![Example image][5]<br/>
 put over a greenish/blueish background results in<br/>
 ![Example image][6]<br/>
 **[Live Demo][1]**
-###Static Mask###
-It is also possible to source the alpha information from an `<img>`-element not incorporated into the video. The script lets you use either the luminance information of the RGB channels (i.e. the image) or the image's alpha channel (see options for how to choose). In case the image does not fit your video's dimensions it will be stretched to those.<br/>
+
+###Static Mask
+It is also possible to source the alpha information from an `<img>`-element. The script lets you use either the luminance information of the RGB channels (i.e. the image) or the image's alpha channel (see options for how to choose). In case the image does not fit your video's dimensions it will be stretched to those.
+
 **[Live Demo][2]**
 
 ##Basic script usage
-Basic HTML5 video markup should look something like this:
-
-```html
-<video id="my-video">
-    <source src="src.webm" type="video/webm">
-    <source src="src.mp4" type="video/mp4">
-    <source src="src.ogg" type="video/ogg">
-    ....
-</video>
-```
-In case you are planning to have your video set to autoplay or loop you can do this when initializing your instance. The lack of a loop option in Firefox will also be fixed when doing that.<br/>
-
-To use the script include the source:<br/>
+To use the script include the source:
 
 ```html
 <script type="text/javascript" src="seeThru.min.js"></script>
 ```
-and then pass your element to `seeThru.create()`:
+and then pass your video element (either a selector or an actual DOMElement) and your options to `seeThru.create(el[, options])`:
 
 ```javascript
 var transparentVideo = seeThru.create('#my-video');
@@ -99,7 +94,7 @@ There are a few options you can pass when building an instance:
 
  - `start` defines the video's behavior on load. It defaults to `'autoplay'` which will automatically start the video as soon as possible. Other options are `'clicktoplay'` which will display the first frame of the video until it is clicked or `'external'` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
  - `end` defines the video's behavior when it has reached its end. It defaults to `'loop'` which will loop the video. Other possibilities are `'stop'` (it will just stop), or `'rewind'` which will jump back to the first frame and stop. If you use `start:'clicktoplay'` along with `'rewind'` or `'end'` the video will be clickable again when finished.
- - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `'#fancyMask'`. In case it returns a collection (class passed), the first element is used - in case the selector matches nothing or a non-image node the option is ignored. Defaults to an empty string, so video information is used for the alpha.
+ - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `'#fancy-mask'`. In case it returns a collection (class passed), the first element is used - in case the selector matches nothing or a non-image node the option is ignored. Defaults to an empty string, so video information is used for the alpha.
  - `alphaMask` specifies if the script uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
@@ -116,19 +111,19 @@ seeThru.create('#my-video', {staticMask : '#image-with-alpha', alphaMask: true})
 ```
 
 ##Additional methods
-Apart from `create`, these methods are available:
+On the returned `seeThru`-Object these methods are available:
 
- - `ready` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the instance as 1st argument
- - `updateMask` lets you swap the alpha source for a video that uses static alpha information. Has to be used along with a new selector as `staticMask` parameter, the value for `alphaMask` will be kept from initialisation.
- - `revert` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
- - `play` and `pause` are convenience methods to control the playback of the video
- - `getCanvas` lets you get the visible canvas element so you can interact with it
+ - `.ready(fn)` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the instance as 1st argument.
+ - `.updateMask(selectorOrElement)` lets you swap the alpha source for a video that uses static alpha information. The value for the `alphaMask` option will be kept from initialisation.
+ - `.revert()` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
+ - `.play()` and `.pause()` are convenience methods to control the playback of the video
+ - `.getCanvas()` lets you get the visible canvas element so you can interact with it
 
 Example:
 ```javascript
-seeThru.create('#my-video').ready(function(st){
-    st.getCanvas().addEventListener('click', function(){
-        st.revert();
+seeThru.create('#my-video', { width: 400, height: 300 }).ready(function(instance){
+    instance.getCanvas().addEventListener('click', function(){
+        instance.revert();
     });
 });
 ```
@@ -144,19 +139,19 @@ seeThru.attach(myVersionOfjQuery);
 ```
 
 ##Examples
-**[Moving alpha][1]**<br>
-**[Static alpha][2]**<br>
-**[Swapping alpha sources][3]**<br>
-**[Video listening to external JS calls][4]**<br>
-**[Video playing on hover][26]**<br>
+- **[Moving alpha][1]**
+- **[Static alpha][2]**
+- **[Swapping alpha sources][3]**
+- **[Video listening to external JS calls][4]**
+- **[Video playing on hover][26]**
 
 ##Preparing video sources using `seethru-convert`
-The package ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (`.mov`s should work best here - also make sure the video actually contains an alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
+The package ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (Animation-compressed `.mov`s should work best here - also make sure the video actually contains information on the alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
 
 To use the script you need to have [`node.js`][30] and [`ffmpeg`][31] installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
 
 ```sh
-$ npm install jquery-seethru -g
+$ npm install seethru -g
 ```
 
 Now you are ready to go:
@@ -213,34 +208,34 @@ All source code is licensed under the **[MIT License][11]**, demo content, video
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
 ![Footer image][10]
 
-[1]:http://m90.github.io/jquery-seeThru/moving-alpha/
-[2]:http://m90.github.io/jquery-seeThru/static-alpha/
-[3]:http://m90.github.io/jquery-seeThru/swap-alpha/
-[4]:http://m90.github.io/jquery-seeThru/external/
-[5]:http://m90.github.io/jquery-seeThru/img/seeThruDemo.png
-[6]:http://m90.github.io/jquery-seeThru/img/seeThruResult.png
+[1]:http://m90.github.io/seeThru/moving-alpha/
+[2]:http://m90.github.io/seeThru/static-alpha/
+[3]:http://m90.github.io/seeThru/swap-alpha/
+[4]:http://m90.github.io/seeThru/external/
+[5]:http://m90.github.io/seeThru/img/seeThruDemo.png
+[6]:http://m90.github.io/seeThru/img/seeThruResult.png
 [7]:http://www.jakearchibald.com
 [8]:http://www.kathikaeppel.de
-[9]:http://code.google.com/p/jquery-seethru/
-[10]:http://m90.github.io/jquery-seeThru/img/footer.png
+[9]:http://code.google.com/p/seethru/
+[10]:http://m90.github.io/seeThru/img/footer.png
 [11]:http://www.opensource.org/licenses/mit-license.php
 [12]:http://creativecommons.org/licenses/by-sa/3.0/
 [13]:https://gist.github.com/2469449
 [14]:http://www.diveintohtml5.info/video.html
 [15]:http://en.wikipedia.org/wiki/Alpha_compositing
 [16]:http://www.redgiantsoftware.com/products/all/knoll-unmult-free
-[17]:https://github.com/m90/jquery-seeThru/zipball/master
+[17]:https://github.com/m90/seeThru/zipball/master
 [18]:http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-[20]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_01.jpg
-[21]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_02.jpg
-[22]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_03.jpg
-[23]:http://m90.github.io/jquery-seeThru/img/seeThru_AE_04.jpg
+[20]:http://m90.github.io/seeThru/img/seeThru_AE_01.jpg
+[21]:http://m90.github.io/seeThru/img/seeThru_AE_02.jpg
+[22]:http://m90.github.io/seeThru/img/seeThru_AE_03.jpg
+[23]:http://m90.github.io/seeThru/img/seeThru_AE_04.jpg
 [24]:http://caniuse.com/#feat=canvas
 [25]:http://caniuse.com/#feat=video
-[26]:http://m90.github.io/jquery-seeThru/hover/
+[26]:http://m90.github.io/seeThru/hover/
 [27]:https://gist.github.com/m90/5795556
 [28]:http://www.html5rocks.com/en/tutorials/cors/
 [29]:http://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
 [30]:http://nodejs.org
 [31]:http://ffmpeg.org
-[32]:https://github.com/m90/jquery-seeThru/issues/12
+[32]:https://github.com/m90/seeThru/issues/12
