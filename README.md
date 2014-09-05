@@ -1,6 +1,6 @@
 #seeThru - HTML5 video with alpha channel transparencies
 
-> This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements.
+> This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements. Formerly called "jquery-seeThru"
 
 The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use transparencies for your video. Alpha information can either be included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
@@ -23,7 +23,7 @@ $ npm install seethru
 ```
 
 ##Word of warning
-This approch is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video on an old machine with 39 tabs open. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
+This approach is a **cheap hack**! For the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be a viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video on an old machine with 39 tabs open. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: **no iOS support**, sorry!!!
 
 ##Table of contents
  - <a href="#video-setup">Video Setup</a>
@@ -87,7 +87,7 @@ var transparentVideo = seeThru.create('#my-video');
 
 If you specify dimension-attributes in your markup they will be considered, in case not the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height). To avoid flickering on pageload I'd recommend setting your video to `display: none;` in your CSS.
 
-If you just want to give the script a test-drive without having to prepare your own video you can download and use the example videos in the repo's **[media folder](https://github.com/m90/jquery-seeThru/tree/master/media)** (also included in the zipped download).
+If you just want to give the script a test-drive without having to prepare your own video you can download and use the example videos in the repo's **[media folder](https://github.com/m90/seeThru/tree/master/media)** (also included in the zipped download).
 
 ##Options
 There are a few options you can pass when building an instance:
