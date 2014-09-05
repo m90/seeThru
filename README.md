@@ -15,7 +15,7 @@ $ git clone git://github.com/m90/seeThru.git
 ```
 If you're using Bower you can install the package using:
 ```sh
-$ bower install seeThru
+$ bower install seethru
 ```
 If you're using npm / browserify you can install the package using:
 ```sh
