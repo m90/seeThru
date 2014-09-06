@@ -6,7 +6,7 @@
     "email" : "frederik.ring@gmail.com",
     "url" : "http://www.frederikring.com"
   },
-  "title" : "jQuery seeThru",
+  "title" : "seeThru",
   "description" : "HTML5 video with alpha channel transparencies",
   "homepage" : "https://github.com/m90/seeThru",
   "docs" : "https://github.com/m90/seeThru",
@@ -25,8 +25,5 @@
       "type" : "MIT",
        "url" : "http://www.opensource.org/licenses/mit-license.php"
     }
-  ],
-  "dependencies" : {
-    "jquery" : ">=1.7"
-  }
+  ]
 }

@@ -1,6 +1,6 @@
 #seeThru - HTML5 video with alpha channel transparencies
 
-> This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements. Formerly called "jquery-seeThru"
+> This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements. Formerly known as "jquery-seeThru"
 
 The original video data will simply be re-rendered into a canvas-element, therefore adding the possibility to use transparencies for your video. Alpha information can either be included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
