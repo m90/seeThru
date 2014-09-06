@@ -2,3 +2,4 @@ test/
 media/
 bower.json
 seethru.json
+.jshintrc

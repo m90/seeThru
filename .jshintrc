@@ -1,0 +1,23 @@
+{
+  "laxcomma" : true
+  , "smarttabs" : true
+  , "unused" : "vars"
+  , "forin" : true
+  , "quotmark" : "single"
+  , "undef" : true
+  , "browser" : true
+  , "noempty" : true
+  , "latedef" : true
+  , "noarg" : true
+  , "nonew" : true
+  , "freeze" : true
+  , "eqeqeq" : true
+  , "immed" : true
+  , "globals" : {
+    "define" : true
+    , "require" : true
+    , "requirejs" : true
+    , "console" : true
+    , "module" : true
+  }
+}

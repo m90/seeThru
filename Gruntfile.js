@@ -25,14 +25,7 @@ module.exports = function(grunt){
 		jshint: {
 			files: ['Gruntfile.js', 'src/*.js'],
 			options: {
-				laxcomma: true,
-				unused : 'vars',
-				globals: {
-					jQuery: true,
-					console: true,
-					module: true,
-					document: true
-				}
+				jshintrc : true
 			}
 		}
 	});

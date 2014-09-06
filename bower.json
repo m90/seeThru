@@ -5,7 +5,8 @@
   "ignore": [
     "Gruntfile.js",
     "package.json",
-    "seethru.jquery.json",
+    "seethru.json",
+    ".jshintrc"
     "node_modules",
     "bower_components",
     "test",
