@@ -561,7 +561,7 @@
 
 				elementStore.push(this._video);
 
-				callbacks.forEach(function(cb){ cb(self); });
+				callbacks.forEach(function(cb){ cb(self, self._video, self.getCanvas()); });
 
 			}.bind(this);
 
@@ -641,7 +641,7 @@
 		*/
 		this.ready = function(cb){
 			if (ready){
-				cb(this);
+				cb(this, this._video, this.getCanvas());
 			} else {
 				callbacks.push(cb);
 			}
