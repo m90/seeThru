@@ -361,13 +361,13 @@
 		var elementDimensions = video.getBoundingClientRect();
 
 		if (!dimensions.height || !dimensions.width){ //we need to find out at least one dimension parameter as it is not explicitly set
-			if (video.width && !video.height){ //<video> has no width- or height-attribute -> source dimensions from video source meta
+			if (!video.width && !video.height){ //<video> has no width- or height-attribute -> source dimensions from video source meta
 				dimensions.width = dimensions.width || video.videoWidth;
 				dimensions.height = dimensions.height || video.videoHeight / divisor;
-			} else if (video.height){ //<video> has no height-attribute -> source dimensions from video source meta
+			} else if (!video.height){ //<video> has no height-attribute -> source dimensions from video source meta
 				dimensions.width = dimensions.width || elementDimensions.width;
 				dimensions.height = dimensions.height || elementDimensions.width / (video.videoWidth / Math.floor(video.videoHeight / divisor));
-			} else if (video.width){ //<video> has no height-attribute -> source dimensions from video source meta
+			} else if (!video.width){ //<video> has no height-attribute -> source dimensions from video source meta
 				dimensions.width = dimensions.width || elementDimensions.height * (video.videoWidth / Math.floor(video.videoHeight / divisor));
 				dimensions.height = dimensions.height || elementDimensions.height;
 			} else { //get values from height and width attributes of <video>
