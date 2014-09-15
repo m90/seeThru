@@ -12,15 +12,21 @@ var argv = require('yargs')
 
 var src = argv.in;
 
-var data = new FFmpeg({ source: src }).ffprobe(function(err, metadata){
+new FFmpeg({ source: src }).ffprobe(function(err, metadata){
+
+	if (err){
+		throw err;
+	} else if (!metadata){
+		throw new Error('Could not read video metadata!');
+	}
 
 	var
 	fileExt = src.split('.')[src.split('.').length - 1]
 	, fileFormats = metadata.format.format_name.split(',')
-	, intermediateFormat = fileFormats.indexOf(fileExt) > -1 ? fileExt : fileFormats[0];
+	, intermediateFormat = fileFormats.indexOf(fileExt) > -1 ? fileExt : fileFormats[0]
+	, alpha = new FFmpeg({ source: src });
 
-	var alpha = new FFmpeg({ source: src });
-
+	/* jshint multistr: true */
 	alpha.addOption(
 		'-vf'
 		, '[in] format=rgba,\
