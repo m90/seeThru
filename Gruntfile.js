@@ -23,7 +23,7 @@ module.exports = function(grunt){
 			}
 		},
 		jshint: {
-			files: ['Gruntfile.js', 'src/*.js', 'converter.js'],
+			files: ['Gruntfile.js', 'src/*.js'],
 			options: {
 				jshintrc : true
 			}
