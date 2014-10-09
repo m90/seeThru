@@ -6,7 +6,7 @@
     "Gruntfile.js",
     "package.json",
     "seethru.json",
-    ".jshintrc"
+    ".jshintrc",
     "node_modules",
     "bower_components",
     "test",
