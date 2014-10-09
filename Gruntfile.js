@@ -9,6 +9,7 @@ module.exports = function(grunt){
 			dist: {
 				files: {
 					'dist/<%= pkg.version %>/seeThru.min.js' : 'src/seeThru.js'
+					, 'dist/seeThru.min.js' : 'src/seeThru.js'
 				}
 			},
 			test: {
