@@ -28,7 +28,8 @@
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "~0.2.0"
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-jsonlint": "^1.0.4"
   },
   "dependencies": {
     "fluent-ffmpeg": "^1.7.2",
