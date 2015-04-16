@@ -320,8 +320,8 @@
 		*/
 		this.teardown = function(){
 			cancelAnimationFrame(interval);
-			video.nextSibling.remove();
-			video.nextSibling.remove();
+			video.parentNode.removeChild(video.nextSibling);
+			video.parentNode.removeChild(video.nextSibling);
 			video.style.display = initialDisplayProp;
 			return this;
 		};
