@@ -1,6 +1,6 @@
 {
   "name": "seethru",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "main": "dist/seeThru.min.js",
   "ignore": [
     "Gruntfile.js",
