@@ -1,7 +1,7 @@
 test/
 media/
-dist/
-!dist/seeThru.min.js
+dist/*
+!dist/*.js
 bower.json
 seethru.json
 .jshintrc
