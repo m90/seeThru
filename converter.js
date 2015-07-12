@@ -34,7 +34,7 @@ new FFmpeg({ source: src }).ffprobe(function(err, metadata){
 		split [T1], fifo, lutrgb=r=maxval:g=maxval:b=maxval,\
 		[T2] overlay [out];\
 		[T1] fifo, lutrgb=r=minval:g=minval:b=minval [T2]'
-	).withVideoCodec(metadata.streams[0].codec_name);
+  ).withNoAudio().withVideoCodec(metadata.streams[0].codec_name);
 
 	alpha.on('error', function(err){
 		console.log('An error occurred generating the alpha channel: ' + err.message);
