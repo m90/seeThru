@@ -18,7 +18,7 @@ new FFmpeg({ source: src }).ffprobe(function(err, metadata){
 	if (err){
 		throw err;
 	} else if (!metadata){
-		throw new Error('Could not read video metadata!');
+		throw new Error('Video contains no metadata!');
 	}
 
 	var
@@ -37,7 +37,8 @@ new FFmpeg({ source: src }).ffprobe(function(err, metadata){
 	).withNoAudio().withVideoCodec(metadata.streams[0].codec_name);
 
 	alpha.on('error', function(err){
-		console.log('An error occurred generating the alpha channel: ' + err.message);
+		console.error('An error occurred generating the alpha channel: ' + err.message);
+		throw err;
 	}).on('end', function(){
 
 		var rgb = new FFmpeg({ source: src });
@@ -60,7 +61,8 @@ new FFmpeg({ source: src }).ffprobe(function(err, metadata){
 				console.log('Processing ' + src + ' finished!');
 			});
 		}).on('error', function(err){
-			console.log('An error occurred combining the video sources: ' + err.message);
+			console.error('An error occurred combining the video sources: ' + err.message);
+			throw err;
 		}).saveToFile(argv.out);
 
 	}).saveToFile('seethru-tmp-alpha.' + intermediateFormat);
