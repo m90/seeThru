@@ -641,7 +641,9 @@
 		*/
 		this.ready = function(cb){
 			if (ready){
-				cb(this, this._video, this.getCanvas());
+				setTimeout(function(){
+					cb(this, this._video, this.getCanvas());
+				}, 0);
 			} else {
 				callbacks.push(cb);
 			}

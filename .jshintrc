@@ -17,6 +17,7 @@
     "define" : true
     , "require" : true
     , "requirejs" : true
+    , "Event": true
     , "console" : true
     , "module" : true
   }
