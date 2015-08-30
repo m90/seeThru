@@ -24,9 +24,9 @@ module.exports = function(grunt){
 			}
 		},
 		jsonlint: {
-  			configfiles: {
-    			src: [ '*.json' ]
-  			}
+			configfiles: {
+				src: [ '*.json' ]
+			}
 		},
 		jshint: {
 			files: ['Gruntfile.js', 'src/*.js'],
