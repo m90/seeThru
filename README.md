@@ -113,7 +113,7 @@ seeThru.create('#my-video', {staticMask : '#image-with-alpha', alphaMask: true})
 ##Additional methods
 On the returned `seeThru`-Object these methods are available:
 
- - `.ready(fn)` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the `seeThru` instance as 1st argument, the used video as 2nd argument, and the canvas representation as the 3rd one.
+ - `.ready(fn)` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the `seeThru` instance as 1st argument, the used video as 2nd argument, and the canvas representation as the 3rd one. To ensure consitent behavior this will always be executed asynchronously, even if the video is ready when called.
  - `.updateMask(selectorOrElement)` lets you swap the alpha source for a video that uses static alpha information. The value for the `alphaMask` option will be kept from initialisation.
  - `.revert()` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
  - `.play()` and `.pause()` are convenience methods to control the playback of the video
