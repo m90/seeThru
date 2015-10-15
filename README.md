@@ -121,14 +121,16 @@ On the returned `seeThru`-Object these methods are available:
 
 Example:
 ```javascript
-seeThru.create('#my-video', { width: 400, height: 300 }).ready(function(instance, video, canvas){
-    canvas.addEventListener('click', function(){
-        instance.revert();
+seeThru
+    .create('#my-video', { width: 400, height: 300 })
+    .ready(function(instance, video, canvas){
+        canvas.addEventListener('click', function(){
+            instance.revert();
+        });
+        video.addEventListener('ended', function(){
+            instance.revert();
+        });
     });
-    video.addEventListener('ended', function(){
-        instance.revert();
-    });
-});
 ```
 
 ##Usage as a jQuery-plugin
