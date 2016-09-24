@@ -1,7 +1,7 @@
 {
   "name": "seethru",
   "description": "HTML5 video with alpha channel transparencies",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": {
     "name": "Frederik Ring",
     "email": "frederik.ring@gmail.com"
@@ -24,7 +24,7 @@
     "canvas",
     "jquery-plugin"
   ],
-  "license": "MIT / CC-BY-SA 3.0",
+  "license": "MIT",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
