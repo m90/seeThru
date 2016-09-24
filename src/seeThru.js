@@ -642,7 +642,7 @@
 		this.ready = function(cb){
 			if (ready){
 				setTimeout(function(){
-					cb(this, this._video, this.getCanvas());
+					cb(self, self._video, self.getCanvas());
 				}, 0);
 			} else {
 				callbacks.push(cb);
