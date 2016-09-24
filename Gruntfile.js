@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         src: ['*/*.hbs', '!layouts/**'],
         dest: './'
       }
-    },
+    }
   });
 
   grunt.loadNpmTasks('assemble');
