@@ -249,21 +249,24 @@
 		, requestAnimationFrame = window.requestAnimationFrame || getRequestAnimationFrame()
 		, cancelAnimationFrame = window.cancelAnimationFrame || getCancelAnimationFrame()
 		, drawFrame = function(recurse){
+			var image, alphaData, i, len, currentTime = video.currentTime;
+			
+			if (lastFrameTime !== currentTime) {
+				lastFrameTime = currentTime;
 
-			var image, alphaData, i, len;
+				buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
+				image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
+				alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
 
-			buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
-			image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
-			alphaData = buffer.getImageData(0, dimensions.height, dimensions.width, dimensions.height).data; //grab from video;
+				if (options.unmult){ unmultiply(image, alphaData); }
 
-			if (options.unmult){ unmultiply(image, alphaData); }
+				//calculate luminance from buffer part, no weighting needed when alpha mask is used
+				for (i = 3, len = image.data.length; i < len; i = i + 4) {
+					image.data[i] = options.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
+				}
 
-			//calculate luminance from buffer part, no weighting needed when alpha mask is used
-			for (i = 3, len = image.data.length; i < len; i = i + 4) {
-				image.data[i] = options.alphaMask ? alphaData[i - 1] : Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
+				display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
 			}
-
-			display.putImageData(image, 0, 0, 0, 0, dimensions.width, dimensions.height);
 
 			if (recurse){
 				interval = requestAnimationFrame(function(){
