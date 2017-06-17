@@ -14,6 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'media/kolor.mp4',
       'node_modules/jquery/dist/jquery.js',
       'src/seeThru.js',
       'test/*.js'
