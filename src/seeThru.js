@@ -248,11 +248,12 @@
 		, interval
 		, requestAnimationFrame = window.requestAnimationFrame || getRequestAnimationFrame()
 		, cancelAnimationFrame = window.cancelAnimationFrame || getCancelAnimationFrame()
+		, lastDrawnFrameTime = null
 		, drawFrame = function(recurse){
-			var image, alphaData, i, len, currentTime = video.currentTime;
+			var image, alphaData, i, len, currentFrameTime = video.currentTime;
 			
-			if (lastFrameTime !== currentTime) {
-				lastFrameTime = currentTime;
+			if (lastDrawnFrameTime !== currentFrameTime) {
+				lastDrawnFrameTime = currentFrameTime;
 
 				buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
 				image = buffer.getImageData(0, 0, dimensions.width, dimensions.height);
