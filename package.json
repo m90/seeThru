@@ -7,6 +7,7 @@
     "email": "frederik.ring@gmail.com"
   },
   "scripts": {
+    "pretest": "grunt lint",
     "test": "karma start karma.conf.js"
   },
   "main": "src/seeThru.js",
@@ -31,7 +32,8 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-jsonlint": "^1.0.4",
     "jquery": "^3.2.1",
