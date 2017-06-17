@@ -6,6 +6,10 @@
     "name": "Frederik Ring",
     "email": "frederik.ring@gmail.com"
   },
+  "scripts": {
+    "pretest": "grunt lint",
+    "test": "karma start karma.conf.js"
+  },
   "main": "src/seeThru.js",
   "repository": "https://github.com/m90/seeThru.git",
   "homepage": "https://github.com/m90/seeThru",
@@ -28,9 +32,16 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-uglify": "~0.2.0",
-    "grunt-jsonlint": "^1.0.4"
+    "grunt-jsonlint": "^1.0.4",
+    "jquery": "^3.2.1",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-cli": "^1.0.1",
+    "karma-qunit": "^1.2.1",
+    "qunitjs": "^2.3.3"
   },
   "dependencies": {
     "fluent-ffmpeg": "^1.7.2",

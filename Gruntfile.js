@@ -11,11 +11,6 @@ module.exports = function(grunt){
 					'dist/<%= pkg.version %>/seeThru.min.js' : 'src/seeThru.js'
 					, 'dist/seeThru.min.js' : 'src/seeThru.js'
 				}
-			},
-			test: {
-				files: {
-					'test/lib/seeThru.min.js' : 'src/seeThru.js'
-				}
 			}
 		},
 		bump: {
@@ -41,7 +36,6 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-jsonlint');
 	grunt.loadNpmTasks('grunt-bump');
 	grunt.registerTask('lint', ['jshint', 'jsonlint']);
-	grunt.registerTask('test', ['jshint', 'uglify:test']);
 	grunt.registerTask('default', ['lint', 'uglify']);
 	grunt.registerTask('patch', ['bump-only:patch']);
 
