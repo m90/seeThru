@@ -20,5 +20,6 @@
     , "Event": true
     , "console" : true
     , "module" : true
+    , "QUnit": true
   }
 }

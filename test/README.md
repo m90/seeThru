@@ -1,1 +1,0 @@
-When running these tests make sure you are serving them via `http(s)`, otherwise canvas will throw cross domain exceptions.
