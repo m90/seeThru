@@ -14,9 +14,8 @@ QUnit.module('seeThru', {
 QUnit.test('default config', function(assert){
 
 	var done = assert.async();
-	seeThru.create('#test-video').ready(function(st){
-
-		var $testvideo = $('#test-video');
+	seeThru.create('#test-video').ready(function(instance, video){
+		var $testvideo = $(video);
 		assert.ok(!$testvideo.is(':visible'), 'video is hidden');
 		assert.ok($('.seeThru-display').length, 'display canvas is created');
 		assert.ok($('.seeThru-display').is(':visible'), 'display canvas is shown');
@@ -24,39 +23,34 @@ QUnit.test('default config', function(assert){
 		assert.equal($testvideo.height(), $('.seeThru-display').height() * 2, 'height is correct');
 		assert.equal($testvideo.width(), $('.seeThru-display').width(), 'width is correct');
 
-		st.revert();
+		instance.revert();
 
 		assert.ok($testvideo.is(':visible'), 'video is shown');
 		assert.equal($('.seeThru-buffer').length, 0, 'buffer canvas is deleted');
 		assert.equal($('.seeThru-display').length, 0, 'display canvas is deleted');
 		done();
-
 	});
-
 });
 
 
 QUnit.test('event routing', function(assert){
-
 	var done = assert.async();
-	seeThru.create('#test-video', {start : 'clicktoplay'}).ready(function(){
-		var $testvideo = $('#test-video');
+	seeThru.create('#test-video', {start : 'clicktoplay'}).ready(function(instance, video){
+		var $testvideo = $(video);
 		$testvideo.on('playing', function(){
-			$testvideo.off('playing');
 			assert.ok(true, 'click event routed video starts playing');
 			done();
 		});
 		$('.seeThru-display').click();
 	});
-
 });
 
 QUnit.test('external JS calls', function(assert){
 	var done = assert.async();
-	seeThru.create('#test-video', {start : 'external'}).ready(function(){
-		var $testvideo = $('#test-video');
+	seeThru.create('#test-video', {start : 'external'}).ready(function(instance, video){
+		var $testvideo = $(video);
+		
 		$testvideo.on('playing', function(){
-			$testvideo.off('playing');
 			assert.ok(true, 'video starts playing');
 			done();
 		});
@@ -72,10 +66,11 @@ QUnit.test('external JS calls', function(assert){
 });
 
 QUnit.test('apply to video only', function(assert){
-	var $div = $('<div>').appendTo(document.body);
+	var container = document.createElement('div');
+	document.body.appendChild(container);
 
 	assert.throws(function(){
-		seeThru.create($div[0]);
+		seeThru.create(container);
 	}, 'throws error when applied to div element');
 });
 
@@ -90,12 +85,14 @@ QUnit.test('apply only once', function(assert){
 	});
 });
 
-QUnit.test('hasData', function(assert){
+QUnit.test('renders video', function(assert){
 	var done = assert.async();
-	seeThru.create('#test-video').ready(function(){
-		var data = $('.seeThru-display')[0].getContext('2d').getImageData(200, 200, 100, 100).data;
-		assert.ok(data.length);
-		done();
+	seeThru.create('#test-video').ready(function(instance, video, canvas){
+		setTimeout(function() {
+			var data = canvas.getContext('2d').getImageData(200, 200, 100, 100).data;
+			assert.ok(Math.max.apply(Math, data) > 1);
+			done();
+		}, 100);
 	});
 });
 
