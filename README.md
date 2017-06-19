@@ -1,6 +1,6 @@
 # seeThru - HTML5 video with alpha channel transparencies
 
-[![Build Status](https://travis-ci.org/m90/go-apiaiclientseeThru.svg?branch=master)](https://travis-ci.org/m90/seeThru)
+[![Build Status](https://travis-ci.org/m90/seeThru.svg?branch=master)](https://travis-ci.org/m90/seeThru)
 
 > This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements. Formerly known as "jquery-seeThru"
 
