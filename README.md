@@ -8,7 +8,7 @@ Your HTML5 video source is re-rendered into a canvas-element, adding the possibi
 
 The package also ships with a simple CLI tool for automatically converting your RGBA video sources into the correct format.
 
-**Breaking News**: Support for VP8/WebM-video with Alpha Transparencies has just landed Chrome by now so let's hope other browser vendors will catch up soon. See the **[article at HTML5 Rocks][29]**.
+**Breaking News**: Support for VP8/WebM-video with Alpha Transparencies has landed Chrome by now so let's hope other browser vendors will catch up soon. See the **[article at HTML5 Rocks][29]**.
 
 ## Download / Installation
 
