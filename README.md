@@ -47,7 +47,7 @@ This approach is a **cheap hack**! For the lack of alpha support in HTML5 video 
  - <a href="#browser-support">Browser support</a>
  - <a href="#license">License</a>
 
-##Video setup
+## Video setup
 In default configuration the script assumes that the alpha information is added underneath the original video track (in the exact same dimensions: a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image, with white being interpreted as fully opaque and black being fully transparent (colored input will be averaged).
 
 For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages.
