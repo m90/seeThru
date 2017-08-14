@@ -1,0 +1,6 @@
+extends: eslint:recommended
+env:
+  jquery: true
+  qunit: true
+  amd: true
+  browser: true

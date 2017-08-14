@@ -1,10 +1,10 @@
 QUnit.module('seeThru', {
 	beforeEach: function(){
-		document.body.innerHTML = `
-			<video onended="this.play();" autoplay loop id="test-video">
-				<source src="http://localhost:9876/base/media/kolor.mp4" type="video/mp4" />
-			</video>
-		`;
+		document.body.innerHTML = '\
+			<video onended="this.play();" autoplay loop id="test-video">\
+				<source src="http://localhost:9876/base/media/kolor.mp4" type="video/mp4" />\
+			</video>\
+		';
 	},
 	afterEach: function() {
 		document.body.innerHTML = '';
@@ -14,7 +14,7 @@ QUnit.module('seeThru', {
 QUnit.test('default config', function(assert){
 
 	var done = assert.async();
-	seeThru.create('#test-video').ready(function(instance, video){
+	window.seeThru.create('#test-video').ready(function(instance, video){
 		var $testvideo = $(video);
 		assert.ok(!$testvideo.is(':visible'), 'video is hidden');
 		assert.ok($('.seeThru-display').length, 'display canvas is created');
@@ -35,7 +35,7 @@ QUnit.test('default config', function(assert){
 
 QUnit.test('event routing', function(assert){
 	var done = assert.async();
-	seeThru.create('#test-video', {start : 'clicktoplay'}).ready(function(instance, video){
+	window.seeThru.create('#test-video', {start : 'clicktoplay'}).ready(function(instance, video){
 		var $testvideo = $(video);
 		$testvideo.on('playing', function(){
 			assert.ok(true, 'click event routed video starts playing');
@@ -47,9 +47,9 @@ QUnit.test('event routing', function(assert){
 
 QUnit.test('external JS calls', function(assert){
 	var done = assert.async();
-	seeThru.create('#test-video', {start : 'external'}).ready(function(instance, video){
+	window.seeThru.create('#test-video', {start : 'external'}).ready(function(instance, video){
 		var $testvideo = $(video);
-		
+
 		$testvideo.on('playing', function(){
 			assert.ok(true, 'video starts playing');
 			done();
@@ -70,16 +70,16 @@ QUnit.test('apply to video only', function(assert){
 	document.body.appendChild(container);
 
 	assert.throws(function(){
-		seeThru.create(container);
+		window.seeThru.create(container);
 	}, 'throws error when applied to div element');
 });
 
 
 QUnit.test('apply only once', function(assert){
 	var done = assert.async();
-	seeThru.create('#test-video').ready(function() {
+	window.seeThru.create('#test-video').ready(function() {
 		assert.throws(function(){
-			seeThru.create('#test-video');
+			window.seeThru.create('#test-video');
 		}, 'throws error when applied twice on video element');
 		done();
 	});
@@ -87,7 +87,7 @@ QUnit.test('apply only once', function(assert){
 
 QUnit.test('renders video', function(assert){
 	var done = assert.async();
-	seeThru.create('#test-video').ready(function(instance, video, canvas){
+	window.seeThru.create('#test-video').ready(function(instance, video, canvas){
 		setTimeout(function() {
 			var data = canvas.getContext('2d').getImageData(200, 200, 100, 100).data;
 			assert.ok(Math.max.apply(Math, data) > 1);

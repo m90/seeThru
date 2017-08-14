@@ -1,6 +1,8 @@
 #!/bin/sh
 ':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
 
+/* eslint-disable no-console */
+
 var FFmpeg = require('fluent-ffmpeg');
 var fs = require('fs');
 

@@ -251,7 +251,7 @@
 		, lastDrawnFrameTime = null
 		, drawFrame = function(recurse){
 			var image, alphaData, i, len, currentFrameTime = video.currentTime;
-			
+
 			if (lastDrawnFrameTime !== currentFrameTime && video.readyState > 1){
 				lastDrawnFrameTime = currentFrameTime;
 
