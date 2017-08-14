@@ -1,4 +1,4 @@
-module.exports = function(grunt){
+module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
@@ -7,14 +7,14 @@ module.exports = function(grunt){
 			},
 			dist: {
 				files: {
-					'dist/<%= pkg.version %>/seeThru.min.js' : 'src/seeThru.js'
-					, 'dist/seeThru.min.js' : 'src/seeThru.js'
+					'dist/<%= pkg.version %>/seeThru.min.js': 'src/seeThru.js',
+					'dist/seeThru.min.js': 'src/seeThru.js'
 				}
 			}
 		},
 		jsonlint: {
 			configfiles: {
-				src: [ '*.json' ]
+				src: ['*.json']
 			}
 		},
 		eslint: {
