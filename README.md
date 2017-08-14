@@ -23,7 +23,7 @@ $ bower install seethru
 ```
 
 CDN:
-```sh
+```html
 <script src="https://unpkg.com/seethru@3/dist/seeThru.min.js"></script>
 ```
 
@@ -81,7 +81,7 @@ To use the script include the source:
 
 and then pass your video element (either a selector or an actual DOMElement) and your options to `seeThru.create(el[, options])`:
 
-```javascript
+```js
 var transparentVideo = seeThru.create('#my-video');
 ```
 
@@ -104,13 +104,13 @@ There are a few options you can pass when building an instance:
 
 This might look like this:
 
-```javascript
+```js
 seeThru.create('#my-video', { start: 'autoplay' , end: 'stop' });
 ```
 
 or
 
-```javascript
+```js
 seeThru.create('#my-video', { staticMask: '#image-with-alpha', alphaMask: true });
 ```
 
@@ -124,7 +124,7 @@ On the returned `seeThru`-Object these methods are available:
  - `.getCanvas()` lets you get the visible canvas element so you can interact with it
 
 Example:
-```javascript
+```js
 seeThru
     .create('#my-video', { width: 400, height: 300 })
     .ready(function (instance, video, canvas) {
@@ -141,7 +141,7 @@ seeThru
 
 If `window.jQuery` is present the script will automatically attach itself to jQuery as a plugin, meaning you can also do something like:
 
-```javascript
+```js
 $('#my-video').seeThru().seeThru('play');
 ```
 
