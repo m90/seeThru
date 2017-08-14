@@ -252,7 +252,7 @@
 		, drawFrame = function(recurse){
 			var image, alphaData, i, len, currentFrameTime = video.currentTime;
 			
-			if (lastDrawnFrameTime !== currentFrameTime) {
+			if (lastDrawnFrameTime !== currentFrameTime && video.readyState > 1){
 				lastDrawnFrameTime = currentFrameTime;
 
 				buffer.drawImage(video, 0, 0, dimensions.width, dimensions.height * divisor); //scales if <video>-dimensions are not matching
