@@ -1,0 +1,79 @@
+extends: eslint:recommended
+rules:
+  indent:
+    - 2
+    - tab
+  quotes:
+    - 2
+    - single
+  linebreak-style:
+    - 2
+    - unix
+  semi:
+    - 2
+    - always
+  comma-spacing:
+    - 2
+    -
+      before: false
+      after: true
+  comma-style:
+    - 2
+    - last
+  brace-style:
+    - 2
+    - 1tbs
+    -
+      allowSingleLine: true
+  key-spacing:
+    - 2
+    -
+      beforeColon: false
+      afterColon: true
+  space-infix-ops:
+    - 2
+    -
+      int32Hint: false
+  keyword-spacing: 2
+  object-curly-spacing:
+    - 2
+    - always
+  array-bracket-spacing:
+    - 2
+    - never
+  computed-property-spacing:
+    - 2
+    - never
+  space-in-parens:
+    - 2
+    - never
+  space-before-function-paren:
+    - 2
+    - always
+  space-before-blocks:
+    - 2
+    - always
+  no-unneeded-ternary: 2
+  no-throw-literal: 2
+  no-useless-call: 2
+  no-multi-spaces: 2
+  no-useless-concat: 2
+  radix: 2
+  no-extra-bind: 2
+  no-multiple-empty-lines: 2
+  array-callback-return: 2
+  curly:
+    - 2
+    - multi-line
+  eqeqeq: 2
+  guard-for-in: 2
+  no-eval: 2
+  no-new-wrappers: 2
+  no-self-compare: 2
+  no-useless-escape: 2
+  dot-notation: 2
+env:
+  jquery: true
+  qunit: true
+  amd: true
+  browser: true

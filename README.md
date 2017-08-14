@@ -82,7 +82,7 @@ var transparentVideo = seeThru.create('#my-video');
 
 If you're using AMD / require.js load the script like:
 ```javascript
-require(['seeThru'], function(seeThru){
+require(['seeThru'], function (seeThru) {
     var transparentVideo = seeThru.create('#my-video');
 });
 ```
@@ -112,12 +112,12 @@ There are a few options you can pass when building an instance:
 
 This might look like this:
 ```javascript
-seeThru.create('#my-video', {start : 'autoplay' , end : 'stop'});
+seeThru.create('#my-video', { start: 'autoplay' , end: 'stop' });
 ```
 
 or
 ```javascript
-seeThru.create('#my-video', {staticMask : '#image-with-alpha', alphaMask: true});
+seeThru.create('#my-video', { staticMask: '#image-with-alpha', alphaMask: true });
 ```
 
 ## Additional methods
@@ -133,11 +133,11 @@ Example:
 ```javascript
 seeThru
     .create('#my-video', { width: 400, height: 300 })
-    .ready(function(instance, video, canvas){
-        canvas.addEventListener('click', function(){
+    .ready(function (instance, video, canvas) {
+        canvas.addEventListener('click', function () {
             instance.revert();
         });
-        video.addEventListener('ended', function(){
+        video.addEventListener('ended', function () {
             instance.revert();
         });
     });

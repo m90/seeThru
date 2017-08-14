@@ -1,5 +1,4 @@
-module.exports = function(grunt){
-
+module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
@@ -8,35 +7,24 @@ module.exports = function(grunt){
 			},
 			dist: {
 				files: {
-					'dist/<%= pkg.version %>/seeThru.min.js' : 'src/seeThru.js'
-					, 'dist/seeThru.min.js' : 'src/seeThru.js'
+					'dist/<%= pkg.version %>/seeThru.min.js': 'src/seeThru.js',
+					'dist/seeThru.min.js': 'src/seeThru.js'
 				}
-			}
-		},
-		bump: {
-			options: {
-				files: ['package.json', 'bower.json', 'seethru.jquery.json']
 			}
 		},
 		jsonlint: {
 			configfiles: {
-				src: [ '*.json' ]
+				src: ['*.json']
 			}
 		},
-		jshint: {
-			files: ['Gruntfile.js', 'src/*.js'],
-			options: {
-				jshintrc: true
-			}
+		eslint: {
+			target: ['.']
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-jsonlint');
-	grunt.loadNpmTasks('grunt-bump');
-	grunt.registerTask('lint', ['jshint', 'jsonlint']);
+	grunt.loadNpmTasks('grunt-eslint');
+	grunt.registerTask('lint', ['eslint', 'jsonlint']);
 	grunt.registerTask('default', ['lint', 'uglify']);
-	grunt.registerTask('patch', ['bump-only:patch']);
-
 };
