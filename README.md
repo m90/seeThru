@@ -24,7 +24,7 @@ $ bower install seethru
 
 You can also pull in the minified library in a UMD build from the `unpkg` CDN:
 ```sh
-<script src="https://unpkg.com/seethru@3.1.0/dist/seeThru.min.js"></script>
+<script src="https://unpkg.com/seethru@3/dist/seeThru.min.js"></script>
 ```
 
 ## Word of warning
