@@ -402,9 +402,9 @@
 				position: 'absolute',
 				top: 0,
 				left: 0,
-				backgroundSize: 'cover',
-				backgroundPosition: 'center',
-				backgroundImage: 'url("' + video.poster + '")'
+				'background-size': 'cover',
+				'background-position': 'center',
+				'background-image': 'url("' + video.poster + '")'
 			});
 			insertAfter(posterframe, video);
 		}
