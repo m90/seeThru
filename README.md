@@ -205,7 +205,7 @@ function loadAsObjectURL(video, url) {
     xhr.onerror = function () { /* Houston we have a problem! */ };
     xhr.open('GET', url, true);
     xhr.send();
-    video.onload = function () { return URL.revokeObjectURL(target.src); };
+    video.onload = function () { return URL.revokeObjectURL(video.src); };
 }
 
 var video = document.querySelector('video');
