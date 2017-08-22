@@ -202,7 +202,7 @@ function loadAsObjectURL(video, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
     xhr.onload = function (response) { return video.src = URL.createObjectURL(xhr.response); };
-    xhr.onerror = function () { /* Huston we have a problem!*/ };
+    xhr.onerror = function () { /* Huston we have a problem! */ };
     xhr.open('GET', url, true);
     xhr.send();
     video.onload = function () { return URL.revokeObjectURL(target.src); };
