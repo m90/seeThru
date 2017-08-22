@@ -195,14 +195,14 @@ Make sure you are using an unmultiplied (straight) version of your color source:
 
 Note that the canvas API is subject to cross domain security restrictions, so be aware that the video source files have to be served from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will see a DOM Security Exception. Also note that this also applies to subdomains, therefore you cannot mix www and non-www-URLs.
 
-This can be worked around when using **[CORS][28]** or by using objectURL:
+This can be worked around when using **[CORS][28]** or by using **Blob URLs[32]**:
 
 ````Javascript
 function loadAsObjectURL(video, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
     xhr.onload = function (response) { return video.src = URL.createObjectURL(xhr.response); };
-    xhr.onerror = function () { /* Huston we have a problem! */ };
+    xhr.onerror = function () { /* Houston we have a problem! */ };
     xhr.open('GET', url, true);
     xhr.send();
     video.onload = function () { return URL.revokeObjectURL(target.src); };
@@ -266,3 +266,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [29]:http://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
 [30]:http://nodejs.org
 [31]:http://ffmpeg.org
+[32]:http://caniuse.com/#feat=bloburls
