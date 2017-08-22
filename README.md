@@ -195,7 +195,7 @@ Make sure you are using an unmultiplied (straight) version of your color source:
 
 Note that the canvas API is subject to cross domain security restrictions, so be aware that the video source files have to be served from the same domain (i.e. if the document that is calling `seeThru` is on `www.example.net` the video files have to be requested from `www.example.net` as well), otherwise you will see a DOM Security Exception. Also note that this also applies to subdomains, therefore you cannot mix www and non-www-URLs.
 
-This can be worked around when using **[CORS][28]** or by using **Blob URLs[32]**:
+This can be worked around when using **[CORS][28]** or by using **[Blob URLs][32]**:
 
 ````Javascript
 function loadAsObjectURL(video, url) {
