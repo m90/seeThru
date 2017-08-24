@@ -197,11 +197,13 @@ Note that the canvas API is subject to cross domain security restrictions, so be
 
 This can be worked around when using **[CORS][28]** or by using **[Blob URLs][32]**:
 
-````Javascript
+````js
 function loadAsObjectURL(video, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
-    xhr.onload = function (response) { return video.src = URL.createObjectURL(xhr.response); };
+    xhr.onload = function (response) {
+        return video.src = URL.createObjectURL(xhr.response);
+    };
     xhr.onerror = function () { /* Houston we have a problem! */ };
     xhr.open('GET', url, true);
     xhr.send();
@@ -213,7 +215,6 @@ video.addEventListener('loadedmetadata', function () {
     seeThru.create(video);
 });
 loadAsObjectURL(video, 'https://www.example.net/video.mp4');
-
 ````
 
 ## Binding mouse events to your video
@@ -224,7 +225,16 @@ The events that are echoed are: `mouseenter mouseleave click mousedown mouseup m
 
 ## Mobile devices & tablets
 
-Support for mobile browsers is patchy due to some forcing any video to open in an external player. In any case you will need to add the `playsinline` attribute to the `<video>` tag. If a video has audio adding the `muted` attribute will enable `playsinline`.
+Support for mobile browsers is patchy due to some forcing any video to open in an external player or requiring user interaction. [As of iOS 10][33], a video will work with seeThru if:
+
+- the video has a `playsinline` attribute
+- the video has no audio track or a `muted` attribute
+
+```html
+<video id="video" autoplay loop playsinline muted></video>
+```
+
+In any case you will need to add the `playsinline` attribute to the `<video>` tag. If a video has audio adding the `muted` attribute will enable `playsinline`.
 
 ## Browser support
 
@@ -267,3 +277,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [30]:http://nodejs.org
 [31]:http://ffmpeg.org
 [32]:http://caniuse.com/#feat=bloburls
+[33]:https://webkit.org/blog/6784/new-video-policies-for-ios/
