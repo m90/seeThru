@@ -2,7 +2,7 @@
 * jQuery seeThru - transparent HTML5 video - written by Frederik Ring (frederik.ring@gmail.com)
 * based on http://jakearchibald.com/scratch/alphavid/ by Jake Archibald (jaffathecake@gmail.com)
 
-* Copyright (c) 2015 Frederik Ring
+* Copyright (c) 2017 Frederik Ring
 * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -231,7 +231,7 @@
 	*/
 	function TransparentVideo (video, options) {
 
-		var initialDisplayProp;
+		var initialStyles = {};
 		var divisor = options.mask ? 1 : 2; //static alpha data will not cut the image dimensions
 		var dimensions = { // calculate dimensions
 			width: parseInt(options.width, 10),
@@ -323,7 +323,11 @@
 			cancelAnimationFrame(interval);
 			video.parentNode.removeChild(video.nextSibling);
 			video.parentNode.removeChild(video.nextSibling);
-			video.style.display = initialDisplayProp;
+			for (var key in initialStyles) {
+				if (Object.prototype.hasOwnProperty.call(initialStyles, key)) {
+					video.style[key] = initialStyles[key];
+				}
+			}
 			return this;
 		};
 
@@ -409,8 +413,12 @@
 			insertAfter(posterframe, video);
 		}
 
-		initialDisplayProp = window.getComputedStyle(video).display;
-		video.style.display = 'none';
+		for (var key in options.hiddenStyles) {
+			if (Object.prototype.hasOwnProperty.call(options.hiddenStyles, key)) {
+				initialStyles[key] = window.getComputedStyle(video)[key];
+				video.style[key] = options.hiddenStyles[key];
+			}
+		}
 
 		if (options.start === 'autoplay') { video.play(); }
 
@@ -428,14 +436,15 @@
 		var ready = false;
 		var callbacks = [];
 		var defaultOptions = {
-			start: 'autoplay', //'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
-			end: 'loop', //'loop', 'rewind', 'stop' any other input will default to 'loop'
-			mask: false, //this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
-			alphaMask: false, //defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
-			width: null, //lets you specify a pixel value used as width -- overrides all other calculations
-			height: null, //lets you specify a pixel value used as height -- overrides all other calculations
+			start: 'autoplay', // 'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
+			end: 'loop', // 'loop', 'rewind', 'stop' any other input will default to 'loop'
+			mask: false, // this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
+			alphaMask: false, // defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
+			width: null, // lets you specify a pixel value used as width -- overrides all other calculations
+			height: null, // lets you specify a pixel value used as height -- overrides all other calculations
 			poster: false, // the plugin will display the image set in the video's poster-attribute when not playing if set to true
-			unmult: false, //set this to true if your video material is premultiplied on black - might cause performance issues
+			unmult: false, // set this to true if your video material is premultiplied on black - might cause performance issues
+			hiddenStyles: { display: 'none' } // this is the CSS that is used to hide the original video - can be updated in order to work around autoplay restrictions
 		};
 		var canConstructEvents = (function () {
 			try {
