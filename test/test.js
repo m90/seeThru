@@ -12,7 +12,6 @@ QUnit.module('seeThru', {
 });
 
 QUnit.test('default config', function (assert) {
-
 	var done = assert.async();
 	window.seeThru.create('#test-video').ready(function (instance, video) {
 		var $testvideo = $(video);
@@ -28,6 +27,19 @@ QUnit.test('default config', function (assert) {
 		assert.ok($testvideo.is(':visible'), 'video is shown');
 		assert.equal($('.seeThru-buffer').length, 0, 'buffer canvas is deleted');
 		assert.equal($('.seeThru-display').length, 0, 'display canvas is deleted');
+		done();
+	});
+});
+
+QUnit.test('custom video styles', function (assert) {
+	var done = assert.async();
+	window.seeThru.create('#test-video', { videoStyles: { width: 0, border: '1px solid red' } }).ready(function (instance, video) {
+		var $testvideo = $(video);
+		assert.equal($testvideo.width(), 0, 'video is hidden using custom styles');
+		assert.equal($testvideo.css('border'), '1px solid rgb(255, 0, 0)', 'video is hidden using custom styles');
+		instance.revert();
+		assert.notEqual($testvideo.width(), 0, 'video is shown');
+		assert.equal($testvideo.css('border'), '0px none rgb(0, 0, 0)', 'video is shown');
 		done();
 	});
 });

@@ -413,10 +413,10 @@
 			insertAfter(posterframe, video);
 		}
 
-		for (var key in options.hiddenStyles) {
-			if (Object.prototype.hasOwnProperty.call(options.hiddenStyles, key)) {
+		for (var key in options.videoStyles) {
+			if (Object.prototype.hasOwnProperty.call(options.videoStyles, key)) {
 				initialStyles[key] = window.getComputedStyle(video)[key];
-				video.style[key] = options.hiddenStyles[key];
+				video.style[key] = options.videoStyles[key];
 			}
 		}
 
@@ -444,7 +444,7 @@
 			height: null, // lets you specify a pixel value used as height -- overrides all other calculations
 			poster: false, // the plugin will display the image set in the video's poster-attribute when not playing if set to true
 			unmult: false, // set this to true if your video material is premultiplied on black - might cause performance issues
-			hiddenStyles: { display: 'none' } // this is the CSS that is used to hide the original video - can be updated in order to work around autoplay restrictions
+			videoStyles: { display: 'none' } // this is the CSS that is used to hide the original video - can be updated in order to work around autoplay restrictions
 		};
 		var canConstructEvents = (function () {
 			try {
