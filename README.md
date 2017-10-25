@@ -25,6 +25,8 @@ $ bower install seethru
 CDN:
 ```html
 <script src="https://unpkg.com/seethru@3/dist/seeThru.min.js"></script>
+<!-- or -->
+<script src="https://cdn.jsdelivr.net/npm/seethru@3/dist/seeThru.min.js"></script>
 ```
 
 Alternatively, use the version(s) in `/dist`.
