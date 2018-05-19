@@ -77,3 +77,4 @@ env:
   qunit: true
   amd: true
   browser: true
+  node: true
