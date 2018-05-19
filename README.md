@@ -4,11 +4,15 @@
 
 > This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements. Formerly known as "jquery-seeThru"
 
+---
+
 Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies in your video. Alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
 The package also ships with a simple CLI tool for automatically converting your RGBA video sources into the correct format.
 
-**Breaking News**: Support for VP8/WebM-video with Alpha Transparencies has landed Chrome by now so let's hope other browser vendors will catch up soon. See the **[article at HTML5 Rocks][29]**.
+## Before you start
+
+Native Support for VP8/WebM-video with Alpha Transparencies has landed in Chrome quite a while ago, so ideally other browser vendors will catch up soon and this script becomes obsolete at some point. You can see the **[article at HTML5 Rocks][29]** and read the discussion about [how to use seeThru as a "polyfill"][34] for more information.
 
 ## Download / Installation
 
@@ -33,7 +37,7 @@ Alternatively, use the version(s) in `/dist`.
 
 ## Word of warning
 
-This approach is a **cheap hack**! Due to the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be the only viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video (or multiple videos) on an old machine with 39 browser tabs opened. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using Flash Video (there, I said it!). Also: the approach has **very limited mobile support**, sorry!!!
+This approach is a **cheap hack**! Due to the lack of alpha support in HTML5 video it is one of the few ways to use video with alpha, so it might be the only viable option in some cases, but please don't expect it to work like a charm when processing 30fps 1080p video (or multiple videos) on an old machine with 39 browser tabs opened. Test your usage thoroughly on old machines as well and if you're not satisfied with the speed, maybe think about using a purely native solution. Also: the mobile support of this approach is **very limited**.
 
 ## Table of contents
  - <a href="#video-setup">Video Setup</a>
@@ -283,3 +287,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [31]:http://ffmpeg.org
 [32]:http://caniuse.com/#feat=bloburls
 [33]:https://webkit.org/blog/6784/new-video-policies-for-ios/
+[34]: https://github.com/m90/seeThru/issues/47
