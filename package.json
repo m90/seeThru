@@ -7,7 +7,7 @@
     "email": "frederik.ring@gmail.com"
   },
   "scripts": {
-    "pretest": "grunt lint",
+    "posttest": "grunt lint",
     "test": "karma start karma.conf.js"
   },
   "main": "src/seeThru.js",
@@ -17,7 +17,7 @@
     "url": "https://github.com/m90/seeThru/issues"
   },
   "bin": {
-    "seethru-convert": "./converter.js"
+    "seethru-convert": "./bin/converter.js"
   },
   "keywords": [
     "html5",
@@ -43,7 +43,7 @@
     "qunitjs": "^2.3.3"
   },
   "dependencies": {
-    "fluent-ffmpeg": "^1.7.2",
-    "yargs": "^1.2.3"
+    "fluent-ffmpeg": "^2.1.2",
+    "yargs": "^11.0.0"
   }
 }

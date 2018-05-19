@@ -165,13 +165,15 @@ seeThru.attach($);
 
 ## Preparing video sources using `seethru-convert`
 
-The package ships with a CLI script (`seethru-convert`) that will automatically prepare your video sources for you. Just pass a video with alpha information (Animation-compressed `.mov`s should work best here - also make sure the video actually contains information on the alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
+The package ships with a CLI tool (`seethru-convert`) that can prepare your video sources for you. Pass a video with alpha information (Animation-compressed `.mov`s should work best here - also make sure the video actually contains information on the alpha channel) and it will automatically separate alpha and RGB information and render them side by side into the target file.
 
-To use the script you need to have [`ffmpeg`][31] installed (Windows users also need to add the FFMpeg executables to their `%PATH%`). Then install the package globally:
+To install the CLI tool globally:
 
 ```sh
 $ npm install seethru -g
 ```
+
+To use the script you need to have [`ffmpeg` and `ffprobe`][31] installed. The executables needs to be in your `$PATH` (`%PATH` for Windows). Alternatively you can pass overrides for the executables used using the `--ffmpeg-path` and `--ffprobe-path` options.
 
 Now you are ready to go:
 
@@ -179,7 +181,7 @@ Now you are ready to go:
 $ seethru-convert --in myvideo.mov --out myvideo-converted.mov
 ```
 
-As a rule of thumb you should be doing this conversion on your uncompressed / high-quality video source once, and then convert the output into whatever files you need (mp4, ogg et. al.).
+Ideally you should be doing this conversion on your uncompressed / high-quality video source once, and then convert the output into whatever files you need (mp4, ogg et. al.) afterwards.
 
 ## Preparing video sources in Adobe After Effects
 
