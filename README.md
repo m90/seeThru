@@ -12,7 +12,7 @@ The package also ships with a simple CLI tool for automatically converting your 
 
 ## Before you start
 
-Native Support for VP8/WebM-video with Alpha Transparencies has landed in Chrome quite a while ago, so ideally other browser vendors will catch up soon and this script becomes obsolete at some point. You can see the **[article at HTML5 Rocks][29]** and read the discussion about [how to use seeThru as a "polyfill"][34] for more information.
+Native Support for VP8/WebM-video with Alpha Transparencies has landed in Chrome quite a while ago, so ideally other **[browser vendors will catch up soon][35]** and this script becomes obsolete at some point. You can see the **[article at HTML5 Rocks][29]** and read the discussion about **[how to use seeThru as a "polyfill"][34]** for more information.
 
 ## Download / Installation
 
@@ -288,3 +288,4 @@ Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, 
 [32]:http://caniuse.com/#feat=bloburls
 [33]:https://webkit.org/blog/6784/new-video-policies-for-ios/
 [34]: https://github.com/m90/seeThru/issues/47
+[35]: https://caniuse.com/#feat=webm
