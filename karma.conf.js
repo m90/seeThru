@@ -57,8 +57,14 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromHeadlessAllowAutoplay'],
 
+    customLaunchers: {
+      ChromHeadlessAllowAutoplay: {
+        base: 'ChromeHeadless',
+        flags: ['--autoplay-policy=no-user-gesture-required']
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

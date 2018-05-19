@@ -7,7 +7,7 @@
     "email": "frederik.ring@gmail.com"
   },
   "scripts": {
-    "pretest": "grunt lint",
+    "posttest": "grunt lint",
     "test": "karma start karma.conf.js"
   },
   "main": "src/seeThru.js",
