@@ -2,10 +2,18 @@
   "name": "seethru",
   "description": "HTML5 video with alpha channel transparencies",
   "version": "3.3.0",
-  "author": {
-    "name": "Frederik Ring",
-    "email": "frederik.ring@gmail.com"
-  },
+  "author": "Frederik Ring <frederik.ring@gmail.com>",
+  "contributors": [
+    "Caio Matias <caiobellomatias@gmail.com>",
+    "CookiesEater <cookies.eater.03@gmail.com>",
+    "DiSoul <starky_ds@sina.cn>",
+    "Jakob Eriksen <mail.eriksen@gmail.com>",
+    "Lukas Drgon <lukas.drgon@gmail.com>",
+    "Mandana Eibegger <me@schoener.at>",
+    "Matt Stone <mstone@bcm.com.au>",
+    "Robbert Helling <robbert@codebron.nl>",
+    "Zabellfour <zabell2814@gmail.com>"
+  ],
   "scripts": {
     "posttest": "grunt lint",
     "test": "karma start karma.conf.js"
