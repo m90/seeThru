@@ -243,16 +243,16 @@ Support for mobile browsers is patchy due to some forcing any video to open in a
 <video id="video" autoplay loop playsinline muted></video>
 ```
 
-In any case you will need to add the `playsinline` attribute to the `<video>` tag. If a video has audio adding the `muted` attribute will enable `playsinline`.
+In any case you will need to add the `playsinline` attribute to the `<video>` tag. If a video has audio, adding the `muted` attribute will enable `playsinline`.
 
 ## Browser support
 
-Tested on Chrome, Firefox, Safari, Opera and IE 9.0+
-(the browser has to support `<video>` and `<canvas>` of course)<br/>See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**<br/>If you are looking for a tool to detect these features have a look at <a href="http://www.modernizr.com/">Modernizr</a>
+The script is tested on Chrome, Firefox, Safari, Opera and IE 9.0+.  
+See caniuse.com for browsers that support **[`<canvas>`][24]** and **[`<video>`][25]**  
 
 ## License
 
-All source code is licensed under the **[MIT License][11]**, demo content, video and imagery is **[CC-BY-SA 3.0][12]**
+All source code is licensed under the **[MIT License][11]**, demo content, video and imagery is available under **[CC-BY-SA 3.0][12]**
 
 ## Thank you
 

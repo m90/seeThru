@@ -9,6 +9,9 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.md]
+trim_trailing_whitespace = false
+
 # tab indentation for js, json and less
 [*.js, *.json]
 indent_style = tab
