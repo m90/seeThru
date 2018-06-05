@@ -6,7 +6,7 @@
 
 ---
 
-Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies in your video. Alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
+Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies for the video. Alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
 The package also ships with a simple CLI tool for automatically converting your RGBA video sources into the correct format.
 
@@ -99,7 +99,7 @@ For testing you can download and use the example videos in the repo's **[media f
 
 There are a few options you can pass when building an instance:
 
- - `start` defines the video's behavior on load. It defaults to `autoplay` which will automatically start the video as soon as possible. Other options are `clicktoplay` which will display the first frame of the video until it is clicked or `external` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
+ - `start` defines the video's behavior on load. It defaults to `none` which delegates the responsibility for triggering playback to the caller. Other options are `clicktoplay` which will display the first frame of the video until it is clicked or `autoplay` which tries to automatically start the video (this might be restricted by browser's autoplay behaviors)
  - `end` defines the video's behavior when it has reached its end. It defaults to `loop` which will loop the video. Other possibilities are `stop` (it will just stop), or `rewind` which will jump back to the first frame and stop. If you use `start: 'clicktoplay'` along with `rewind` or `end` the video will be clickable again when finished.
  - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `#fancy-mask`. In case the selector matches nothing or a non-image node the option is ignored.
  - `alphaMask` specifies if the script uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
@@ -112,7 +112,7 @@ There are a few options you can pass when building an instance:
 This might look like this:
 
 ```js
-seeThru.create('#my-video', { start: 'autoplay' , end: 'stop' });
+seeThru.create('#my-video', { start: 'autoplay', end: 'stop' });
 ```
 
 or
@@ -207,10 +207,10 @@ Note that the canvas API is subject to cross domain security restrictions, so be
 This can be worked around when using **[CORS][28]** or by using **[Blob URLs][32]**:
 
 ````js
-function loadAsObjectURL(video, url) {
+function loadAsObjectURL (video, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
-    xhr.onload = function (response) {
+    xhr.onload = function () {
         return video.src = URL.createObjectURL(xhr.response);
     };
     xhr.onerror = function () { /* Houston we have a problem! */ };

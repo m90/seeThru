@@ -273,8 +273,8 @@
 			}
 
 		};
-		var drawStaticMask = function (node) {
 
+		var drawStaticMask = function (node) {
 			if (node.tagName !== 'IMG') throw new Error('Cannot use non-image element as mask!');
 
 			node.width = dimensions.width;
@@ -420,7 +420,17 @@
 			}
 		}
 
-		if (options.start === 'autoplay') { video.play(); }
+		if (options.start === 'autoplay') {
+			var autoplay = video.play();
+			if (autoplay && autoplay.catch) {
+				// Some browsers block autoplay behavior and will log
+				// an unhandled promise rejection in case it is not
+				// handled
+				autoplay.catch(function (err) {
+					console.error(err); // eslint-disable-line no-console
+				});
+			}
+		}
 
 	}
 
@@ -436,7 +446,7 @@
 		var ready = false;
 		var callbacks = [];
 		var defaultOptions = {
-			start: 'autoplay', // 'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
+			start: 'none', // 'none', 'autoplay', 'clicktoplay' - defaults to none which means it's up to the caller to trigger video playback
 			end: 'loop', // 'loop', 'rewind', 'stop' any other input will default to 'loop'
 			mask: false, // this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
 			alphaMask: false, // defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
@@ -475,6 +485,12 @@
 		];
 
 		options = options || {};
+
+		if (options.start === 'external') {
+			options.start = 'none';
+			console.log('[seeThru] the `external` behavior has been deprecated and renamed, please use `none` instead or do not pass any value.'); // eslint-disable-line no-console
+		}
+
 		this._video = getNode(DOMNode);
 
 		if (!this._video || this._video.tagName !== 'VIDEO') throw new Error('Could not use specified source');
@@ -501,11 +517,16 @@
 			var runInit = function () {
 
 				function playSelfAndUnbind () {
-					self._video.play();
+					var playResult = self._video.play();
 					if (self._options.poster) {
 						self._seeThru.getPoster().removeEventListener('click', playSelfAndUnbind);
 					} else {
 						self._seeThru.getCanvas().removeEventListener('click', playSelfAndUnbind);
+					}
+					if (playResult && playResult.catch) {
+						playResult.catch(function (err) {
+							console.error(err); // eslint-disable-line no-console
+						});
 					}
 				}
 

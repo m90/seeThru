@@ -57,9 +57,20 @@ QUnit.test('event routing', function (assert) {
 	});
 });
 
-QUnit.test('external JS calls', function (assert) {
+QUnit.test('autoplay', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video', { start: 'external' }).ready(function (instance, video) {
+	window.seeThru.create('#test-video', { start: 'autoplay' }).ready(function (instance, video) {
+		var $testvideo = $(video);
+		$testvideo.on('playing', function () {
+			assert.ok(true, 'video started playing when passing autoplay');
+			done();
+		});
+	});
+});
+
+QUnit.test('caller controls playback', function (assert) {
+	var done = assert.async();
+	window.seeThru.create('#test-video').ready(function (instance, video) {
 		var $testvideo = $(video);
 
 		$testvideo.on('playing', function () {
