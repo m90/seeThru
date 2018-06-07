@@ -108,6 +108,7 @@ There are a few options you can pass when building an instance:
  - `poster` can be set to `true` if you want the video to be replaced by the image specified in the `<video>`s `poster`-attribute when in a paused state
  - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the script to un-premultiply the imagery. Note that this might have really bad effects on performance, so it is recommended to work with unpremultiplied video sources
  - `videoStyles` is the CSS (in object notation) that is used to hide the original video - can be updated in order to work around autoplay restrictions. It defaults to `{ display: 'none' }`
+ - `namespace` is the prefix that will be used for the CSS classnames applied to the created DOM elements (buffer, display, posterframe), defaults to `seeThru`
 
 This might look like this:
 
@@ -124,17 +125,17 @@ seeThru.create('#my-video', { staticMask: '#image-with-alpha', alphaMask: true }
 ## Additional methods
 On the returned `seeThru`-Object these methods are available:
 
- - `.ready(fn)` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the `seeThru` instance as 1st argument, the used video as 2nd argument, and the canvas representation as the 3rd one. To ensure consistent behavior this will always be executed asynchronously, even if the video is ready when called.
+ - `.ready(fn)` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the `seeThru` instance as 2nd argument, the used video as 3rd argument, and the canvas representation as the 4th one. A possible error or `null` will be passed as the 1st argument. To ensure consistent behavior this will always be executed asynchronously, even if the video is ready when called.
  - `.updateMask(selectorOrElement)` lets you swap the alpha source for a video that uses static alpha information. The value for the `alphaMask` option will be kept from initialisation.
  - `.revert()` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
- - `.play()` and `.pause()` are convenience methods to control the playback of the video
+ - `.play(callback)` and `.pause()` are convenience methods to control the playback of the video. The callback passed to play might receive an error in case playback could not be initiated
  - `.getCanvas()` lets you get the visible canvas element so you can interact with it
 
 Example:
 ```js
 seeThru
     .create('#my-video', { width: 400, height: 300 })
-    .ready(function (instance, video, canvas) {
+    .ready(function (err, instance, video, canvas) {
         canvas.addEventListener('click', function () {
             instance.revert();
         });
