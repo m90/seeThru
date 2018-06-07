@@ -136,6 +136,10 @@ Example:
 seeThru
     .create('#my-video', { width: 400, height: 300 })
     .ready(function (err, instance, video, canvas) {
+        if (err) {
+            console.error(err);
+            return;
+        }
         canvas.addEventListener('click', function () {
             instance.revert();
         });
