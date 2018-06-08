@@ -6,9 +6,9 @@
 
 ---
 
-Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies in your video. Alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
+Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies for the video. The alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
-The package also ships with a simple CLI tool for automatically converting your RGBA video sources into the correct format.
+The package also includes a simple CLI tool for automatically converting your RGBA video sources into the correct format.
 
 ## Before you start
 
@@ -33,7 +33,7 @@ CDN:
 <script src="https://cdn.jsdelivr.net/npm/seethru@3/dist/seeThru.min.js"></script>
 ```
 
-Alternatively, use the version(s) in `/dist`.
+Alternatively, download and use the version(s) in `/dist`.
 
 ## Word of warning
 
@@ -59,7 +59,7 @@ This approach is a **cheap hack**! Due to the lack of alpha support in HTML5 vid
 
 In default configuration the script assumes that the alpha information is added underneath the original video track (in the exact same dimensions: a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image, with white being interpreted as fully opaque and black being fully transparent (colored input will be averaged).
 
-For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages. If there is no way for you to supply unmultiplied sources, you can use the [`unmult` option](#options), that comes with a severe performance penalty due to un-premultiplying at runtime.
+For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages. If there is no way for you to supply unmultiplied sources, you can use the [`unmult` option](#options), that comes with a noticeable performance penalty due to un-premultiplying at runtime.
 
 For a basic introduction of how to encode and embed video for HTML5 pages see the great **[Dive into HTML5][14]**
 
@@ -85,13 +85,27 @@ To use the script include the source:
 <script type="text/javascript" src="seeThru.min.js"></script>
 ```
 
-and then pass your video element (either a selector or an actual DOMElement) and your options to `seeThru.create(el[, options])`:
+and then pass your video element (either a selector or an actual DOMElement) and your options to `seeThru.create(el [, options])`:
 
 ```js
-var transparentVideo = seeThru.create('#my-video');
+seeThru.create('#my-video').ready(function (err, instance, video, canvas) {
+    if (err) {
+        // handle error
+    }
+    // attach additional behavior to the video
+    // or the canvas element
+});
 ```
 
+### Error handling
+
+Due to the asynchronous nature of video initialization calling `create` will not throw on errors synchronously. This means you cannot `try/catch` errors, but you should always check for the error that is passed to the callback in `.ready(callback)`.
+
+### Dimensions
+
 If you specify dimension-attributes for your video, they will be considered, in case they are left unspecified, the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height).
+
+### Testing
 
 For testing you can download and use the example videos in the repo's **[media folder](https://github.com/m90/seeThru/tree/master/media)**.
 
@@ -99,42 +113,57 @@ For testing you can download and use the example videos in the repo's **[media f
 
 There are a few options you can pass when building an instance:
 
- - `start` defines the video's behavior on load. It defaults to `autoplay` which will automatically start the video as soon as possible. Other options are `clicktoplay` which will display the first frame of the video until it is clicked or `external` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
- - `end` defines the video's behavior when it has reached its end. It defaults to `loop` which will loop the video. Other possibilities are `stop` (it will just stop), or `rewind` which will jump back to the first frame and stop. If you use `start: 'clicktoplay'` along with `rewind` or `end` the video will be clickable again when finished.
- - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `#fancy-mask`. In case the selector matches nothing or a non-image node the option is ignored.
+ - `start` defines the video's behavior on load. It defaults to `none` which delegates the responsibility for triggering playback to the caller. Other options are `clicktoplay` which will display the first frame of the video until it is clicked or `autoplay` which tries to automatically start the video (this might be restricted by browser's autoplay behaviors)
+ - `end` defines the video's behavior when it has reached its end. It defaults to `stop` which will simply stop the video. Other possibilities are `loop` (which tries to restart the video), or `rewind` which will jump back to the first frame and stop. If you use `start: 'clicktoplay'` along with `rewind` or `end` the video will be clickable again when finished.
+ - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `#mask-element`. In case the selector matches nothing or a non-image node the option is ignored.
  - `alphaMask` specifies if the script uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `poster` can be set to `true` if you want the video to be replaced by the image specified in the `<video>`s `poster`-attribute when in a paused state
  - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the script to un-premultiply the imagery. Note that this might have really bad effects on performance, so it is recommended to work with unpremultiplied video sources
  - `videoStyles` is the CSS (in object notation) that is used to hide the original video - can be updated in order to work around autoplay restrictions. It defaults to `{ display: 'none' }`
+ - `namespace` is the prefix that will be used for the CSS classnames applied to the created DOM elements (buffer, display, posterframe), defaults to `seeThru`
 
 This might look like this:
 
 ```js
-seeThru.create('#my-video', { start: 'autoplay' , end: 'stop' });
+seeThru.create('#my-video', { start: 'autoplay', end: 'stop' })
+    .ready(function (err) {
+        if (err) {
+            console.log('Error initializing seeThru: ', err.message);
+        }
+    });
 ```
 
 or
 
 ```js
-seeThru.create('#my-video', { staticMask: '#image-with-alpha', alphaMask: true });
+seeThru.create('#my-video', { staticMask: '#image-with-alpha', alphaMask: true })
+    .ready(function (err) {
+        if (err) {
+            console.log('Error initializing seeThru: ', err.message);
+        }
+    });
 ```
 
 ## Additional methods
 On the returned `seeThru`-Object these methods are available:
 
- - `.ready(fn)` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the `seeThru` instance as 1st argument, the used video as 2nd argument, and the canvas representation as the 3rd one. To ensure consistent behavior this will always be executed asynchronously, even if the video is ready when called.
+ - `.ready(fn)` lets you safely access the instance's methods as it will make sure the video's metadata has been fully loaded and the script was able to initialize. It will be passed the `seeThru` instance as 2nd argument, the used video as 3rd argument, and the canvas representation as the 4th one. A possible error or `null` will be passed as the 1st argument. To ensure consistent behavior this will always be executed asynchronously, even if the video is ready when called.
  - `.updateMask(selectorOrElement)` lets you swap the alpha source for a video that uses static alpha information. The value for the `alphaMask` option will be kept from initialisation.
  - `.revert()` will revert the `<video>` element back to its original state, remove the `<canvas>` elements, all attached data and event listeners/handlers
- - `.play()` and `.pause()` are convenience methods to control the playback of the video
+ - `.play(callback)` and `.pause()` are convenience methods to control the playback of the video. The callback passed to play might receive an error in case playback could not be initiated
  - `.getCanvas()` lets you get the visible canvas element so you can interact with it
 
 Example:
 ```js
 seeThru
     .create('#my-video', { width: 400, height: 300 })
-    .ready(function (instance, video, canvas) {
+    .ready(function (err, instance, video, canvas) {
+        if (err) {
+            console.error(err);
+            return;
+        }
         canvas.addEventListener('click', function () {
             instance.revert();
         });
@@ -207,10 +236,10 @@ Note that the canvas API is subject to cross domain security restrictions, so be
 This can be worked around when using **[CORS][28]** or by using **[Blob URLs][32]**:
 
 ````js
-function loadAsObjectURL(video, url) {
+function loadAsObjectURL (video, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
-    xhr.onload = function (response) {
+    xhr.onload = function () {
         return video.src = URL.createObjectURL(xhr.response);
     };
     xhr.onerror = function () { /* Houston we have a problem! */ };

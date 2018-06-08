@@ -1,7 +1,7 @@
 QUnit.module('seeThru', {
 	beforeEach: function () {
 		document.body.innerHTML = '\
-			<video onended="this.play();" autoplay loop id="test-video">\
+			<video onended="this.play();" loop id="test-video">\
 				<source src="http://localhost:9876/base/media/kolor.mp4" type="video/mp4" />\
 			</video>\
 		';
@@ -13,7 +13,8 @@ QUnit.module('seeThru', {
 
 QUnit.test('default config', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video').ready(function (instance, video) {
+	window.seeThru.create('#test-video').ready(function (err, instance, video) {
+		assert.equal(err, null);
 		var $testvideo = $(video);
 		assert.ok(!$testvideo.is(':visible'), 'video is hidden');
 		assert.ok($('.seeThru-display').length, 'display canvas is created');
@@ -31,9 +32,20 @@ QUnit.test('default config', function (assert) {
 	});
 });
 
+QUnit.test('namespace option', function (assert) {
+	var done = assert.async();
+	window.seeThru.create('#test-video', { namespace: 'test' }).ready(function (err) {
+		assert.equal(err, null);
+		assert.ok($('.test-display').length, 'display canvas is created with correct classname');
+		assert.ok($('.test-buffer').length, 'buffer canvas is created with correct classname');
+		done();
+	});
+});
+
 QUnit.test('custom video styles', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video', { videoStyles: { width: 0, border: '1px solid red' } }).ready(function (instance, video) {
+	window.seeThru.create('#test-video', { videoStyles: { width: 0, border: '1px solid red' } }).ready(function (err, instance, video) {
+		assert.equal(err, null);
 		var $testvideo = $(video);
 		assert.equal($testvideo.width(), 0, 'video is hidden using custom styles');
 		assert.equal($testvideo.css('border'), '1px solid rgb(255, 0, 0)', 'video is hidden using custom styles');
@@ -47,7 +59,8 @@ QUnit.test('custom video styles', function (assert) {
 
 QUnit.test('event routing', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video', { start: 'clicktoplay' }).ready(function (instance, video) {
+	window.seeThru.create('#test-video', { start: 'clicktoplay' }).ready(function (err, instance, video) {
+		assert.equal(err, null);
 		var $testvideo = $(video);
 		$testvideo.on('playing', function () {
 			assert.ok(true, 'click event routed video starts playing');
@@ -57,49 +70,79 @@ QUnit.test('event routing', function (assert) {
 	});
 });
 
-QUnit.test('external JS calls', function (assert) {
+QUnit.test('autoplay', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video', { start: 'external' }).ready(function (instance, video) {
+	window.seeThru.create('#test-video', { start: 'autoplay' }).ready(function (err, instance, video) {
+		assert.equal(err, null);
 		var $testvideo = $(video);
-
 		$testvideo.on('playing', function () {
-			assert.ok(true, 'video starts playing');
+			assert.ok(true, 'video started playing when passing autoplay');
 			done();
 		});
+	});
+});
 
-		$testvideo.hover(function () {
-			this.play();
-		});
+QUnit.test('caller controls playback', function (assert) {
+	var done = assert.async();
+	window.seeThru.create('#test-video').ready(function (err, instance, video) {
+		assert.equal(err, null);
+		var $testvideo = $(video);
+		$testvideo
+			.on('playing', function () {
+				assert.ok(true, 'video starts playing');
+				done();
+			})
+			.hover(function () {
+				this.play();
+			});
 
 		assert.ok($('.seeThru-display').is(':visible'), 'still frame shown');
-
 		$testvideo.trigger('mouseover');
 	});
 });
 
+QUnit.test('async callback', function (assert) {
+	var done = assert.async();
+	var check = 12;
+	window.seeThru.create('#test-video').ready(function () {
+		var innerCheck = 44;
+		assert.equal(check, 24);
+		window.seeThru.create('#test-video').ready(function () {
+			assert.equal(innerCheck, 88);
+			done();
+		});
+		innerCheck = 88;
+	});
+	check = 24;
+});
+
 QUnit.test('apply to video only', function (assert) {
+	var done = assert.async();
 	var container = document.createElement('div');
 	document.body.appendChild(container);
 
-	assert.throws(function () {
-		window.seeThru.create(container);
-	}, 'throws error when applied to div element');
+	window.seeThru.create(container).ready(function (err) {
+		assert.notEqual(err, null, 'passes error to callback');
+		done();
+	});
 });
 
 
 QUnit.test('apply only once', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video').ready(function () {
-		assert.throws(function () {
-			window.seeThru.create('#test-video');
-		}, 'throws error when applied twice on video element');
-		done();
+	window.seeThru.create('#test-video').ready(function (err) {
+		assert.equal(err, null);
+		window.seeThru.create('#test-video').ready(function (err) {
+			assert.notEqual(err, null);
+			done();
+		});
 	});
 });
 
 QUnit.test('renders video', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video').ready(function (instance, video, canvas) {
+	window.seeThru.create('#test-video').ready(function (err, instance, video, canvas) {
+		assert.equal(err, null);
 		setTimeout(function () {
 			var data = canvas.getContext('2d').getImageData(200, 200, 100, 100).data;
 			assert.ok(Math.max.apply(Math, data) > 1);
@@ -110,6 +153,12 @@ QUnit.test('renders video', function (assert) {
 
 
 QUnit.test('jQuery plugin', function (assert) {
+	var done = assert.async();
 	assert.ok('seeThru' in $.fn, 'plugin is attached');
 	assert.ok(typeof $.fn.seeThru === 'function', 'seeThru is function');
+	$('#test-video').seeThru().seeThru('ready', function (err, instance, video) {
+		assert.equal(err, null);
+		assert.ok($(video).is('#test-video'));
+		done();
+	});
 });
