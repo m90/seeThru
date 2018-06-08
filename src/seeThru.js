@@ -172,18 +172,19 @@
 
 		$.fn.seeThru = function () {
 			var args = slice(arguments);
-
+			var head = args.shift();
 			return this.each(function () {
+				var self = this;
 				var $this = $(this);
-				if (!args.length || (args.length === 1 && toString(args[0]) === '[object Object]')) {
+				if (args.length === 0) {
 					if ($this.data('seeThru')) { return; }
-					$this.data('seeThru', new SeeThru(this, args[0])._init());
-				} else if (args.length && toString(args[0]) === '[object String]') {
+					$this.data('seeThru', new SeeThru(this, head)._init());
+				} else if (toString(head) === '[object String]') {
 					if (!$this.data('seeThru')) { return; }
 					// all methods other then init will be deferred until `.ready()`
 					$this.data('seeThru').ready(function () {
-						$this.data('seeThru')[args[0]](args[1]);
-						if (args[0] === 'revert') {
+						$this.data('seeThru')[head].apply(self, args);
+						if (head === 'revert') {
 							$this.data('seeThru', null);
 						}
 					});
@@ -296,7 +297,6 @@
 					drawFrame(true);
 				});
 			}
-
 		};
 
 		var drawStaticMask = function (node) {
@@ -312,7 +312,6 @@
 			}
 
 			node.style.display = 'none';
-
 		};
 
 
@@ -419,7 +418,9 @@
 		insertAfter(displayCanvas, video);
 
 		// draw static mask if needed
-		if (options.mask) drawStaticMask(getNode(options.mask));
+		if (options.mask) {
+			drawStaticMask(getNode(options.mask));
+		}
 
 		// append "posterframe" if option is set and attribute is present on the video
 		if (options.poster && video.poster) {
@@ -692,7 +693,9 @@
 	}
 
 	// if we have a global version of jQuery we'll automatically attach the script as a plugin
-	if (window.jQuery) attachSelfAsPlugin(window.jQuery);
+	if (window.jQuery) {
+		attachSelfAsPlugin(window.jQuery);
+	}
 
 	var elementStore = new Store();
 

@@ -153,6 +153,12 @@ QUnit.test('renders video', function (assert) {
 
 
 QUnit.test('jQuery plugin', function (assert) {
+	var done = assert.async();
 	assert.ok('seeThru' in $.fn, 'plugin is attached');
 	assert.ok(typeof $.fn.seeThru === 'function', 'seeThru is function');
+	$('#test-video').seeThru().seeThru('ready', function (err, instance, video) {
+		assert.equal(err, null);
+		assert.ok($(video).is('#test-video'));
+		done();
+	});
 });
