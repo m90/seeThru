@@ -6,9 +6,9 @@
 
 ---
 
-Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies for the video. Alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
+Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies for the video. The alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
-The package also ships with a simple CLI tool for automatically converting your RGBA video sources into the correct format.
+The package also includes a simple CLI tool for automatically converting your RGBA video sources into the correct format.
 
 ## Before you start
 
@@ -33,7 +33,7 @@ CDN:
 <script src="https://cdn.jsdelivr.net/npm/seethru@3/dist/seeThru.min.js"></script>
 ```
 
-Alternatively, use the version(s) in `/dist`.
+Alternatively, download and use the version(s) in `/dist`.
 
 ## Word of warning
 
@@ -59,7 +59,7 @@ This approach is a **cheap hack**! Due to the lack of alpha support in HTML5 vid
 
 In default configuration the script assumes that the alpha information is added underneath the original video track (in the exact same dimensions: a video of 400x300 target dimensions will have a 400x600 source file). The alpha information should be a black and white image, with white being interpreted as fully opaque and black being fully transparent (colored input will be averaged).
 
-For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is all about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages. If there is no way for you to supply unmultiplied sources, you can use the [`unmult` option](#options), that comes with a severe performance penalty due to un-premultiplying at runtime.
+For optimal results the color channel should be un-premultiplied. (see the Wikipedia article on **[Alpha Compositing][15]** for more info on what that is about). If you need a tool to un-premultiply your imagery you can use **[Knoll Unmult][16]** which is available for quite a lot of packages. If there is no way for you to supply unmultiplied sources, you can use the [`unmult` option](#options), that comes with a noticeable performance penalty due to un-premultiplying at runtime.
 
 For a basic introduction of how to encode and embed video for HTML5 pages see the great **[Dive into HTML5][14]**
 
@@ -85,13 +85,27 @@ To use the script include the source:
 <script type="text/javascript" src="seeThru.min.js"></script>
 ```
 
-and then pass your video element (either a selector or an actual DOMElement) and your options to `seeThru.create(el[, options])`:
+and then pass your video element (either a selector or an actual DOMElement) and your options to `seeThru.create(el [, options])`:
 
 ```js
-var transparentVideo = seeThru.create('#my-video');
+seeThru.create('#my-video').ready(function (err, instance, video, canvas) {
+    if (err) {
+        // handle error
+    }
+    // attach additional behavior to the video
+    // or the canvas element
+});
 ```
 
+### Error handling
+
+Due to the asynchronous nature of video initialization calling `create` will not throw on errors synchronously. This means you cannot `try/catch` errors, but you should always check for the error that is passed to the callback in `.ready(callback)`.
+
+### Dimensions
+
 If you specify dimension-attributes for your video, they will be considered, in case they are left unspecified, the dimensions of the source file will be used (video with alpha included will of course turn out to be halved in height).
+
+### Testing
 
 For testing you can download and use the example videos in the repo's **[media folder](https://github.com/m90/seeThru/tree/master/media)**.
 
@@ -100,8 +114,8 @@ For testing you can download and use the example videos in the repo's **[media f
 There are a few options you can pass when building an instance:
 
  - `start` defines the video's behavior on load. It defaults to `none` which delegates the responsibility for triggering playback to the caller. Other options are `clicktoplay` which will display the first frame of the video until it is clicked or `autoplay` which tries to automatically start the video (this might be restricted by browser's autoplay behaviors)
- - `end` defines the video's behavior when it has reached its end. It defaults to `loop` which will loop the video. Other possibilities are `stop` (it will just stop), or `rewind` which will jump back to the first frame and stop. If you use `start: 'clicktoplay'` along with `rewind` or `end` the video will be clickable again when finished.
- - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `#fancy-mask`. In case the selector matches nothing or a non-image node the option is ignored.
+ - `end` defines the video's behavior when it has reached its end. It defaults to `stop` which will simply stop the video. Other possibilities are `loop` (which tries to restart the video), or `rewind` which will jump back to the first frame and stop. If you use `start: 'clicktoplay'` along with `rewind` or `end` the video will be clickable again when finished.
+ - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `#mask-element`. In case the selector matches nothing or a non-image node the option is ignored.
  - `alphaMask` specifies if the script uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
  - `width` can be used to control the width of the rendered canvas. Overrides the attributes of the `<video>`-element
@@ -113,13 +127,23 @@ There are a few options you can pass when building an instance:
 This might look like this:
 
 ```js
-seeThru.create('#my-video', { start: 'autoplay', end: 'stop' });
+seeThru.create('#my-video', { start: 'autoplay', end: 'stop' })
+    .ready(function (err) {
+        if (err) {
+            console.log('Error initializing seeThru: ', err.message);
+        }
+    });
 ```
 
 or
 
 ```js
-seeThru.create('#my-video', { staticMask: '#image-with-alpha', alphaMask: true });
+seeThru.create('#my-video', { staticMask: '#image-with-alpha', alphaMask: true })
+    .ready(function (err) {
+        if (err) {
+            console.log('Error initializing seeThru: ', err.message);
+        }
+    });
 ```
 
 ## Additional methods

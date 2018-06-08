@@ -144,9 +144,8 @@
 			return document.querySelector(input);
 		} else if (input.length) {
 			return input[0];
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	/**
@@ -197,7 +196,8 @@
 		try {
 			if (new Event('submit', { bubbles: false }).bubbles !== false) {
 				return false;
-			} else if (new Event('submit', { bubbles: true }).bubbles !== true) {
+			}
+			if (new Event('submit', { bubbles: true }).bubbles !== true) {
 				return false;
 			}
 			return true;
@@ -457,7 +457,7 @@
 		var callbacks = [];
 		var defaultOptions = {
 			start: 'none', // 'none', 'autoplay', 'clicktoplay' - defaults to none which means it's up to the caller to trigger video playback
-			end: 'loop', // 'loop', 'rewind', 'stop' any other input will default to 'loop'
+			end: 'stop', // 'loop', 'rewind', 'stop' any other input will default to 'stop'
 			mask: false, // this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
 			alphaMask: false, // defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width: null, // lets you specify a pixel value used as width -- overrides all other calculations
@@ -628,12 +628,11 @@
 		self.play = function (callback) {
 			var result = self._video.play();
 			if (callback && result && result.catch) {
-				result
-					.then(function () {
-						callback(null);
-					}, function (err) {
-						callback(err);
-					});
+				result.then(function () {
+					callback(null);
+				}, function (err) {
+					callback(err);
+				});
 			}
 			return self;
 		};
