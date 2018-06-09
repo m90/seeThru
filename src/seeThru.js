@@ -25,9 +25,8 @@
 				return false;
 			} else if (new Event('submit', { bubbles: true }).bubbles !== true) {
 				return false;
-			} else {
-				return true;
 			}
+			return true;
 		} catch (e) {
 			return false;
 		}
@@ -299,7 +298,6 @@
 		};
 
 		var drawStaticMask = function (node) {
-
 			if (node.tagName !== 'IMG') throw new Error('Cannot use non-image element as mask!');
 
 			node.width = dimensions.width;
@@ -472,11 +470,11 @@
 		};
 
 		options = options || {};
-		this._video = getNode(DOMNode);
+		self._video = getNode(DOMNode);
 
-		if (!this._video || this._video.tagName !== 'VIDEO') throw new Error('Could not use specified source');
+		if (!self._video || self._video.tagName !== 'VIDEO') throw new Error('Could not use specified source');
 
-		this._options = (function (options) {
+		self._options = (function (options) {
 			for (var key in defaultOptions) {
 				if (defaultOptions.hasOwnProperty(key)) {
 					if (!(key in options)) {
@@ -493,8 +491,8 @@
 		* @returns self
 		* @API private
 		*/
-		this._init = function () {
-			var runInit = function () {
+		self._init = function () {
+			function runInit () {
 				function playSelfAndUnbind () {
 					self._video.play();
 					if (self._options.poster) {
@@ -504,38 +502,38 @@
 					}
 				}
 
-				if (elementStore.has(this._video)) { throw new Error('seeThru already initialized on passed video element!'); }
+				if (elementStore.has(self._video)) { throw new Error('seeThru already initialized on passed video element!'); }
 
-				this._seeThru = new TransparentVideo(this._video, this._options);
+				self._seeThru = new TransparentVideo(self._video, self._options);
 
 				// attach behavior for start options
-				if (this._options.start === 'clicktoplay') {
-					if (this._options.poster) {
-						this._seeThru.getPoster().addEventListener('click', playSelfAndUnbind);
+				if (self._options.start === 'clicktoplay') {
+					if (self._options.poster) {
+						self._seeThru.getPoster().addEventListener('click', playSelfAndUnbind);
 					} else {
-						this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
+						self._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
 					}
 				}
 
 				// attach behavior for end options
-				if (this._options.end === 'rewind') {
-					this._video.addEventListener('ended', function () {
+				if (self._options.end === 'rewind') {
+					self._video.addEventListener('ended', function () {
 						self._video.currentTime = 0;
 						self._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
 					});
-				} else if (this._options.end !== 'stop') {
-					this._video.addEventListener('ended', function () {
+				} else if (self._options.end !== 'stop') {
+					self._video.addEventListener('ended', function () {
 						self._video.currentTime = 0;
 						self._video.play();
 					});
 				}
 
 				// attach behavior for posterframe option
-				if (this._options.poster && this._video.poster) {
-					this._video.addEventListener('play', function () {
+				if (self._options.poster && self._video.poster) {
+					self._video.addEventListener('play', function () {
 						self._seeThru.getPoster().style.display = 'none';
 					});
-					this._video.addEventListener('pause', function () {
+					self._video.addEventListener('pause', function () {
 						self._seeThru.getPoster().style.display = 'block';
 					});
 				}
@@ -557,25 +555,24 @@
 					});
 				});
 
-				this._seeThru.startRendering();
+				self._seeThru.startRendering();
 
 				ready = true;
 
-				elementStore.push(this._video);
+				elementStore.push(self._video);
 
-				callbacks.forEach(function (cb) { cb(self, self._video, self.getCanvas()); });
-
-			}.bind(this);
-
-			if (this._video.readyState > 0) {
-				runInit();
-			} else {
-				this._video.addEventListener('loadedmetadata', function () {
-					runInit();
+				callbacks.forEach(function (cb) {
+					cb(self, self._video, self.getCanvas());
 				});
 			}
 
-			return this;
+			if (self._video.readyState > 0) {
+				runInit();
+			} else {
+				self._video.addEventListener('loadedmetadata', runInit);
+			}
+
+			return self;
 		};
 
 		/**
@@ -584,8 +581,8 @@
 		* @returns {DOMElement}
 		* @API public
 		*/
-		this.getCanvas = function () {
-			return this._seeThru.getCanvas();
+		self.getCanvas = function () {
+			return self._seeThru.getCanvas();
 		};
 
 		/**
@@ -594,9 +591,9 @@
 		* @returns self
 		* @API public
 		*/
-		this.play = function () {
-			this._video.play();
-			return this;
+		self.play = function () {
+			self._video.play();
+			return self;
 		};
 
 		/**
@@ -605,9 +602,9 @@
 		* @returns self
 		* @API public
 		*/
-		this.pause = function () {
-			this._video.pause();
-			return this;
+		self.pause = function () {
+			self._video.pause();
+			return self;
 		};
 
 		/**
@@ -615,9 +612,9 @@
 		* reverts the transparent video back to its original state
 		* @API public
 		*/
-		this.revert = function () {
-			this._seeThru.teardown();
-			elementStore.remove(this._video);
+		self.revert = function () {
+			self._seeThru.teardown();
+			elementStore.remove(self._video);
 		};
 
 		/**
@@ -627,9 +624,9 @@
 		* @returns self
 		* @API public
 		*/
-		this.updateMask = function (mask) {
-			this._seeThru.updateMask(getNode(mask));
-			return this;
+		self.updateMask = function (mask) {
+			self._seeThru.updateMask(getNode(mask));
+			return self;
 		};
 
 		/**
@@ -640,7 +637,7 @@
 		* @returns self
 		* @API public
 		*/
-		this.ready = function (cb) {
+		self.ready = function (cb) {
 			if (ready) {
 				setTimeout(function () {
 					cb(self, self._video, self.getCanvas());
@@ -648,7 +645,7 @@
 			} else {
 				callbacks.push(cb);
 			}
-			return this;
+			return self;
 		};
 
 	}
