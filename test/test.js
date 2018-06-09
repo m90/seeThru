@@ -1,7 +1,7 @@
 QUnit.module('seeThru', {
 	beforeEach: function () {
 		document.body.innerHTML = '\
-			<video onended="this.play();" autoplay loop id="test-video">\
+			<video onended="this.play();" loop id="test-video">\
 				<source src="http://localhost:9876/base/media/kolor.mp4" type="video/mp4" />\
 			</video>\
 		';
@@ -59,7 +59,7 @@ QUnit.test('event routing', function (assert) {
 
 QUnit.test('external JS calls', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video', { start: 'external' }).ready(function (instance, video) {
+	window.seeThru.create('#test-video').ready(function (instance, video) {
 		var $testvideo = $(video);
 
 		$testvideo.on('playing', function () {

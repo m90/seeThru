@@ -19,6 +19,34 @@
 		root.seeThru = factory();
 	}
 })(this, function () {
+	var canConstructEvents = (function () {
+		try {
+			if (new Event('submit', { bubbles: false }).bubbles !== false) {
+				return false;
+			} else if (new Event('submit', { bubbles: true }).bubbles !== true) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (e) {
+			return false;
+		}
+	})();
+
+	var eventsToEcho = [
+		'mouseenter',
+		'mouseleave',
+		'click',
+		'mousedown',
+		'mouseup',
+		'mousemove',
+		'mouseover',
+		'hover',
+		'dblclick',
+		'contextmenu',
+		'focus',
+		'blur'
+	];
 
 	/**
 	* convert an image's alpha channel into a black & white canvasPixelArray
@@ -144,9 +172,8 @@
 			return document.querySelector(input);
 		} else if (input.length) {
 			return input[0];
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	/**
@@ -169,7 +196,6 @@
 	* @param {jQuery} $
 	*/
 	function attachSelfAsPlugin ($) {
-
 		if (!$.fn || $.fn.seeThru) { return; }
 
 		$.fn.seeThru = function () {
@@ -230,7 +256,6 @@
 	* @param {Object options}
 	*/
 	function TransparentVideo (video, options) {
-
 		var initialStyles = {};
 		var divisor = options.mask ? 1 : 2; //static alpha data will not cut the image dimensions
 		var dimensions = { // calculate dimensions
@@ -271,8 +296,8 @@
 					drawFrame(true);
 				});
 			}
-
 		};
+
 		var drawStaticMask = function (node) {
 
 			if (node.tagName !== 'IMG') throw new Error('Cannot use non-image element as mask!');
@@ -287,7 +312,6 @@
 			}
 
 			node.style.display = 'none';
-
 		};
 
 
@@ -394,7 +418,9 @@
 		insertAfter(displayCanvas, video);
 
 		// draw static mask if needed
-		if (options.mask) drawStaticMask(getNode(options.mask));
+		if (options.mask) {
+			drawStaticMask(getNode(options.mask));
+		}
 
 		// append "posterframe" if option is set and attribute is present on the video
 		if (options.poster && video.poster) {
@@ -419,9 +445,6 @@
 				video.style[key] = options.videoStyles[key];
 			}
 		}
-
-		if (options.start === 'autoplay') { video.play(); }
-
 	}
 
 	/**
@@ -436,8 +459,8 @@
 		var ready = false;
 		var callbacks = [];
 		var defaultOptions = {
-			start: 'autoplay', // 'autoplay', 'clicktoplay', 'external' (will display the first frame and make the video wait for an external interface) - defaults to autoplay
-			end: 'loop', // 'loop', 'rewind', 'stop' any other input will default to 'loop'
+			start: 'external', // 'clicktoplay' or 'external' defaults to external
+			end: 'stop', // 'loop', 'rewind', 'stop' any other input will default to 'stop'
 			mask: false, // this lets you define a <img> (selected by #id or .class - class will use the first occurence)used as a black and white mask instead of adding the alpha to the video
 			alphaMask: false, // defines if the used `mask` uses black and white or alpha information - defaults to false, i.e. black and white
 			width: null, // lets you specify a pixel value used as width -- overrides all other calculations
@@ -446,33 +469,6 @@
 			unmult: false, // set this to true if your video material is premultiplied on black - might cause performance issues
 			videoStyles: { display: 'none' } // this is the CSS that is used to hide the original video - can be updated in order to work around autoplay restrictions
 		};
-		var canConstructEvents = (function () {
-			try {
-				if (new Event('submit', { bubbles: false }).bubbles !== false) {
-					return false;
-				} else if (new Event('submit', { bubbles: true }).bubbles !== true) {
-					return false;
-				} else {
-					return true;
-				}
-			} catch (e) {
-				return false;
-			}
-		})();
-		var eventsToEcho = [
-			'mouseenter',
-			'mouseleave',
-			'click',
-			'mousedown',
-			'mouseup',
-			'mousemove',
-			'mouseover',
-			'hover',
-			'dblclick',
-			'contextmenu',
-			'focus',
-			'blur'
-		];
 
 		options = options || {};
 		this._video = getNode(DOMNode);
@@ -497,9 +493,7 @@
 		* @API private
 		*/
 		this._init = function () {
-
 			var runInit = function () {
-
 				function playSelfAndUnbind () {
 					self._video.play();
 					if (self._options.poster) {
@@ -520,8 +514,6 @@
 					} else {
 						this._seeThru.getCanvas().addEventListener('click', playSelfAndUnbind);
 					}
-				} else if (this._options.start === 'autoplay' && options.poster) {
-					this._seeThru.getPoster().style.display = 'none';
 				}
 
 				// attach behavior for end options
@@ -583,7 +575,6 @@
 			}
 
 			return this;
-
 		};
 
 		/**
