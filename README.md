@@ -99,8 +99,8 @@ For testing you can download and use the example videos in the repo's **[media f
 
 There are a few options you can pass when building an instance:
 
- - `start` defines the video's behavior on load. It defaults to `autoplay` which will automatically start the video as soon as possible. Other options are `clicktoplay` which will display the first frame of the video until it is clicked or `external` which will just display the first frame of the video and wait for external JS calls (so you can build your own interface or something - note that although the `<video>` is hidden it is still playing and controls the rendered image).
- - `end` defines the video's behavior when it has reached its end. It defaults to `loop` which will loop the video. Other possibilities are `stop` (it will just stop), or `rewind` which will jump back to the first frame and stop. If you use `start: 'clicktoplay'` along with `rewind` or `end` the video will be clickable again when finished.
+ - `start` defines the video's behavior on load. It defaults to `external` which will just display the first frame of the video and wait for the caller to initiate video playback. Other options are `clicktoplay` which will display the first frame of the video until it is clicked.
+ - `end` defines the video's behavior when it has reached its end. It defaults to `stop`. Other possibilities are `rewind` which will jump back to the first frame and stop. If you use `start: 'clicktoplay'` along with `rewind` or `end` the video will be clickable again when finished.
  - `staticMask` lets you use the content of an `<img>` node as alpha information (also black and white). The parameter expects a CSS selector (preferrably ID) that refers directly to an image tag, like `#fancy-mask`. In case the selector matches nothing or a non-image node the option is ignored.
  - `alphaMask` specifies if the script uses either the black and white information (i.e. `false`) or the alpha information (i.e. `true`) of the element specified in the `mask` parameter. Defaults to `false`.
  - `height` can be used to control the height of the rendered canvas. Overrides the attributes of the `<video>`-element
@@ -108,11 +108,12 @@ There are a few options you can pass when building an instance:
  - `poster` can be set to `true` if you want the video to be replaced by the image specified in the `<video>`s `poster`-attribute when in a paused state
  - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the script to un-premultiply the imagery. Note that this might have really bad effects on performance, so it is recommended to work with unpremultiplied video sources
  - `videoStyles` is the CSS (in object notation) that is used to hide the original video - can be updated in order to work around autoplay restrictions. It defaults to `{ display: 'none' }`
+ - `namespace` is the prefix that will be used for the CSS classnames applied to the created DOM elements (buffer, display, posterframe), defaults to `seeThru`
 
 This might look like this:
 
 ```js
-seeThru.create('#my-video', { start: 'autoplay' , end: 'stop' });
+seeThru.create('#my-video');
 ```
 
 or

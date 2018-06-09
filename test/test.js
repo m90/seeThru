@@ -1,7 +1,7 @@
 QUnit.module('seeThru', {
 	beforeEach: function () {
 		document.body.innerHTML = '\
-			<video onended="this.play();" autoplay loop id="test-video">\
+			<video onended="this.play();" loop id="test-video">\
 				<source src="http://localhost:9876/base/media/kolor.mp4" type="video/mp4" />\
 			</video>\
 		';
@@ -27,6 +27,15 @@ QUnit.test('default config', function (assert) {
 		assert.ok($testvideo.is(':visible'), 'video is shown');
 		assert.equal($('.seeThru-buffer').length, 0, 'buffer canvas is deleted');
 		assert.equal($('.seeThru-display').length, 0, 'display canvas is deleted');
+		done();
+	});
+});
+
+QUnit.test('namespace option', function (assert) {
+	var done = assert.async();
+	window.seeThru.create('#test-video', { namespace: 'test' }).ready(function () {
+		assert.ok($('.test-display').length, 'display canvas is created with correct classname');
+		assert.ok($('.test-buffer').length, 'buffer canvas is created with correct classname');
 		done();
 	});
 });
@@ -59,7 +68,7 @@ QUnit.test('event routing', function (assert) {
 
 QUnit.test('external JS calls', function (assert) {
 	var done = assert.async();
-	window.seeThru.create('#test-video', { start: 'external' }).ready(function (instance, video) {
+	window.seeThru.create('#test-video').ready(function (instance, video) {
 		var $testvideo = $(video);
 
 		$testvideo.on('playing', function () {
@@ -108,8 +117,29 @@ QUnit.test('renders video', function (assert) {
 	});
 });
 
+QUnit.test('async callback', function (assert) {
+	var done = assert.async();
+	var check = 12;
+	window.seeThru.create('#test-video').ready(function (instance) {
+		var innerCheck = 44;
+		assert.equal(check, 24);
+		instance.revert();
+		window.seeThru.create('#test-video').ready(function () {
+			assert.equal(innerCheck, 88);
+			done();
+		});
+		innerCheck = 88;
+	});
+	check = 24;
+});
 
 QUnit.test('jQuery plugin', function (assert) {
+	var done = assert.async();
 	assert.ok('seeThru' in $.fn, 'plugin is attached');
 	assert.ok(typeof $.fn.seeThru === 'function', 'seeThru is function');
+	$('#test-video').seeThru({ namespace: 'plugin' }).seeThru('ready', function (instance, video, canvas) {
+		assert.ok($(video).is('#test-video'));
+		assert.ok($(canvas).is('.plugin-display'));
+		done();
+	});
 });
