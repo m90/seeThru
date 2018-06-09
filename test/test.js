@@ -117,8 +117,29 @@ QUnit.test('renders video', function (assert) {
 	});
 });
 
+QUnit.test('async callback', function (assert) {
+	var done = assert.async();
+	var check = 12;
+	window.seeThru.create('#test-video').ready(function (instance) {
+		var innerCheck = 44;
+		assert.equal(check, 24);
+		instance.revert();
+		window.seeThru.create('#test-video').ready(function () {
+			assert.equal(innerCheck, 88);
+			done();
+		});
+		innerCheck = 88;
+	});
+	check = 24;
+});
 
 QUnit.test('jQuery plugin', function (assert) {
+	var done = assert.async();
 	assert.ok('seeThru' in $.fn, 'plugin is attached');
 	assert.ok(typeof $.fn.seeThru === 'function', 'seeThru is function');
+	$('#test-video').seeThru({ namespace: 'plugin' }).seeThru('ready', function (instance, video, canvas) {
+		assert.ok($(video).is('#test-video'));
+		assert.ok($(canvas).is('.plugin-display'));
+		done();
+	});
 });
