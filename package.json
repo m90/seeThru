@@ -1,7 +1,7 @@
 {
   "name": "seethru",
   "description": "HTML5 video with alpha channel transparencies",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "author": "Frederik Ring <frederik.ring@gmail.com>",
   "contributors": [
     "Caio Matias <caiobellomatias@gmail.com>",

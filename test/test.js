@@ -119,18 +119,23 @@ QUnit.test('renders video', function (assert) {
 
 QUnit.test('async callback', function (assert) {
 	var done = assert.async();
-	var check = 12;
+	var firstCheck = 12;
 	window.seeThru.create('#test-video').ready(function (instance) {
-		var innerCheck = 44;
-		assert.equal(check, 24);
+		var secondCheck = 44;
+		assert.equal(firstCheck, 24);
 		instance.revert();
-		window.seeThru.create('#test-video').ready(function () {
-			assert.equal(innerCheck, 88);
-			done();
+		window.seeThru.create('#test-video').ready(function (instance) {
+			var thirdCheck = 99;
+			assert.equal(secondCheck, 88);
+			instance.ready(function () {
+				assert.equal(thirdCheck, 33);
+				done();
+			});
+			thirdCheck = 33;
 		});
-		innerCheck = 88;
+		secondCheck = 88;
 	});
-	check = 24;
+	firstCheck = 24;
 });
 
 QUnit.test('jQuery plugin', function (assert) {
