@@ -408,11 +408,11 @@
 		bufferCanvas.width = dimensions.width;
 		bufferCanvas.height = dimensions.height * 2;
 		bufferCanvas.style.display = 'none';
-		bufferCanvas.className = 'seeThru-buffer';
+		bufferCanvas.className = options.namespace + '-buffer';
 
 		displayCanvas.width = dimensions.width;
 		displayCanvas.height = dimensions.height;
-		displayCanvas.className = 'seeThru-display';
+		displayCanvas.className = options.namespace + '-display';
 
 		insertAfter(bufferCanvas, video);
 		insertAfter(displayCanvas, video);
@@ -467,7 +467,8 @@
 			height: null, // lets you specify a pixel value used as height -- overrides all other calculations
 			poster: false, // the plugin will display the image set in the video's poster-attribute when not playing if set to true
 			unmult: false, // set this to true if your video material is premultiplied on black - might cause performance issues
-			videoStyles: { display: 'none' } // this is the CSS that is used to hide the original video - can be updated in order to work around autoplay restrictions
+			videoStyles: { display: 'none' }, // this is the CSS that is used to hide the original video - can be updated in order to work around autoplay restrictions
+			namespace: 'seeThru' // this will be used for prefixing the CSS classnames applied to the created elements
 		};
 
 		options = options || {};

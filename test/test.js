@@ -31,6 +31,15 @@ QUnit.test('default config', function (assert) {
 	});
 });
 
+QUnit.test('namespace option', function (assert) {
+	var done = assert.async();
+	window.seeThru.create('#test-video', { namespace: 'test' }).ready(function () {
+		assert.ok($('.test-display').length, 'display canvas is created with correct classname');
+		assert.ok($('.test-buffer').length, 'buffer canvas is created with correct classname');
+		done();
+	});
+});
+
 QUnit.test('custom video styles', function (assert) {
 	var done = assert.async();
 	window.seeThru.create('#test-video', { videoStyles: { width: 0, border: '1px solid red' } }).ready(function (instance, video) {

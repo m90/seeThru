@@ -108,6 +108,7 @@ There are a few options you can pass when building an instance:
  - `poster` can be set to `true` if you want the video to be replaced by the image specified in the `<video>`s `poster`-attribute when in a paused state
  - `unmult` can be used if your source material's RGB channels are premultiplied (with black) and you want the script to un-premultiply the imagery. Note that this might have really bad effects on performance, so it is recommended to work with unpremultiplied video sources
  - `videoStyles` is the CSS (in object notation) that is used to hide the original video - can be updated in order to work around autoplay restrictions. It defaults to `{ display: 'none' }`
+ - `namespace` is the prefix that will be used for the CSS classnames applied to the created DOM elements (buffer, display, posterframe), defaults to `seeThru`
 
 This might look like this:
 
