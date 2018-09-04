@@ -44,7 +44,7 @@
     "grunt-eslint": "^20.0.0",
     "grunt-jsonlint": "^1.0.4",
     "jquery": "^3.2.1",
-    "karma": "^2.0.2",
+    "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.1.1",
     "karma-cli": "^1.0.1",
     "karma-qunit": "^1.2.1",
