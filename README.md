@@ -50,7 +50,6 @@ This approach is a **cheap hack**! Due to the lack of alpha support in HTML5 vid
  - <a href="#preparing-video-sources-in-adobe-after-effects">Preparing video sources in Adobe After Effects</a>
  - <a href="#cross-domain-issues-with-canvas-elements">CrossDomain issues with canvas elements</a>
  - <a href="#binding-mouse-events-to-your-video">Binding mouse events to your video</a>
- - <a href="#chrome-and-m4v-issues">Chrome and `m4v` issues</a>
  - <a href="#mobile-devices--tablets">Mobile devices & tablets</a>
  - <a href="#browser-support">Browser support</a>
  - <a href="#license">License</a>
