@@ -21,6 +21,11 @@ npm:
 $ npm install seethru
 ```
 
+yarn:
+```sh
+$ yarn add seethru
+```
+
 bower:
 ```sh
 $ bower install seethru
@@ -33,7 +38,7 @@ CDN:
 <script src="https://cdn.jsdelivr.net/npm/seethru@4/dist/seeThru.min.js"></script>
 ```
 
-Alternatively, use the version(s) in `/dist`.
+Alternatively, you can download and use the version(s) in the `/dist` folder.
 
 ## Word of warning
 
