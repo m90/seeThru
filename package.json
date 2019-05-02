@@ -43,7 +43,7 @@
     "grunt-contrib-uglify": "^3.3.0",
     "grunt-eslint": "^20.0.0",
     "grunt-jsonlint": "^1.0.4",
-    "jquery": "^3.2.1",
+    "jquery": "^3.4.0",
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.1.1",
     "karma-cli": "^1.0.1",
