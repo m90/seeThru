@@ -38,7 +38,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-uglify": "^3.3.0",
     "grunt-eslint": "^20.0.0",
@@ -52,6 +52,6 @@
   },
   "dependencies": {
     "fluent-ffmpeg": "^2.1.2",
-    "yargs": "^11.0.0"
+    "yargs": "^14.0.0"
   }
 }
