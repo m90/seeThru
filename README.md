@@ -6,6 +6,10 @@
 
 ---
 
+**Interested in maintaining this library?** In case you are interested, and maybe even want to continue development of this library, do not hesitate to send me an email at frederik.ring@gmail.com. I currently don't have the time to show this repository the love it would still deserve.
+
+---
+
 Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies in your video. Alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
 The package also ships with a simple CLI tool for automatically converting your RGBA video sources into the correct format.
