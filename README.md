@@ -268,33 +268,33 @@ All source code is licensed under the **[MIT License][11]**, demo content, video
 Thanks to **[Jake Archibald][7]**, who had the original idea for this approach, **[Kathi Käppel][8]** who designed the lovely Mr. Kolor from the demo and Sebastian Lechenbauer for making fun of my git dyslexia.
 ![Footer image][10]
 
-[1]:http://m90.github.io/seeThru/moving-alpha/
-[2]:http://m90.github.io/seeThru/static-alpha/
-[3]:http://m90.github.io/seeThru/swap-alpha/
-[4]:http://m90.github.io/seeThru/external/
-[5]:http://m90.github.io/seeThru/img/seeThruDemo.png
-[6]:http://m90.github.io/seeThru/img/seeThruResult.png
-[7]:http://www.jakearchibald.com
-[8]:http://www.kathikaeppel.com/
-[10]:http://m90.github.io/seeThru/img/footer.png
-[11]:http://www.opensource.org/licenses/mit-license.php
-[12]:http://creativecommons.org/licenses/by-sa/3.0/
-[14]:http://www.diveintohtml5.info/video.html
-[15]:http://en.wikipedia.org/wiki/Alpha_compositing
-[16]:http://www.redgiantsoftware.com/products/all/knoll-unmult-free
-[18]:http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-[20]:http://m90.github.io/seeThru/img/seeThru_AE_01.jpg
-[21]:http://m90.github.io/seeThru/img/seeThru_AE_02.jpg
-[22]:http://m90.github.io/seeThru/img/seeThru_AE_03.jpg
-[23]:http://m90.github.io/seeThru/img/seeThru_AE_04.jpg
-[24]:http://caniuse.com/#feat=canvas
-[25]:http://caniuse.com/#feat=video
-[26]:http://m90.github.io/seeThru/hover/
-[28]:http://www.html5rocks.com/en/tutorials/cors/
-[29]:http://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
-[30]:http://nodejs.org
-[31]:http://ffmpeg.org
-[32]:http://caniuse.com/#feat=bloburls
-[33]:https://webkit.org/blog/6784/new-video-policies-for-ios/
+[1]: https://m90.github.io/seeThru/moving-alpha/
+[2]: https://m90.github.io/seeThru/static-alpha/
+[3]: https://m90.github.io/seeThru/swap-alpha/
+[4]: https://m90.github.io/seeThru/external/
+[5]: https://m90.github.io/seeThru/img/seeThruDemo.png
+[6]: https://m90.github.io/seeThru/img/seeThruResult.png
+[7]: https://www.jakearchibald.com
+[8]: http://www.kathikaeppel.com/
+[10]: https://m90.github.io/seeThru/img/footer.png
+[11]: https://www.opensource.org/licenses/mit-license.php
+[12]: https://creativecommons.org/licenses/by-sa/3.0/
+[14]: http://www.diveintohtml5.info/video.html
+[15]: https://en.wikipedia.org/wiki/Alpha_compositing
+[16]: http://www.redgiantsoftware.com/products/all/knoll-unmult-free
+[18]: https://paulirish.com/2011/requestanimationframe-for-smart-animating/
+[20]: https://m90.github.io/seeThru/img/seeThru_AE_01.jpg
+[21]: https://m90.github.io/seeThru/img/seeThru_AE_02.jpg
+[22]: https://m90.github.io/seeThru/img/seeThru_AE_03.jpg
+[23]: https://m90.github.io/seeThru/img/seeThru_AE_04.jpg
+[24]: https://caniuse.com/#feat=canvas
+[25]: https://caniuse.com/#feat=video
+[26]: https://m90.github.io/seeThru/hover/
+[28]: https://www.html5rocks.com/en/tutorials/cors/
+[29]: https://updates.html5rocks.com/2013/07/Alpha-transparency-in-Chrome-video
+[30]: https://nodejs.org
+[31]: https://ffmpeg.org
+[32]: https://caniuse.com/#feat=bloburls
+[33]: https://webkit.org/blog/6784/new-video-policies-for-ios/
 [34]: https://github.com/m90/seeThru/issues/47
 [35]: https://caniuse.com/#feat=webm
