@@ -1,18 +1,16 @@
-# seeThru - HTML5 video with alpha channel transparencies
-
 ## Before you start
 
-Unless you still need to support Internet Explorer, __you probably do not need this library (which dates back to 2012) anymore__. Using WebM and HEVC video codecs, you can have native transparent HTML5 video in all browsers as of late 2020.
+Unless you still need to support Internet Explorer, __you probably do not need this library (which dates back to 2012) anymore__. Using WebM and HEVC video formats, you can have native transparent HTML5 video in all browsers as of late 2020.
 
 Check out the ongoing discussion in [__this issue__][34] for more information.
 
 ---
 
+# seeThru - HTML5 video with alpha channel transparencies
+
 [![Build Status](https://travis-ci.org/m90/seeThru.svg?branch=master)](https://travis-ci.org/m90/seeThru)
 
 > This package adds "support" for the lacking alpha channel in HTML5 `<video>` elements. Formerly known as "jquery-seeThru"
-
----
 
 Your HTML5 video source is re-rendered into a canvas-element, adding the possibility to use transparencies in your video. Alpha information is either included in the video's source file (moving) or in a seperate `<img>`-element (static).
 
