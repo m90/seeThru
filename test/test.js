@@ -106,7 +106,7 @@ QUnit.test('apply only once', function (assert) {
 	});
 });
 
-QUnit.test('renders video', function (assert) {
+QUnit.skip('renders video', function (assert) {
 	var done = assert.async();
 	window.seeThru.create('#test-video').ready(function (instance, video, canvas) {
 		setTimeout(function () {
